@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Rust
+/target/
+
+# Peace local state
+.peace/
+
+# Claude Code local settings
+.claude/settings.local.json
