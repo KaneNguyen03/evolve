@@ -1,0 +1,44 @@
+name: "💡 RFC: language idea"
+description: Propose a change to the Peace language, its formats, or its safety model.
+title: "RFC: "
+labels: ["rfc"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ☮ Thanks for helping Peace evolve! Rough ideas are welcome. We refine them together.
+  - type: textarea
+    id: problem
+    attributes:
+      label: 🔥 The problem
+      description: What hurts today? Who has this problem?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 🧬 The proposal
+      description: How would you solve it in Peace? Code sketches in a ```peace block are great.
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: 🍂 What could go wrong?
+      description: Failure modes, safety concerns, fitness gaming, or complexity costs.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔀 Alternatives considered
+  - type: dropdown
+    id: area
+    attributes:
+      label: 🗂️ Area
+      options:
+        - Syntax & core language
+        - Data model (arrays, frames, units, uncertainty)
+        - Evolution (gene, fitness, mutation, selection)
+        - Safety (sandbox, capabilities, gates)
+        - Lessons & lineage formats
+        - Tooling & agents (CLI, MCP, LSP)
+        - Other

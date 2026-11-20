@@ -1,4 +1,6 @@
-# Peace: Use Cases
+<img src="../assets/logo/peace-mark.svg" width="72" align="right" alt="Peace logo"/>
+
+# 🧪 Peace: Use Cases
 
 > A thinking document. Each scenario covers **the pain today**, **how Peace changes it**, a **code sketch**, and the **open questions** it raises. Syntax is illustrative and will change.
 

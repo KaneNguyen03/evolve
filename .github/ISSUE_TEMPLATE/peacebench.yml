@@ -1,0 +1,50 @@
+name: "🧪 PeaceBench case: real-world failure"
+description: Contribute a real software failure caused by a changing environment.
+title: "Bench: "
+labels: ["peacebench"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        🦴 Every real failure is a fossil we can learn from.
+        > ⚠️ **Anonymize everything.** No personal data, secrets, customer names, or proprietary code.
+  - type: dropdown
+    id: category
+    attributes:
+      label: 🗂️ Category
+      options:
+        - Schema drift
+        - Format drift (dates, numbers, currency, locale)
+        - API contract change
+        - Edge case (empty, Unicode, huge values, time zones)
+        - Dependency upgrade
+        - Performance drift
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: program
+    attributes:
+      label: 📄 The program that used to work
+      description: A minimal version (any language is fine).
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: 🌊 What changed in the environment?
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: 🎯 Examples (input → expected output)
+  - type: textarea
+    id: invariants
+    attributes:
+      label: 🔒 Invariants a correct fix must never violate
+  - type: textarea
+    id: fix
+    attributes:
+      label: 🩹 How it was actually fixed (optional)

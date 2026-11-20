@@ -1,4 +1,6 @@
-# Peace: Development Roadmap and Possibilities
+<img src="../assets/logo/peace-mark.svg" width="72" align="right" alt="Peace logo"/>
+
+# 🗺️ Peace: Development Roadmap and Possibilities
 
 > **Status:** planning draft (November 2026). Dates are targets for a small core team (3–5 people) and will move as we learn. Each phase ships something people can use and ends with a demo that proves a hypothesis.
 
@@ -41,6 +43,11 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 ---
 
 ## 2. Phase plan
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="../assets/diagrams/roadmap-dark.svg">
+  <img alt="Roadmap timeline from Seed v0.0 (Feb 2027) to Forest v1.0 (H2 2028)" src="../assets/diagrams/roadmap-light.svg" width="100%">
+</picture>
 
 ### Phase 0: Seed 🌱 (Nov 2026 – Feb 2027)
 **Goal:** agree on what we're building.

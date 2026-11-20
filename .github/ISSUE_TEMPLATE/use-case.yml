@@ -1,0 +1,30 @@
+name: "🌍 Use case"
+description: Describe where Peace could help in your domain.
+title: "Use case: "
+labels: ["use-case"]
+body:
+  - type: textarea
+    id: pain
+    attributes:
+      label: 🔥 The pain today
+    validations:
+      required: true
+  - type: textarea
+    id: peace
+    attributes:
+      label: ☮ With Peace
+      description: How would genes, fitness, Lessons, or populations help? A code sketch is welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: fitness
+    attributes:
+      label: 🎯 How would you measure "better"?
+  - type: textarea
+    id: safety
+    attributes:
+      label: 🛡️ What must never change (conserved) and how risky is a wrong fix?
+  - type: input
+    id: industry
+    attributes:
+      label: 🏭 Industry or domain

@@ -1,4 +1,6 @@
-# Peace: Vision and Purpose
+<img src="../assets/logo/peace-mark.svg" width="72" align="right" alt="Peace logo"/>
+
+# 🌿 Peace: Vision and Purpose
 
 > **Peace is a programming language in which a program's failures make it better instead of only breaking it.**
 
@@ -25,6 +27,11 @@ The improvement loop is the oldest algorithm in nature:
 ```
 observe failure → vary → measure → select → remember
 ```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="../assets/diagrams/evolution-loop-dark.svg">
+  <img alt="The Peace improvement loop: observe, vary, measure, select, remember" src="../assets/diagrams/evolution-loop-light.svg" width="720">
+</picture>
 
 In Peace, each step is a language construct:
 

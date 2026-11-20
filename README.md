@@ -1,66 +1,87 @@
-# ☮ Peace
+<div align="center">
 
-> **A programming language that makes peace with failure.**
-> Python's readability. Julia's data-native power. Rust's foundation.
-> Programs that mutate, experiment, learn from their mistakes, and heal themselves.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner/peace-banner-dark.svg">
+  <img alt="Peace: programs that learn from failure. Python-readable, Julia data-native, Rust-built." src="assets/banner/peace-banner-light.svg" width="100%">
+</picture>
 
-**Status:** 🌱 Concept / design stage. Nothing here is implemented yet. This README is for thinking through *why* Peace should exist and *what* people (and AI agents) would build with it.
+<br/>
 
-**Docs:** [Vision & purpose](docs/vision.md) · [Use cases & applications](docs/use-cases.md) · [Roadmap & possibilities](docs/roadmap.md)
+[![Status: Seed](https://img.shields.io/badge/status-seed%20·%20design%20stage-22C55E?style=flat-square)](docs/roadmap.md)
+[![Built with Rust beta](https://img.shields.io/badge/built%20with-Rust%20beta-F97316?style=flat-square&logo=rust&logoColor=white)](rust-toolchain.toml)
+[![Python-readable](https://img.shields.io/badge/syntax-Python--readable-38BDF8?style=flat-square&logo=python&logoColor=white)](#-three-heritages)
+[![Julia data-native](https://img.shields.io/badge/data-Julia--native-8B5CF6?style=flat-square&logo=julia&logoColor=white)](#-three-heritages)
+[![PRs welcome](https://img.shields.io/badge/PRs%20%26%20RFCs-welcome-14B8A6?style=flat-square)](CONTRIBUTING.md)
+[![License: TBD](https://img.shields.io/badge/license-TBD-475569?style=flat-square)](#-license)
+
+**☮ A programming language that makes peace with failure.**<br/>
+Programs that mutate, experiment, learn from their mistakes, and heal themselves.
+
+[🌿 Vision](docs/vision.md) · [🧪 Use cases](docs/use-cases.md) · [🗺️ Roadmap](docs/roadmap.md) · [🎨 Brand](docs/brand.md) · [🤝 Contribute](CONTRIBUTING.md)
+
+</div>
+
+> [!NOTE]
+> 🌱 **Peace is in the Seed stage.** Nothing is implemented yet. This repository is where we work out *why* Peace should exist and *what* people (and AI agents) will build with it. Ideas, critiques, and real-world failure stories are the most valuable contributions right now.
 
 ---
 
-## Table of contents
+## 📚 Table of contents
 
-1. [Why Peace?](#why-peace)
-2. [The Zen of Peace](#the-zen-of-peace)
-3. [A first taste](#a-first-taste)
-4. [Three heritages](#three-heritages)
-5. [The evolutionary model](#the-evolutionary-model)
-6. [Peace for AI agents](#peace-for-ai-agents)
-7. [Safety: evolution with guardrails](#safety-evolution-with-guardrails)
-8. [Use cases](#use-cases)
-9. [Architecture (built on Rust beta)](#architecture-built-on-rust-beta)
-10. [Toolchain sketch](#toolchain-sketch)
-11. [Roadmap](#roadmap)
-12. [Open questions](#open-questions)
+| | | |
+|---|---|---|
+| 🌿 [Why Peace?](#-why-peace) | 🧘 [The Zen of Peace](#-the-zen-of-peace) | ✨ [A first taste](#-a-first-taste) |
+| 🧬 [Three heritages](#-three-heritages) | 🦠 [The evolutionary model](#-the-evolutionary-model) | 🤖 [Peace for AI agents](#-peace-for-ai-agents) |
+| 🛡️ [Safety guardrails](#️-safety-evolution-with-guardrails) | 🧪 [Use cases](#-use-cases) | 🦀 [Architecture](#-architecture-built-on-rust-beta) |
+| 🧰 [Toolchain](#-toolchain-sketch) | 🗺️ [Roadmap](#️-roadmap) | ❓ [Open questions](#-open-questions) |
 
 ---
 
-## Why Peace?
+## 🌿 Why Peace?
 
 > **Peace is a programming language in which a program's failures make it better instead of only breaking it.**
 
 Most programming languages treat failure as an enemy. An exception is something to be caught, silenced, or allowed to crash the program. Then a human reads a stack trace, guesses a fix, and redeploys. The program itself learns nothing.
 
-Nature works differently. For about four billion years, life has improved through **variation, failure, and selection**. Most mutations fail. The failures aren't wasted: they're how the population learns what doesn't work. What survives is fit for its environment, and the history is recorded in the genome.
+Nature works differently. For about four billion years, life has improved through **variation, failure, and selection**. Most mutations fail. The failures aren't wasted: they're how the population learns what doesn't work. What survives is fit for its environment, and the history is recorded in the genome. 🧬
 
-### The problem
-- **AI agents write and repair more and more code**, yet they get unstructured error text, a pass/fail signal, and no memory across sessions.
-- **Software lives in drifting environments.** Schemas, APIs, and workloads change, and the same kinds of fixes are made by hand again and again.
-- **Data work is split across languages and libraries.** Python for prototyping, C or Rust for speed, and separate packages for frames, units, and uncertainty.
+### 🔥 The problem
 
-### The thesis
-Rust made *ownership* a primitive. Julia made *dispatch and arrays* primitives. **Peace makes the improvement loop a primitive:**
+- 🤖 **AI agents write and repair more and more code**, yet they get unstructured error text, a pass/fail signal, and no memory across sessions.
+- 🌊 **Software lives in drifting environments.** Schemas, APIs, and workloads change, and the same kinds of fixes are made by hand again and again.
+- 🧩 **Data work is split across languages and libraries.** Python for prototyping, C or Rust for speed, and separate packages for frames, units, and uncertainty.
 
-```
-observe failure → vary → measure → select → remember
- attempt/learn     gene    fitness   population  fossil record
-```
+### 💡 The thesis
 
-Because the loop lives in the language, Peace can make it **safe** (sandbox, capabilities, conserved code), **cheap** (JIT, parallel populations), and **auditable** (lineage for every change).
+Rust made *ownership* a primitive. Julia made *dispatch and arrays* primitives. **Peace makes the improvement loop a primitive.**
 
-### Who it's for
-**AI agent builders · data engineers · researchers and scientists · platform engineers and SREs · educators**
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/diagrams/evolution-loop-dark.svg">
+  <img alt="The Peace improvement loop: 1 Observe (attempt/learn), 2 Vary (gene, mutate), 3 Measure (fitness, invariant), 4 Select (population, promote), 5 Remember (fossil record, lineage), around a sandboxed, budgeted, human-gated runtime." src="assets/diagrams/evolution-loop-light.svg" width="760">
+</picture>
+</div>
 
-### What Peace is not
-Not "no humans needed" (production changes are human-gated by default). Not magic (no measurable fitness, no evolution). Not a Rust replacement (it's built *on* Rust). Not a black box (every evolved variant is readable source code).
+Because the loop lives in the language, Peace can make it **🛡️ safe** (sandbox, capabilities, conserved code), **⚡ cheap** (JIT, parallel populations), and **🔍 auditable** (lineage for every change).
+
+### 👥 Who it's for
+
+| 🤖 AI agent builders | 🛠️ Data engineers | 🔬 Researchers | 🏗️ Platform engineers & SREs | 🎓 Educators |
+|:---:|:---:|:---:|:---:|:---:|
+| Machine-readable errors, rewards, and memory | Pipelines that survive drift | Speed, units, and uncertainty | Integrations that adapt | Failure as the first step of learning |
+
+### 🚫 What Peace is not
+
+- ❌ **Not "no humans needed".** Production changes are human-gated by default.
+- ❌ **Not magic.** No measurable fitness means no evolution.
+- ❌ **Not a Rust replacement.** It's built *on* Rust.
+- ❌ **Not a black box.** Every evolved variant is readable source code.
 
 📖 Full rationale, prior art, and comparison with other approaches: **[docs/vision.md](docs/vision.md)**
 
 ---
 
-## The Zen of Peace
+## 🧘 The Zen of Peace
 
 *In the spirit of `import this`:*
 
@@ -80,17 +101,19 @@ Humans hold the final say over what survives.
 
 ---
 
-## A first taste
+## ✨ A first taste
+
+### 🐍 Looks like Python, on purpose
 
 ```peace
-# hello.peace: looks like Python, on purpose
+# hello.peace
 def greet(name: str) -> str:
     return f"Peace be with you, {name}"
 
 print(greet("world"))
 ```
 
-### Data is native (Julia heritage)
+### 📊 Data is native (Julia heritage)
 
 ```peace
 xs = [1.0, 2.0, 3.0, 4.0]
@@ -106,7 +129,7 @@ sales
   |> sum(:revenue)
 ```
 
-### Imperfection is native
+### 📏 Imperfection is native
 
 ```peace
 g     = 9.81 ± 0.02 m/s²           # values carry uncertainty and units
@@ -115,7 +138,7 @@ drop  = 0.5 * g * t^2              # uncertainty propagates automatically
 print(drop)                        # 8.29 ± 0.64 m
 ```
 
-### Failure is a teacher
+### 🍂 Failure is a teacher
 
 ```peace
 attempt:
@@ -127,7 +150,7 @@ learn err:
 
 `attempt / learn` behaves like `try / except`, with one difference: every failure becomes a **Lesson** (type, context, inputs, stack, environment) that people, the runtime, and AI agents can query later.
 
-### Code that evolves and heals
+### 🩹 Code that evolves and heals
 
 ```peace
 @heal(strategies=[retry, mutate, ask_agent], budget=20, approve="human")
@@ -140,17 +163,17 @@ fitness parse_price:
     invariant result.amount >= 0                  # a mutation may never break this
 ```
 
-- `gene` marks a function as **evolvable**.
-- `fitness` defines what "better" means for it.
-- `@heal` says what to do when it fails in production: retry, generate mutated variants, test them in a sandbox, and propose the fittest one for promotion.
+- 🧬 `gene` marks a function as **evolvable**.
+- 🎯 `fitness` defines what "better" means for it.
+- 🩹 `@heal` says what to do when it fails in production: retry, generate mutated variants, test them in a sandbox, and propose the fittest one for promotion.
 
-When `parse_price("€12,50")` fails, Peace doesn't just crash. It records a Lesson, spawns variants, keeps the one that passes all examples, the new case, and every invariant, and opens a promotion request with the full diff and lineage.
+When `parse_price("€12,50")` fails, Peace doesn't just crash. It records a Lesson, spawns variants, keeps the one that passes all examples, the new case, and every invariant, and opens a promotion request with the full diff and lineage. ✅
 
 ---
 
-## Three heritages
+## 🧬 Three heritages
 
-| From **Python** 🐍 | From **Julia** 🔬 | From **Rust** 🦀 |
+| 🐍 From **Python** | 🔬 From **Julia** | 🦀 From **Rust** |
 |---|---|---|
 | Indentation, readable syntax | Multiple dispatch | Compiler & runtime written in Rust |
 | "Batteries included" stdlib | Broadcasting with `.` | Memory safety, no data races |
@@ -159,7 +182,7 @@ When `parse_price("€12,50")` fails, Peace doesn't just crash. It records a Les
 | `import this` philosophy | JIT specialization for speed | WASM sandboxes (wasmtime) for mutations |
 | Huge ecosystem (interop via PyO3) | DataFrames as a core type (Arrow) | Fearless concurrency for populations |
 
-### Multiple dispatch
+### 🔀 Multiple dispatch
 
 ```peace
 def collide(a: Asteroid, b: Ship):   return damage(b, a.mass)
@@ -171,33 +194,33 @@ Dispatch is also how evolution plugs in: a mutated variant is just another **met
 
 ---
 
-## The evolutionary model
+## 🦠 The evolutionary model
 
 Peace borrows its vocabulary from biology on purpose. The metaphor *is* the mental model.
 
-| Biology | Peace concept | What it is |
-|---|---|---|
-| Gene | `gene def` | A function that may evolve |
-| Conserved gene | `@conserved` | Code that must never mutate (security, money, safety) |
-| Mutation | `mutate` | A generated variant: param tweak, AST edit, or agent-proposed patch |
-| Environment | `fitness` | Examples, benchmarks, invariants, and a score |
-| Natural selection | `select` | Keep the fittest variant(s) that satisfy all invariants |
-| Population | `population` | Several variants running side by side (A/B, shadow, canary) |
-| Scar / immune memory | `Lesson` | A structured record of a failure |
-| Fossil record | `.peace/fossils/` | Queryable history of every lesson and mutation |
-| Genome / lineage | `.peace/lineage/` | Parent → child ancestry of every promoted variant |
-| Extinction | `extinct` | A retired variant, kept for history, never run |
-| Speciation | `fork species` | A variant line that diverges for a different environment |
+| | Biology | Peace concept | What it is |
+|:---:|---|---|---|
+| 🧬 | Gene | `gene def` | A function that may evolve |
+| 🔒 | Conserved gene | `@conserved` | Code that must never mutate (security, money, safety) |
+| 🎲 | Mutation | `mutate` | A generated variant: param tweak, AST edit, or agent-proposed patch |
+| 🌍 | Environment | `fitness` | Examples, benchmarks, invariants, and a score |
+| 🏆 | Natural selection | `select` | Keep the fittest variant(s) that satisfy all invariants |
+| 👥 | Population | `population` | Several variants running side by side (A/B, shadow, canary) |
+| 🩹 | Scar / immune memory | `Lesson` | A structured record of a failure |
+| 🦴 | Fossil record | `.peace/fossils/` | Queryable history of every lesson and mutation |
+| 🌳 | Genome / lineage | `.peace/lineage/` | Parent → child ancestry of every promoted variant |
+| 🪦 | Extinction | `extinct` | A retired variant, kept for history, never run |
+| 🐦 | Speciation | `fork species` | A variant line that diverges for a different environment |
 
-### Mutation strategies
+### 🎲 Mutation strategies
 
-1. **Parametric**: tune constants, thresholds, and hyperparameters (cheap, safe).
-2. **Structural**: AST-level edits from a library of operators (swap branch, widen type, add guard, change algorithm).
-3. **Recombination**: crossover between two successful variants.
-4. **Agentic**: an LLM proposes a patch, given the Lesson, the fitness spec, and the lineage.
-5. **Human**: a person writes a variant; it enters the same selection pipeline.
+1. 🎚️ **Parametric**: tune constants, thresholds, and hyperparameters (cheap, safe).
+2. 🌲 **Structural**: AST-level edits from a library of operators (swap branch, widen type, add guard, change algorithm).
+3. 🧫 **Recombination**: crossover between two successful variants.
+4. 🤖 **Agentic**: an LLM proposes a patch, given the Lesson, the fitness spec, and the lineage.
+5. 🧑‍💻 **Human**: a person writes a variant; it enters the same selection pipeline.
 
-### Explicit populations
+### 👥 Explicit populations
 
 ```peace
 population ranker = evolve(rank_results, size=16, generations=30, seed=42):
@@ -211,80 +234,77 @@ best.promote(approve="human")
 
 ---
 
-## Peace for AI agents
+## 🤖 Peace for AI agents
 
 Peace is designed to be **the language AI agents learn best in**:
 
-- **Lessons are machine-readable.** Every failure is a typed record that can be exported as JSON or Arrow, not free-form stderr text.
-- **The fossil record is a DataFrame.** Agents (and humans) query their own history:
+- 🧾 **Lessons are machine-readable.** Every failure is a typed record that can be exported as JSON or Arrow, not free-form stderr text.
+- 📊 **The fossil record is a DataFrame.** Agents (and humans) query their own history:
   ```peace
   fossils = peace.fossils()
   fossils |> filter(_.gene == "parse_price") |> groupby(:error_kind) |> count()
   ```
-- **Fitness is the reward signal.** Agents don't guess whether a change is better; the language measures it.
-- **Built-in MCP server.** `peace serve --mcp` exposes lessons, lineage, fitness runs, and mutation proposals as tools, so any agent can join the evolutionary loop.
-- **Cheap, safe experiments.** Every attempt runs in a sandbox with a budget, so agents can explore freely without breaking anything.
-- **Memory across sessions.** Lessons persist, so a mistake an agent made last week becomes an immune response today.
-
-```
-          ┌──────────────┐  failure   ┌──────────┐
-          │  running     │──────────▶│  Lesson  │──┐
-          │  program     │            └──────────┘  │
-          └──────▲───────┘                          ▼
-                 │ promote (human gate)      ┌─────────────┐
-          ┌──────┴───────┐   fittest        │  mutate     │◀── agent / LLM
-          │   select     │◀─────────────────│  variants   │
-          └──────────────┘   (sandboxed     └─────────────┘
-                              fitness runs)
-```
+- 🎯 **Fitness is the reward signal.** Agents don't guess whether a change is better; the language measures it.
+- 🔌 **Built-in MCP server.** `peace serve --mcp` exposes lessons, lineage, fitness runs, and mutation proposals as tools, so any agent can join the evolutionary loop.
+- 🧪 **Cheap, safe experiments.** Every attempt runs in a sandbox with a budget, so agents can explore freely without breaking anything.
+- 🧠 **Memory across sessions.** Lessons persist, so a mistake an agent made last week becomes an immune response today.
 
 ---
 
-## Safety: evolution with guardrails
+## 🛡️ Safety: evolution with guardrails
 
 Self-modifying code is powerful and dangerous. Peace treats safety as part of the language, not an afterthought.
 
-| Guardrail | Mechanism |
-|---|---|
-| **Sandboxing** | Mutations are compiled to WASM and run in wasmtime with no ambient authority |
-| **Capabilities** | A gene can only touch the network, filesystem, or clock if explicitly granted |
-| **Invariants** | `invariant` clauses are checked on every variant; violation means instant extinction |
-| **Conserved regions** | `@conserved` code (auth, payments, safety limits) is never mutated |
-| **Budgets** | Limits on generations, CPU time, memory, tokens, and money per heal cycle |
-| **Promotion gates** | `approve="human"` (default), `"tests"`, or `"auto"` (opt-in, per gene) |
-| **Full lineage** | Every promoted variant has a diff, parent, fitness report, and author (human or agent) |
-| **Instant rollback** | `peace revert parse_price@gen-7` restores any ancestor |
-| **Reproducibility** | Seeded randomness, so evolution runs can be replayed exactly |
+| | Guardrail | Mechanism |
+|:---:|---|---|
+| 📦 | **Sandboxing** | Mutations are compiled to WASM and run in wasmtime with no ambient authority |
+| 🔑 | **Capabilities** | A gene can only touch the network, filesystem, or clock if explicitly granted |
+| 📐 | **Invariants** | `invariant` clauses are checked on every variant; violation means instant extinction |
+| 🔒 | **Conserved regions** | `@conserved` code (auth, payments, safety limits) is never mutated |
+| ⏱️ | **Budgets** | Limits on generations, CPU time, memory, tokens, and money per heal cycle |
+| 🚦 | **Promotion gates** | `approve="human"` (default), `"tests"`, or `"auto"` (opt-in, per gene) |
+| 🌳 | **Full lineage** | Every promoted variant has a diff, parent, fitness report, and author (human or agent) |
+| ⏪ | **Instant rollback** | `peace revert parse_price@gen-7` restores any ancestor |
+| 🎰 | **Reproducibility** | Seeded randomness, so evolution runs can be replayed exactly |
 
+> [!IMPORTANT]
 > **Default posture:** mutate freely in the sandbox, never change production without a gate.
 
 ---
 
-## Use cases
+## 🧪 Use cases
 
-See **[docs/use-cases.md](docs/use-cases.md)** for detailed scenarios with code sketches, a prioritization matrix, and applications by industry. Summary:
+See **[docs/use-cases.md](docs/use-cases.md)** for detailed scenarios with code sketches, a prioritization matrix, and applications by industry.
 
 | # | Use case | Why Peace fits | Priority |
-|---|---|---|---|
-| 1 | **Self-healing data pipelines** | Schema drift and messy input trigger heal cycles instead of 3 a.m. pages | ⭐ Beachhead |
-| 2 | **AI coding agents that learn** | Lessons + fitness give agents a real feedback loop and long-term memory | ⭐ Beachhead |
-| 3 | **Resilient API integrations** | Adapters evolve when a third-party API changes its format | High |
-| 10 | **Evolving prompts & agent tools** | Prompts and tool schemas as genes; eval sets as fitness; re-evolve on model upgrades | High |
-| 4 | **Scientific computing & experiments** | Uncertainty, units, arrays, and evolutionary search in one language | Medium |
-| 5 | **Algorithm & heuristic discovery** | Evolve ranking, scheduling, caching, or compression heuristics against benchmarks | Medium |
-| 6 | **ML hyperparameter & architecture search** | Populations + fitness as a native construct, not a framework | Medium |
-| 11 | **Incident auto-remediation** | Runbooks evolve against replayed incidents; Peace proposes, humans execute | Later |
-| 7 | **Edge, robotics & control tuning** | Parametric evolution of controllers with `@conserved` safety envelopes | Later |
-| 8 | **Simulation & agent-based modeling** | Populations of evolving agents are literally the language model | Community |
-| 9 | **Teaching programming** | Students see failure as data and watch code improve generation by generation | Community |
+|:---:|---|---|---|
+| 1 | 🛠️ **Self-healing data pipelines** | Schema drift and messy input trigger heal cycles instead of 3 a.m. pages | ⭐ Beachhead |
+| 2 | 🤖 **AI coding agents that learn** | Lessons + fitness give agents a real feedback loop and long-term memory | ⭐ Beachhead |
+| 3 | 🔗 **Resilient API integrations** | Adapters evolve when a third-party API changes its format | 🔥 High |
+| 10 | 💬 **Evolving prompts & agent tools** | Prompts and tool schemas as genes; eval sets as fitness; re-evolve on model upgrades | 🔥 High |
+| 4 | 🔬 **Scientific computing & experiments** | Uncertainty, units, arrays, and evolutionary search in one language | 🟡 Medium |
+| 5 | 🧮 **Algorithm & heuristic discovery** | Evolve ranking, scheduling, caching, or compression heuristics against benchmarks | 🟡 Medium |
+| 6 | 🧠 **ML hyperparameter & architecture search** | Populations + fitness as a native construct, not a framework | 🟡 Medium |
+| 11 | 🚨 **Incident auto-remediation** | Runbooks evolve against replayed incidents; Peace proposes, humans execute | ⏳ Later |
+| 7 | 🦾 **Edge, robotics & control tuning** | Parametric evolution of controllers with `@conserved` safety envelopes | ⏳ Later |
+| 8 | 🐜 **Simulation & agent-based modeling** | Populations of evolving agents are literally the language model | 🌍 Community |
+| 9 | 🎓 **Teaching programming** | Students see failure as data and watch code improve generation by generation | 🌍 Community |
 
-**Where Peace is *not* a good fit (yet):** hard real-time systems, safety-certified software (avionics, medical devices) where any runtime change is forbidden, and tiny scripts where evolution adds nothing. You can still write plain Peace there; just don't use `gene`.
+> [!CAUTION]
+> **Where Peace is *not* a good fit (yet):** hard real-time systems, safety-certified software (avionics, medical devices) where any runtime change is forbidden, and tiny scripts where evolution adds nothing. You can still write plain Peace there; just don't use `gene`.
 
 ---
 
-## Architecture (built on Rust beta)
+## 🦀 Architecture (built on Rust beta)
 
 Peace is implemented in **Rust**, tracking the **beta channel** so the compiler can adopt upcoming Rust features (language, `std`, and codegen improvements) one release cycle before stable. CI also builds on stable, so the project never depends on a feature that gets pulled from beta.
+
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/diagrams/architecture-dark.svg">
+  <img alt="Peace architecture: .peace source goes through a lossless CST, HIR and typed IR, then to a Cranelift JIT, LLVM AOT, or a WASM sandbox. peace-evolve edits the CST/IR, receives fitness results from the sandbox, and stores lessons and lineage in the fossil record." src="assets/diagrams/architecture-light.svg" width="100%">
+</picture>
+</div>
 
 ```toml
 # rust-toolchain.toml
@@ -293,7 +313,8 @@ channel = "beta"
 components = ["rustfmt", "clippy", "rust-src"]
 ```
 
-### Planned crate layout
+<details>
+<summary>📦 <b>Planned crate layout</b></summary>
 
 ```
 peacelang/
@@ -315,88 +336,102 @@ peacelang/
 └── examples/
 ```
 
-### Execution pipeline
-
-```
- .peace source ─▶ CST ─▶ HIR ─▶ typed IR ─┬─▶ Cranelift JIT  (REPL, dev)
-                                          ├─▶ LLVM AOT       (release binaries)
-                                          └─▶ WASM           (sandboxed mutations)
-                          ▲
-                          └── peace-evolve edits the CST/IR, never raw text
-```
+</details>
 
 ---
 
-## Toolchain sketch
+## 🧰 Toolchain sketch
 
 ```bash
-peace run app.peace                 # run (JIT)
-peace build --release               # native binary (AOT)
-peace repl                          # interactive, notebook-friendly
-peace test                          # tests + fitness checks + invariants
+peace run app.peace                 # ▶️  run (JIT)
+peace build --release               # 📦 native binary (AOT)
+peace repl                          # 💬 interactive, notebook-friendly
+peace test                          # ✅ tests + fitness checks + invariants
 
-peace evolve parse_price            # run an evolution cycle for one gene
-peace heal --watch                  # watch production lessons and propose fixes
-peace lessons --gene parse_price    # browse the fossil record
-peace lineage parse_price           # show the family tree of a gene
-peace diff parse_price@gen-3 @gen-7 # compare two generations
-peace promote parse_price@gen-7     # human-approved promotion
-peace revert parse_price@gen-3      # rollback to an ancestor
-peace serve --mcp                   # expose Peace to AI agents
+peace evolve parse_price            # 🧬 run an evolution cycle for one gene
+peace heal --watch                  # 🩹 watch production lessons and propose fixes
+peace lessons --gene parse_price    # 🦴 browse the fossil record
+peace lineage parse_price           # 🌳 show the family tree of a gene
+peace diff parse_price@gen-3 @gen-7 # 🔍 compare two generations
+peace promote parse_price@gen-7     # 🚦 human-approved promotion
+peace revert parse_price@gen-3      # ⏪ rollback to an ancestor
+peace serve --mcp                   # 🔌 expose Peace to AI agents
 ```
 
 ---
 
-## Roadmap
+## 🗺️ Roadmap
 
 **Strategy: engine first, language second.** The evolution engine (fossil record, fitness, mutation) ships first as Rust crates with **Python bindings**, so the core idea gets tested with real users before the compiler is finished. The language track runs in parallel, and the two converge in Phase 3.
 
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/diagrams/roadmap-dark.svg">
+  <img alt="Roadmap timeline: Seed v0.0 Feb 2027, Sprout v0.1 Jun 2027, Root v0.2 Oct 2027, Branch v0.3 Jan 2028, Bloom v0.4 Apr 2028, Pollinate v0.5 Aug 2028, Forest v1.0 H2 2028." src="assets/diagrams/roadmap-light.svg" width="100%">
+</picture>
+</div>
+
 | Phase | Version | Target | Headline |
 |---|---|---|---|
-| 0 **Seed** 🌱 | `v0.0` | Feb 2027 | Vision, core RFCs, grammar, PeaceBench spec |
-| 1 **Sprout** 🌿 | `v0.1` | Jun 2027 | Evolution engine for Python + Peace interpreter with `attempt/learn` |
-| 2 **Root** 🌳 | `v0.2` | Oct 2027 | Arrays, broadcasting, multiple dispatch, DataFrames, units, uncertainty |
-| 3 **Branch** 🌲 | `v0.3` | Jan 2028 | Native `gene` / `fitness` / `population`, lineage, PeaceBench v1 |
-| 4 **Bloom** 🌸 | `v0.4` | Apr 2028 | Cranelift JIT, WASM sandbox, capabilities, `@heal` in services |
-| 5 **Pollinate** 🐝 | `v0.5` | Aug 2028 | MCP server, agentic mutation, Python interop, LSP |
-| 6 **Forest** 🌍 | `v1.0` | H2 2028 | LLVM AOT, package manager, stdlib, stability guarantees |
+| 🌱 0 **Seed** | `v0.0` | Feb 2027 | Vision, core RFCs, grammar, PeaceBench spec |
+| 🌿 1 **Sprout** | `v0.1` | Jun 2027 | Evolution engine for Python + Peace interpreter with `attempt/learn` |
+| 🌳 2 **Root** | `v0.2` | Oct 2027 | Arrays, broadcasting, multiple dispatch, DataFrames, units, uncertainty |
+| 🌲 3 **Branch** | `v0.3` | Jan 2028 | Native `gene` / `fitness` / `population`, lineage, PeaceBench v1 |
+| 🌸 4 **Bloom** | `v0.4` | Apr 2028 | Cranelift JIT, WASM sandbox, capabilities, `@heal` in services |
+| 🐝 5 **Pollinate** | `v0.5` | Aug 2028 | MCP server, agentic mutation, Python interop, LSP |
+| 🌍 6 **Forest** | `v1.0` | H2 2028 | LLVM AOT, package manager, stdlib, stability guarantees |
 
 📍 Full plan with deliverables, exit demos, the **PeaceBench** benchmark, success metrics, risks, Rust beta policy, and future possibilities (a collective immune system, verified invariants, self-evolving compiler, and more): **[docs/roadmap.md](docs/roadmap.md)**
 
 ---
 
-## Open questions
+## ❓ Open questions
 
-These are deliberately unresolved. They're the most interesting part.
+These are deliberately unresolved. They're the most interesting part. 🤔
 
-1. **Typing:** how gradual? Should `gene` functions require full type signatures so mutations have a contract?
-2. **Memory model:** tracing GC, reference counting, or Rust-style ownership hidden behind Python-like syntax?
-3. **Indexing:** 0-based (Python) or 1-based (Julia)? *(Leaning 0-based.)*
-4. **Where does evolution happen?** Only at dev time, in staging, or live in production with shadow traffic?
-5. **Fitness gaming:** how do we stop variants from overfitting the examples (Goodhart's law)? Hidden holdout sets? Adversarial examples generated from Lessons?
-6. **Determinism:** can agentic (LLM) mutations be made reproducible enough for audits?
-7. **Identity:** after 50 generations, is it still "the same" function? How should semver work for evolving code?
-8. **Ownership & licensing:** who is the author of code written by evolution?
-9. **Lesson privacy:** Lessons capture inputs. How do we redact PII by default?
-10. **Ecosystem sharing:** should Lessons be shareable across projects, like a global immune system?
+1. 🏷️ **Typing:** how gradual? Should `gene` functions require full type signatures so mutations have a contract?
+2. 🧠 **Memory model:** tracing GC, reference counting, or Rust-style ownership hidden behind Python-like syntax?
+3. 🔢 **Indexing:** 0-based (Python) or 1-based (Julia)? *(Leaning 0-based.)*
+4. 📍 **Where does evolution happen?** Only at dev time, in staging, or live in production with shadow traffic?
+5. 🎯 **Fitness gaming:** how do we stop variants from overfitting the examples (Goodhart's law)? Hidden holdout sets? Adversarial examples generated from Lessons?
+6. 🎰 **Determinism:** can agentic (LLM) mutations be made reproducible enough for audits?
+7. 🪞 **Identity:** after 50 generations, is it still "the same" function? How should semver work for evolving code?
+8. ⚖️ **Ownership & licensing:** who is the author of code written by evolution?
+9. 🔐 **Lesson privacy:** Lessons capture inputs. How do we redact PII by default?
+10. 🌐 **Ecosystem sharing:** should Lessons be shareable across projects, like a global immune system?
 
----
-
-## Contributing
-
-Peace is at the idea stage, so the best contributions now are **use cases, syntax ideas, real-world failure cases for PeaceBench, and hard questions**. See [how to help right now](docs/roadmap.md#10-how-to-help-right-now). Open an issue titled `RFC: <idea>` and tell us:
-
-- the problem you have today,
-- how you imagine solving it in Peace,
-- what could go wrong.
+💬 Have an opinion? [Open an RFC issue](https://github.com/peace-program-project/peace/issues/new/choose).
 
 ---
 
-## License
+## 🤝 Contributing
+
+Peace is at the idea stage, so the best contributions now are **use cases, syntax ideas, real-world failure cases for PeaceBench, and hard questions**.
+
+| If you want to… | Do this |
+|---|---|
+| 💡 Propose a language idea | Open an **RFC** issue |
+| 🧪 Share a real-world failure | Open a **PeaceBench case** issue |
+| 🌍 Describe a use case | Open a **Use case** issue |
+| ❓ Ask anything | Start a [Discussion](https://github.com/peace-program-project/peace/discussions) |
+
+Read **[CONTRIBUTING.md](CONTRIBUTING.md)** and [how to help right now](docs/roadmap.md#10-how-to-help-right-now). Everyone participating agrees to our **[Code of Conduct](CODE_OF_CONDUCT.md)**. 🕊️
+
+---
+
+## 📄 License
 
 To be decided (likely MIT OR Apache-2.0, following Rust ecosystem convention).
 
 ---
 
-<p align="center"><i>"Nothing in biology makes sense except in the light of evolution."</i> (Theodosius Dobzhansky)<br/>
-<i>Nothing in Peace makes sense except in the light of failure.</i></p>
+<div align="center">
+
+<img src="assets/logo/peace-mark.svg" width="72" alt="Peace logo"/>
+
+<i>"Nothing in biology makes sense except in the light of evolution."</i> (Theodosius Dobzhansky)<br/>
+<b><i>Nothing in Peace makes sense except in the light of failure.</i></b> ☮
+
+<sub>Made with 🕊️ by the <a href="https://github.com/peace-program-project">Peace Program Project</a></sub>
+
+</div>

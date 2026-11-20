@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Peace logo">
+<title>Peace logo</title>
+<defs><radialGradient id="av-bg" cx="0.5" cy="0.42" r="0.75"><stop offset="0" stop-color="#12302D"/><stop offset="1" stop-color="#0B1220"/></radialGradient></defs>
+<rect width="512" height="512" fill="url(#av-bg)"/>
+<defs><linearGradient id="av-grad" gradientUnits="userSpaceOnUse" x1="20" y1="20" x2="236" y2="236"><stop offset="0" stop-color="#22C55E"/><stop offset="0.5" stop-color="#14B8A6"/><stop offset="1" stop-color="#38BDF8"/></linearGradient></defs>
+<g transform="translate(76.0 76.0) scale(1.4062)">
+<circle cx="128" cy="128" r="106" fill="none" stroke="url(#av-grad)" stroke-width="18"/>
+<g stroke="url(#av-grad)" stroke-width="14" stroke-linecap="round" fill="none">
+<line x1="128" y1="31" x2="128" y2="208.0"/>
+<line x1="128" y1="128" x2="71.4" y2="184.6"/>
+<line x1="128" y1="128" x2="184.6" y2="184.6"/>
+<line x1="156.3" y1="156.3" x2="196.3" y2="142.3" stroke="#F97316" stroke-width="9"/>
+</g>
+<circle cx="128" cy="128" r="12" fill="#14B8A6"/>
+<circle cx="71.4" cy="184.6" r="13" fill="#22C55E"/>
+<circle cx="128.0" cy="208.0" r="13" fill="#14B8A6"/>
+<circle cx="184.6" cy="184.6" r="13" fill="#38BDF8"/>
+<circle cx="196.3" cy="142.3" r="10" fill="#F97316"/>
+</g>
+</svg>
