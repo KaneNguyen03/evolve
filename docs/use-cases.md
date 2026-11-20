@@ -16,6 +16,9 @@ Not every use case is equally ready. Each one is scored on **pain** (how much it
 | 2 | AI coding agents that learn | 🔴 High | 🟢 PeaceBench | 🟢 Sandboxed | Phase 1 → Phase 5 | ⭐ **Beachhead** |
 | 3 | Resilient API integrations | 🟠 Med–High | 🟢 Recorded contracts | 🟡 Needs capabilities | Phase 4 | High |
 | 10 | Evolving prompts and agent tools | 🟠 Med–High | 🟡 Eval sets | 🟢 Sandboxed | Phase 5 | High |
+| 13 | AI-native applications | 🔴 High | 🟡 Eval sets + Lessons | 🟢 Escalation to humans | Phase 5 | 🎯 **Mission** |
+| 14 | Agent-to-agent systems | 🔴 High | 🟡 System-level fitness | 🟡 Conserved protocols | Phase 5 → post-1.0 | 🎯 **Mission** |
+| 12 | Next-generation AI models | 🔴 High | 🟢 Eval suites | 🟡 Safety invariants required | Phase 2 (tensors) → post-1.0 | 🎯 **Mission** (long-term) |
 | 5 | Algorithm and heuristic discovery | 🟡 Medium | 🟢 Benchmarks | 🟢 Offline | Phase 3 | Medium |
 | 6 | ML hyperparameter search | 🟡 Medium | 🟢 Val metrics | 🟢 Offline | Phase 3 | Medium |
 | 4 | Scientific computing | 🟡 Medium | 🟢 χ², residuals | 🟢 Offline | Phase 2 | Medium |
@@ -31,6 +34,8 @@ Not every use case is equally ready. Each one is scored on **pain** (how much it
 
 Both can start delivering value in **Phase 1 through the Python engine**, before the Peace language is finished.
 
+**Beachheads vs. mission:** the beachheads prove the loop on problems that are cheap to get wrong. The 🎯 **mission** use cases (AI models, AI-native apps, and agent-to-agent systems) are *why* Peace exists. Each beachhead builds a piece the mission needs: Lessons and fitness (1, 2), typed prompts and tools (10), sandboxed capabilities (3), and safety invariants (7, 11).
+
 ### Applications by industry
 
 | Industry | Example application | Related use cases |
@@ -41,7 +46,9 @@ Both can start delivering value in **Phase 1 through the Python engine**, before
 | Public sector and GovTech | Ingesting documents and forms from many agencies with drifting formats, with mandatory human approval and full audit lineage | 1, 3 |
 | Energy and manufacturing | Controller tuning, sensor-drift compensation, anomaly heuristics | 4, 7 |
 | SaaS and platforms | Search and ranking heuristics, cache policies, incident runbooks | 5, 11 |
-| AI product teams | Prompt, tool, and agent-policy evolution with eval-driven fitness | 2, 10 |
+| AI product teams | Prompt, tool, and agent-policy evolution with eval-driven fitness; AI-native apps | 2, 10, 13 |
+| AI labs and model builders | Modular architectures evolved under safety invariants, context-specialized adapters | 6, 12 |
+| Enterprise automation | Agent societies spanning departments and vendors, with conserved protocols and audit lineage | 13, 14 |
 | Education | Failure-friendly intro courses, visible learning logs | 9 |
 
 ---
@@ -338,6 +345,120 @@ fitness remediate:
 
 ### Open questions
 - Should this ever go beyond *propose*? Our position for now: no, never without a human.
+
+---
+
+## 12. Next-generation AI models
+
+### The pain today
+Models are trained once, evaluated once, and frozen. Architecture search, safety evaluation, and context adaptation each live in a different tool. Safety is often a separate filter bolted on after training, and nothing stops a "better" checkpoint from quietly regressing on it.
+
+### With Peace
+Gradient descent trains the weights; **evolution shapes everything around them**: architecture, modules, hyperparameters, and context-specific variants (an idea related to population-based training). Safety and robustness are not afterthoughts but **hard invariants of fitness**.
+
+```peace
+module Encoder(dim: int):
+    layers = [Attention(dim, heads=~8 in 4..16), MLP(dim, ratio=~4 in 2..8)]
+
+gene model Assistant:
+    encoder  = Encoder(dim=~1024 in 512..4096)
+    memory   = Retrieval(index="kb/")
+    tools    = [search, calculator]                 # world interaction via capabilities
+    adapters = species(by=context)                  # one adapter line per context
+    @conserved safety = SafetyFilter(policy="policies/v3.peace")
+
+fitness Assistant:
+    evals     "evals/quality/*.jsonl", "evals/robustness/*.jsonl"
+    score     = quality - 0.2 * latency_p99 - 0.1 * cost_per_1k
+    invariant safety_suite.pass_rate >= 0.99
+    invariant not jailbreak_suite.any_success()
+
+train Assistant on data"corpus/" with optimizer=AdamW, evolve=architecture, budget=gpu_hours(500)
+
+# Context adaptation through multiple dispatch:
+def respond(m: Assistant, ctx: Medical, q: Query): return m.adapters[Medical].answer(q, cite=true)
+def respond(m: Assistant, ctx: Code,    q: Query): return m.adapters[Code].answer(q, run_tests=true)
+```
+
+### Open questions
+- Which tensor and autodiff backend should Peace build on? Rust crates such as Burn or Candle, or bindings to an existing runtime?
+- How do we make evolution affordable at model scale? Evolve small proxies, then transfer? Evolve adapters only?
+- Can safety invariants on models ever be *proven*, or only tested? What's the minimum eval coverage before a promotion?
+
+---
+
+## 13. AI-native applications
+
+### The pain today
+Prompts are string constants, tools are loosely typed JSON, evals live in a separate notebook, and production failures disappear into logs. Every model upgrade means re-checking everything by hand.
+
+### With Peace
+Prompts, tools, memory, and evals are language features. Every failure in production becomes a Lesson, then a regression eval, then input to the next evolution cycle.
+
+```peace
+app SupportDesk:
+    gene prompt classify:
+        """Classify the ticket as billing, bug, or how-to. Reply with one word."""
+    agent resolver = Agent(model=any, tools=[crm.lookup, kb.search])
+    memory = peace.fossils(scope="app")
+
+    on ticket:
+        attempt:
+            reply = resolver.solve(ticket, kind=classify(ticket.text))
+        learn err:
+            remember err                            # becomes a regression eval automatically
+            escalate_to_human(ticket)
+
+fitness SupportDesk:
+    examples  "evals/tickets.jsonl" + lessons(scope="app")
+    score     = resolved_rate - 0.5 * wrong_answer_rate - 0.001 * cost
+    invariant not result.leaks_pii()
+```
+
+### Open questions
+- How do we version an app whose prompts evolve but whose UI and API must stay stable?
+- What should the default retention and redaction policy be for Lessons that contain user conversations?
+
+---
+
+## 14. Agent-to-agent systems
+
+### The pain today
+Multi-agent systems are wired together with untyped messages and prompt conventions. When one agent changes, others break silently. Nobody can say which agent caused a bad outcome, and improving one agent can make the team worse.
+
+### With Peace
+Agents are first-class. **Protocols** between them are typed, versioned, and `@conserved`. A **society** has a system-level fitness, so evolution optimizes the team, not individuals. Every message and decision is part of one lineage, so failures can be traced to the agent and generation that caused them.
+
+```peace
+agent Researcher:
+    capabilities web.read
+    gene def plan(goal: Goal) -> list[Task]: ...
+
+agent Reviewer:
+    capabilities none
+    def check(report: Report) -> Verdict: ...
+
+@conserved
+protocol Review(Researcher -> Reviewer):
+    send      Report
+    reply     Verdict
+    invariant every report.claims cite a source
+    timeout   5 min
+
+society lab = [Researcher() * 4, Reviewer()]
+
+fitness lab:
+    score     = verified_findings_per_hour - cost
+    invariant no agent exceeds its capabilities
+
+lab.evolve(roles=true, generations=20)          # agents evolve; the protocol stays conserved
+lab.expose(a2a=true, mcp=true)                  # interoperate with agents outside Peace
+```
+
+### Open questions
+- How is credit assigned when the society's fitness improves: to which agent, and which generation?
+- How do we prevent collusion, where agents jointly game the system-level fitness?
+- How much of an open protocol (such as A2A) should be modeled as Peace types vs. handled by a library?
 
 ---
 

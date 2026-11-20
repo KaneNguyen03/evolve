@@ -65,3 +65,9 @@ When code lands, Peace will be a Rust workspace on the **beta** toolchain (see [
 ## 🕊️ Code of Conduct
 
 Everyone participating in Peace agrees to our [Code of Conduct](CODE_OF_CONDUCT.md). Be kind. Failure is how we all learn.
+
+---
+
+## 📄 License
+
+Peace is licensed under the [Apache License, Version 2.0](LICENSE). By contributing, you agree that your contributions are licensed under Apache-2.0, as described in Section 5 of the license.

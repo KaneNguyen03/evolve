@@ -6,6 +6,49 @@
 
 ---
 
+## 🎯 Mission
+
+**Peace exists to build the next generation of AI systems: systems that evolve, adapt, and stay safe while doing it.** It has three missions, built on one foundation.
+
+### 🧠 Mission 1: Next-generation AI models
+
+Today's models are trained once, evaluated once, and frozen. When the world changes, they're retrained from scratch. Peace aims for models that are:
+
+| Property | What it means | Peace primitive |
+|---|---|---|
+| ⚡ **Optimized** | Best quality for the compute, latency, and cost budget | `fitness` with multi-objective scores; evolution over architectures and hyperparameters (gradient descent inside, evolution outside) |
+| 🛡️ **Safe** | Safety can't be traded away for a better score | `@conserved` safety modules; safety evals as hard `invariant`s; human promotion gates |
+| 💪 **Robust** | Holds up under distribution shift and adversarial input | Robustness suites in fitness; production failures become regression Lessons; hidden holdouts |
+| 🌍 **Interacts with the world** | Uses tools, reads sensors, drives actuators | Tools, sensors, and actuators as explicit **capabilities**, sandboxed by default |
+| 🔄 **Evolves and adapts to context** | Specializes per domain, user group, or environment without forgetting its base | `species(by=context)` and multiple dispatch on context types |
+| 🧩 **Modular** | Built from parts that are swapped, recombined, and improved independently | `module`s with typed interfaces; recombination between successful variants |
+
+### 📱 Mission 2: AI-native applications
+
+In most AI applications, prompts are string constants, tools are loosely typed JSON, evals live in a separate notebook, and failures disappear into logs. In Peace:
+
+- 💬 **Prompts are genes**, versioned with lineage and evolved against eval sets.
+- 🔧 **Tools are typed functions** with declared capabilities.
+- 🦴 **Memory is the fossil record**: Lessons from real use become long-term memory and regression tests.
+- 🎯 **Evals are `fitness` blocks** that live next to the code they judge.
+- 🚦 **Humans stay in the loop** through `attempt / learn` escalation and promotion gates.
+
+### 🕸️ Mission 3: Agent-to-agent systems
+
+As agents start to work with other agents, the hard problems move to the **interfaces**: who may say what to whom, in what format, under which guarantees. Peace provides:
+
+- 🤖 **`agent`** as a first-class construct, with its own capabilities, genes, and Lessons.
+- 📜 **`protocol`**: typed, versioned contracts between agents, with invariants checked on every message.
+- 👥 **`society`**: a population of cooperating agents with a *system-level* fitness, so the team improves, not just individuals.
+- 🔒 **Conserved contracts**: agents may evolve their internal behavior, while the protocols between them stay stable unless a human approves a change.
+- 🌐 **Open interoperability**: MCP for tools and context, and agent-to-agent protocols such as A2A for messaging across systems and vendors.
+
+### 🌱 The shared foundation
+
+All three missions rest on the same three ideas: 🍂 **failure as data**, 🧬 **evolution as a language feature**, and 🛡️ **safety by construction**. Self-healing pipelines and learning coding agents are where Peace proves these ideas first. AI models, AI-native apps, and agent societies are where they matter most.
+
+---
+
 ## 1. The problem
 
 Three trends are colliding:
@@ -49,7 +92,7 @@ Because the loop is part of the language, the compiler and runtime can make it *
 
 | Persona | What they get |
 |---|---|
-| **AI agent builders** | A language whose errors, rewards, and memory are machine-readable by design, plus an MCP server to plug any agent in |
+| **AI model and agent builders** | Modular models with safety invariants, typed agent protocols, and errors, rewards, and memory that are machine-readable by design, plus an MCP server to plug any agent in |
 | **Data engineers** | Pipelines that survive schema drift and dirty input, with quarantine and partial results instead of 3 a.m. pages |
 | **Researchers and scientists** | Python-like syntax, Julia-like speed, native units and uncertainty, and evolutionary search for models |
 | **Platform engineers and SREs** | Integrations and heuristics that adapt to changing environments, behind explicit promotion gates |
@@ -97,6 +140,8 @@ By 1.0, we want to be able to say:
 - A data pipeline written in Peace **heals most common real-world drift failures** without a code change from a human, beyond an approval click.
 - An AI agent working in Peace **fixes more bugs, and repeats fewer mistakes**, than the same agent working in plain Python. We'll measure this on a public benchmark (see [PeaceBench](roadmap.md#4-peacebench)).
 - Numeric Peace code runs **within a small constant factor of Julia**.
+- A team can build a **modular model or agent society** in Peace whose variants improve on quality and cost **without ever regressing on safety invariants**.
+- Agents written in Peace **interoperate over open protocols** (MCP, A2A) with agents written in other languages.
 - **Zero** unapproved changes ever reach production by default.
 
 See **[roadmap.md](roadmap.md)** for how we get there.

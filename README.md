@@ -12,7 +12,7 @@
 [![Python-readable](https://img.shields.io/badge/syntax-Python--readable-38BDF8?style=flat-square&logo=python&logoColor=white)](#-three-heritages)
 [![Julia data-native](https://img.shields.io/badge/data-Julia--native-8B5CF6?style=flat-square&logo=julia&logoColor=white)](#-three-heritages)
 [![PRs welcome](https://img.shields.io/badge/PRs%20%26%20RFCs-welcome-14B8A6?style=flat-square)](CONTRIBUTING.md)
-[![License: TBD](https://img.shields.io/badge/license-TBD-475569?style=flat-square)](#-license)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-0F766E?style=flat-square)](LICENSE)
 
 **☮ A programming language that makes peace with failure.**<br/>
 Programs that mutate, experiment, learn from their mistakes, and heal themselves.
@@ -30,10 +30,42 @@ Programs that mutate, experiment, learn from their mistakes, and heal themselves
 
 | | | |
 |---|---|---|
-| 🌿 [Why Peace?](#-why-peace) | 🧘 [The Zen of Peace](#-the-zen-of-peace) | ✨ [A first taste](#-a-first-taste) |
-| 🧬 [Three heritages](#-three-heritages) | 🦠 [The evolutionary model](#-the-evolutionary-model) | 🤖 [Peace for AI agents](#-peace-for-ai-agents) |
-| 🛡️ [Safety guardrails](#️-safety-evolution-with-guardrails) | 🧪 [Use cases](#-use-cases) | 🦀 [Architecture](#-architecture-built-on-rust-beta) |
-| 🧰 [Toolchain](#-toolchain-sketch) | 🗺️ [Roadmap](#️-roadmap) | ❓ [Open questions](#-open-questions) |
+| 🎯 [Mission](#-mission) | 🌿 [Why Peace?](#-why-peace) | 🧘 [The Zen of Peace](#-the-zen-of-peace) |
+| ✨ [A first taste](#-a-first-taste) | 🧬 [Three heritages](#-three-heritages) | 🦠 [The evolutionary model](#-the-evolutionary-model) |
+| 🧠 [Peace for AI](#-peace-for-ai-models-apps-and-agent-systems) | 🛡️ [Safety guardrails](#️-safety-evolution-with-guardrails) | 🧪 [Use cases](#-use-cases) |
+| 🦀 [Architecture](#-architecture-built-on-rust-beta) | 🧰 [Toolchain](#-toolchain-sketch) | 🗺️ [Roadmap](#️-roadmap) |
+| ❓ [Open questions](#-open-questions) | 🤝 [Contributing](#-contributing) | 📄 [License](#-license) |
+
+---
+
+## 🎯 Mission
+
+**Peace exists to build the next generation of AI systems: systems that evolve, adapt, and stay safe while doing it.**
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🧠 Next-generation AI models
+Models that are **optimized, safe, and robust**, that **interact with the world**, and that **evolve and adapt to their context**. They're built from **modular** parts that can be swapped, specialized, and improved independently.
+
+</td>
+<td width="33%" valign="top">
+
+### 📱 AI-native applications
+Applications where prompts, tools, memory, and evaluations are **first-class language features**. Every failure becomes a Lesson the app learns from.
+
+</td>
+<td width="33%" valign="top">
+
+### 🕸️ Agent-to-agent systems
+Societies of agents that **communicate through typed, versioned protocols**, cooperate on goals, and **evolve as a system**, while the contracts between them stay conserved and safe.
+
+</td>
+</tr>
+</table>
+
+Underneath all three is the same foundation: 🍂 **failure as data**, 🧬 **evolution as a language feature**, and 🛡️ **safety by construction**.
 
 ---
 
@@ -66,9 +98,9 @@ Because the loop lives in the language, Peace can make it **🛡️ safe** (sand
 
 ### 👥 Who it's for
 
-| 🤖 AI agent builders | 🛠️ Data engineers | 🔬 Researchers | 🏗️ Platform engineers & SREs | 🎓 Educators |
+| 🧠 AI model & agent builders | 🛠️ Data engineers | 🔬 Researchers | 🏗️ Platform engineers & SREs | 🎓 Educators |
 |:---:|:---:|:---:|:---:|:---:|
-| Machine-readable errors, rewards, and memory | Pipelines that survive drift | Speed, units, and uncertainty | Integrations that adapt | Failure as the first step of learning |
+| Modular models, typed agent protocols, safety invariants, and machine-readable feedback | Pipelines that survive drift | Speed, units, and uncertainty | Integrations that adapt | Failure as the first step of learning |
 
 ### 🚫 What Peace is not
 
@@ -234,9 +266,86 @@ best.promote(approve="human")
 
 ---
 
-## 🤖 Peace for AI agents
+## 🧠 Peace for AI: models, apps, and agent systems
 
-Peace is designed to be **the language AI agents learn best in**:
+### 🧠 Building next-generation AI models
+
+Gradient descent trains the weights *inside* a model. Peace adds evolution *outside* it: architectures, modules, hyperparameters, and context-specific variants evolve against fitness that includes **quality, cost, robustness, and safety**. This is the idea behind population-based training, made into language syntax.
+
+```peace
+module Encoder(dim: int):                          # 🧩 modular, typed, swappable building block
+    layers = [Attention(dim, heads=~8 in 4..16), MLP(dim, ratio=~4 in 2..8)]
+
+gene model Assistant:
+    encoder  = Encoder(dim=~1024 in 512..4096)
+    memory   = Retrieval(index="kb/")              # 🔌 plug-in modules
+    tools    = [search, calculator, robot_arm]     # 🌍 interacts with the world through capabilities
+    adapters = species(by=context)                 # 🐦 one specialized line per context: legal, medical, code…
+    @conserved safety = SafetyFilter(policy="policies/v3.peace")   # 🔒 never mutated
+
+fitness Assistant:
+    evals     "evals/quality/*.jsonl", "evals/robustness/*.jsonl"
+    score     = quality - 0.2 * latency_p99 - 0.1 * cost_per_1k
+    invariant safety_suite.pass_rate >= 0.99       # 🛡️ a variant that fails safety goes extinct
+    invariant not jailbreak_suite.any_success()
+
+train Assistant on data"corpus/" with optimizer=AdamW, evolve=architecture, budget=gpu_hours(500)
+```
+
+| Goal | How Peace supports it |
+|---|---|
+| ⚡ **Optimized** | Evolution over architectures and hyperparameters; tensor kernels in Rust, with backends such as Burn or Candle |
+| 🛡️ **Safe** | `@conserved` safety modules, safety evals as hard `invariant`s, human promotion gates |
+| 💪 **Robust** | Robustness and adversarial suites in `fitness`; every production failure becomes a regression Lesson |
+| 🌍 **Interacts with the world** | Tools, sensors, and actuators as explicit **capabilities**, sandboxed by default |
+| 🔄 **Evolves and adapts to context** | `species(by=context)` plus multiple dispatch on context types |
+| 🧩 **Modular** | `module`s with typed interfaces that can be swapped, recombined, and evolved independently |
+
+### 📱 Building AI-native applications
+
+```peace
+app SupportDesk:
+    gene prompt classify:                          # 💬 prompts are genes, versioned with lineage
+        """Classify the ticket as billing, bug, or how-to. Reply with one word."""
+    agent resolver = Agent(model=any, tools=[crm.lookup, kb.search])
+    memory = peace.fossils(scope="app")            # 🦴 Lessons become long-term memory
+
+    on ticket:
+        attempt:
+            reply = resolver.solve(ticket, kind=classify(ticket.text))
+        learn err:
+            remember err
+            escalate_to_human(ticket)              # 🚦 imperfect beats absent, humans stay in the loop
+```
+
+### 🕸️ Building agent-to-agent systems
+
+```peace
+agent Researcher:
+    capabilities web.read
+    gene def plan(goal: Goal) -> list[Task]: ...
+
+agent Reviewer:
+    capabilities none
+    def check(report: Report) -> Verdict: ...
+
+@conserved
+protocol Review(Researcher -> Reviewer):           # 📜 typed, versioned contract between agents
+    send      Report
+    reply     Verdict
+    invariant every report.claims cite a source
+
+society lab = [Researcher() * 4, Reviewer()]
+fitness lab:
+    score = verified_findings_per_hour - cost
+lab.evolve(roles=true)                             # 🧬 agents evolve; the protocol stays conserved
+```
+
+Peace agents speak **open protocols**: MCP for tools and context, and agent-to-agent protocols such as A2A for cross-system messaging. Protocol messages are typed, Lessons can be shared between agents (with redaction), and the whole society has one lineage.
+
+### 🤖 The language agents learn best in
+
+When agents *write code*, Peace gives them a real feedback loop:
 
 - 🧾 **Lessons are machine-readable.** Every failure is a typed record that can be exported as JSON or Arrow, not free-form stderr text.
 - 📊 **The fossil record is a DataFrame.** Agents (and humans) query their own history:
@@ -280,6 +389,9 @@ See **[docs/use-cases.md](docs/use-cases.md)** for detailed scenarios with code 
 |:---:|---|---|---|
 | 1 | 🛠️ **Self-healing data pipelines** | Schema drift and messy input trigger heal cycles instead of 3 a.m. pages | ⭐ Beachhead |
 | 2 | 🤖 **AI coding agents that learn** | Lessons + fitness give agents a real feedback loop and long-term memory | ⭐ Beachhead |
+| 12 | 🧠 **Next-generation AI models** | Modular, safety-invariant models whose architectures evolve and adapt per context | 🎯 Mission |
+| 13 | 📱 **AI-native applications** | Prompts, tools, memory, and evals as language features; apps that learn from every failure | 🎯 Mission |
+| 14 | 🕸️ **Agent-to-agent systems** | Typed protocols, conserved contracts, and societies of agents that evolve as a system | 🎯 Mission |
 | 3 | 🔗 **Resilient API integrations** | Adapters evolve when a third-party API changes its format | 🔥 High |
 | 10 | 💬 **Evolving prompts & agent tools** | Prompts and tool schemas as genes; eval sets as fitness; re-evolve on model upgrades | 🔥 High |
 | 4 | 🔬 **Scientific computing & experiments** | Uncertainty, units, arrays, and evolutionary search in one language | 🟡 Medium |
@@ -378,7 +490,7 @@ peace serve --mcp                   # 🔌 expose Peace to AI agents
 | 🌳 2 **Root** | `v0.2` | Oct 2027 | Arrays, broadcasting, multiple dispatch, DataFrames, units, uncertainty |
 | 🌲 3 **Branch** | `v0.3` | Jan 2028 | Native `gene` / `fitness` / `population`, lineage, PeaceBench v1 |
 | 🌸 4 **Bloom** | `v0.4` | Apr 2028 | Cranelift JIT, WASM sandbox, capabilities, `@heal` in services |
-| 🐝 5 **Pollinate** | `v0.5` | Aug 2028 | MCP server, agentic mutation, Python interop, LSP |
+| 🐝 5 **Pollinate** | `v0.5` | Aug 2028 | MCP + A2A, `agent` / `protocol` / `society`, AI-native `app`s, Python interop, LSP |
 | 🌍 6 **Forest** | `v1.0` | H2 2028 | LLVM AOT, package manager, stdlib, stability guarantees |
 
 📍 Full plan with deliverables, exit demos, the **PeaceBench** benchmark, success metrics, risks, Rust beta policy, and future possibilities (a collective immune system, verified invariants, self-evolving compiler, and more): **[docs/roadmap.md](docs/roadmap.md)**
@@ -421,7 +533,9 @@ Read **[CONTRIBUTING.md](CONTRIBUTING.md)** and [how to help right now](docs/roa
 
 ## 📄 License
 
-To be decided (likely MIT OR Apache-2.0, following Rust ecosystem convention).
+Peace is licensed under the **[Apache License, Version 2.0](LICENSE)**. See [NOTICE](NOTICE).
+
+Unless you explicitly state otherwise, any contribution you intentionally submit for inclusion in Peace is licensed under Apache-2.0, as defined in the license, without any additional terms or conditions.
 
 ---
 
