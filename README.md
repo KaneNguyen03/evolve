@@ -6,6 +6,8 @@
 
 **Status:** 🌱 Concept / design stage. Nothing here is implemented yet. This README is for thinking through *why* Peace should exist and *what* people (and AI agents) would build with it.
 
+**Docs:** [Vision & purpose](docs/vision.md) · [Use cases & applications](docs/use-cases.md) · [Roadmap & possibilities](docs/roadmap.md)
+
 ---
 
 ## Table of contents
@@ -27,18 +29,34 @@
 
 ## Why Peace?
 
+> **Peace is a programming language in which a program's failures make it better instead of only breaking it.**
+
 Most programming languages treat failure as an enemy. An exception is something to be caught, silenced, or allowed to crash the program. Then a human reads a stack trace, guesses a fix, and redeploys. The program itself learns nothing.
 
 Nature works differently. For about four billion years, life has improved through **variation, failure, and selection**. Most mutations fail. The failures aren't wasted: they're how the population learns what doesn't work. What survives is fit for its environment, and the history is recorded in the genome.
 
-AI agents now write, run, and repair code at machine speed. They need a language where:
+### The problem
+- **AI agents write and repair more and more code**, yet they get unstructured error text, a pass/fail signal, and no memory across sessions.
+- **Software lives in drifting environments.** Schemas, APIs, and workloads change, and the same kinds of fixes are made by hand again and again.
+- **Data work is split across languages and libraries.** Python for prototyping, C or Rust for speed, and separate packages for frames, units, and uncertainty.
 
-- **Failure is structured data** they can learn from, not a wall of text.
-- **Trying several variants** of a function is a language feature, not a pile of scripts.
-- **Imperfection is representable**: uncertain values, partial results, and "good enough for now".
-- **Self-modification is safe**: sandboxed, measured, reversible, and auditable.
+### The thesis
+Rust made *ownership* a primitive. Julia made *dispatch and arrays* primitives. **Peace makes the improvement loop a primitive:**
 
-Peace is that language.
+```
+observe failure → vary → measure → select → remember
+ attempt/learn     gene    fitness   population  fossil record
+```
+
+Because the loop lives in the language, Peace can make it **safe** (sandbox, capabilities, conserved code), **cheap** (JIT, parallel populations), and **auditable** (lineage for every change).
+
+### Who it's for
+**AI agent builders · data engineers · researchers and scientists · platform engineers and SREs · educators**
+
+### What Peace is not
+Not "no humans needed" (production changes are human-gated by default). Not magic (no measurable fitness, no evolution). Not a Rust replacement (it's built *on* Rust). Not a black box (every evolved variant is readable source code).
+
+📖 Full rationale, prior art, and comparison with other approaches: **[docs/vision.md](docs/vision.md)**
 
 ---
 
@@ -244,19 +262,21 @@ Self-modifying code is powerful and dangerous. Peace treats safety as part of th
 
 ## Use cases
 
-See **[docs/use-cases.md](docs/use-cases.md)** for detailed scenarios with code sketches. Summary:
+See **[docs/use-cases.md](docs/use-cases.md)** for detailed scenarios with code sketches, a prioritization matrix, and applications by industry. Summary:
 
-| # | Use case | Why Peace fits |
-|---|---|---|
-| 1 | **Self-healing data pipelines** | Schema drift and messy input trigger heal cycles instead of 3 a.m. pages |
-| 2 | **AI coding agents that learn** | Lessons + fitness give agents a real feedback loop and long-term memory |
-| 3 | **Resilient API integrations** | Adapters evolve when a third-party API changes its format |
-| 4 | **Scientific computing & experiments** | Uncertainty, units, arrays, and evolutionary search in one language |
-| 5 | **Algorithm & heuristic discovery** | Evolve ranking, scheduling, caching, or compression heuristics against benchmarks |
-| 6 | **ML hyperparameter & architecture search** | Populations + fitness as a native construct, not a framework |
-| 7 | **Edge, robotics & control tuning** | Parametric evolution of controllers with `@conserved` safety envelopes |
-| 8 | **Simulation & agent-based modeling** | Populations of evolving agents are literally the language model |
-| 9 | **Teaching programming** | Students see failure as data and watch code improve generation by generation |
+| # | Use case | Why Peace fits | Priority |
+|---|---|---|---|
+| 1 | **Self-healing data pipelines** | Schema drift and messy input trigger heal cycles instead of 3 a.m. pages | ⭐ Beachhead |
+| 2 | **AI coding agents that learn** | Lessons + fitness give agents a real feedback loop and long-term memory | ⭐ Beachhead |
+| 3 | **Resilient API integrations** | Adapters evolve when a third-party API changes its format | High |
+| 10 | **Evolving prompts & agent tools** | Prompts and tool schemas as genes; eval sets as fitness; re-evolve on model upgrades | High |
+| 4 | **Scientific computing & experiments** | Uncertainty, units, arrays, and evolutionary search in one language | Medium |
+| 5 | **Algorithm & heuristic discovery** | Evolve ranking, scheduling, caching, or compression heuristics against benchmarks | Medium |
+| 6 | **ML hyperparameter & architecture search** | Populations + fitness as a native construct, not a framework | Medium |
+| 11 | **Incident auto-remediation** | Runbooks evolve against replayed incidents; Peace proposes, humans execute | Later |
+| 7 | **Edge, robotics & control tuning** | Parametric evolution of controllers with `@conserved` safety envelopes | Later |
+| 8 | **Simulation & agent-based modeling** | Populations of evolving agents are literally the language model | Community |
+| 9 | **Teaching programming** | Students see failure as data and watch code improve generation by generation | Community |
 
 **Where Peace is *not* a good fit (yet):** hard real-time systems, safety-certified software (avionics, medical devices) where any runtime change is forbidden, and tiny scripts where evolution adds nothing. You can still write plain Peace there; just don't use `gene`.
 
@@ -329,15 +349,19 @@ peace serve --mcp                   # expose Peace to AI agents
 
 ## Roadmap
 
-| Phase | Name | Goal |
-|---|---|---|
-| 0 | **Seed** 🌱 | This README, use cases, syntax RFCs, a grammar draft |
-| 1 | **Sprout** | Tree-walking interpreter in Rust: Python-like core, `attempt/learn`, Lessons |
-| 2 | **Root** | Arrays, broadcasting, multiple dispatch, DataFrames (Arrow) |
-| 3 | **Branch** | `gene` / `fitness` / parametric mutation, fossil record, lineage |
-| 4 | **Bloom** | Cranelift JIT, WASM sandbox, structural mutation, `@heal` |
-| 5 | **Pollinate** | MCP server, agentic mutation, Python interop |
-| 6 | **Forest** | LLVM AOT, package manager, stdlib, 1.0 |
+**Strategy: engine first, language second.** The evolution engine (fossil record, fitness, mutation) ships first as Rust crates with **Python bindings**, so the core idea gets tested with real users before the compiler is finished. The language track runs in parallel, and the two converge in Phase 3.
+
+| Phase | Version | Target | Headline |
+|---|---|---|---|
+| 0 **Seed** 🌱 | `v0.0` | Feb 2027 | Vision, core RFCs, grammar, PeaceBench spec |
+| 1 **Sprout** 🌿 | `v0.1` | Jun 2027 | Evolution engine for Python + Peace interpreter with `attempt/learn` |
+| 2 **Root** 🌳 | `v0.2` | Oct 2027 | Arrays, broadcasting, multiple dispatch, DataFrames, units, uncertainty |
+| 3 **Branch** 🌲 | `v0.3` | Jan 2028 | Native `gene` / `fitness` / `population`, lineage, PeaceBench v1 |
+| 4 **Bloom** 🌸 | `v0.4` | Apr 2028 | Cranelift JIT, WASM sandbox, capabilities, `@heal` in services |
+| 5 **Pollinate** 🐝 | `v0.5` | Aug 2028 | MCP server, agentic mutation, Python interop, LSP |
+| 6 **Forest** 🌍 | `v1.0` | H2 2028 | LLVM AOT, package manager, stdlib, stability guarantees |
+
+📍 Full plan with deliverables, exit demos, the **PeaceBench** benchmark, success metrics, risks, Rust beta policy, and future possibilities (a collective immune system, verified invariants, self-evolving compiler, and more): **[docs/roadmap.md](docs/roadmap.md)**
 
 ---
 
@@ -360,7 +384,7 @@ These are deliberately unresolved. They're the most interesting part.
 
 ## Contributing
 
-Peace is at the idea stage, so the best contributions now are **use cases, syntax ideas, and hard questions**. Open an issue titled `RFC: <idea>` and tell us:
+Peace is at the idea stage, so the best contributions now are **use cases, syntax ideas, real-world failure cases for PeaceBench, and hard questions**. See [how to help right now](docs/roadmap.md#10-how-to-help-right-now). Open an issue titled `RFC: <idea>` and tell us:
 
 - the problem you have today,
 - how you imagine solving it in Peace,

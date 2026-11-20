@@ -4,6 +4,46 @@
 
 ---
 
+## Prioritization: where Peace wins first
+
+Not every use case is equally ready. Each one is scored on **pain** (how much it hurts today), **measurability** (can we write a clear `fitness`?), and **safety** (how bad a wrong promotion would be), then mapped to the [roadmap](roadmap.md) phase that unlocks it.
+
+| # | Use case | Pain | Measurable | Safe to evolve | Unlocked in | Priority |
+|---|---|---|---|---|---|---|
+| 1 | Self-healing data pipelines | 🔴 High | 🟢 Clear (historical rows) | 🟢 Quarantine limits damage | Phase 1 (Python), Phase 3 (native) | ⭐ **Beachhead** |
+| 2 | AI coding agents that learn | 🔴 High | 🟢 PeaceBench | 🟢 Sandboxed | Phase 1 → Phase 5 | ⭐ **Beachhead** |
+| 3 | Resilient API integrations | 🟠 Med–High | 🟢 Recorded contracts | 🟡 Needs capabilities | Phase 4 | High |
+| 10 | Evolving prompts and agent tools | 🟠 Med–High | 🟡 Eval sets | 🟢 Sandboxed | Phase 5 | High |
+| 5 | Algorithm and heuristic discovery | 🟡 Medium | 🟢 Benchmarks | 🟢 Offline | Phase 3 | Medium |
+| 6 | ML hyperparameter search | 🟡 Medium | 🟢 Val metrics | 🟢 Offline | Phase 3 | Medium |
+| 4 | Scientific computing | 🟡 Medium | 🟢 χ², residuals | 🟢 Offline | Phase 2 | Medium |
+| 11 | Incident auto-remediation | 🔴 High | 🟡 SLOs | 🔴 Risky | Phase 4+ | Later |
+| 7 | Edge, robotics, and control | 🟡 Medium | 🟢 Simulation | 🔴 Physical risk | Phase 4+ | Later |
+| 8 | Simulation and agent-based modeling | 🟢 Low | 🟢 Built in | 🟢 Offline | Phase 3 | Community |
+| 9 | Teaching programming | 🟡 Medium | 🟡 Exercises | 🟢 Harmless | Phase 1+ | Community |
+
+**Why these two beachheads:**
+
+- **Self-healing data pipelines** have frequent, expensive, *repetitive* failures (schema and format drift) with an obvious fitness signal (do historical rows still parse the same way?). Quarantine and partial results make a wrong guess cheap. This is the demo that sells Peace to teams.
+- **AI agents that learn** is the reason Peace exists now rather than ten years ago. Agents are the most frequent "programmers" that will ever use the evolution loop, and PeaceBench gives an objective way to prove the uplift.
+
+Both can start delivering value in **Phase 1 through the Python engine**, before the Peace language is finished.
+
+### Applications by industry
+
+| Industry | Example application | Related use cases |
+|---|---|---|
+| Fintech and e-commerce | Payment-provider adapters, price and currency parsing, fraud-rule tuning (with `@conserved` money logic) | 1, 3, 5 |
+| Healthcare and life sciences | Lab data ingestion across instrument vendors, assay models with uncertainty | 1, 4 |
+| Logistics | Carrier API integrations, route and scheduling heuristics | 3, 5 |
+| Public sector and GovTech | Ingesting documents and forms from many agencies with drifting formats, with mandatory human approval and full audit lineage | 1, 3 |
+| Energy and manufacturing | Controller tuning, sensor-drift compensation, anomaly heuristics | 4, 7 |
+| SaaS and platforms | Search and ranking heuristics, cache policies, incident runbooks | 5, 11 |
+| AI product teams | Prompt, tool, and agent-policy evolution with eval-driven fitness | 2, 10 |
+| Education | Failure-friendly intro courses, visible learning logs | 9 |
+
+---
+
 ## 1. Self-healing data pipelines
 
 ### The pain today
@@ -240,6 +280,62 @@ The language's culture says failure is data. Students:
 - watch a function improve generation by generation,
 - learn testing naturally, because fitness *is* testing,
 - learn about evolution, statistics, and uncertainty along the way.
+
+---
+
+## 10. Evolving prompts, tools, and agent policies
+
+### The pain today
+LLM applications are tuned by trial and error: someone edits a prompt, eyeballs a few outputs, and ships. Tool descriptions and agent routing rules drift out of date as models change. Each model upgrade restarts the guesswork.
+
+### With Peace
+Prompts, tool schemas, and routing policies are genes. Eval sets are fitness. Every model upgrade becomes a new *environment* that triggers re-selection, with lineage showing exactly which prompt version shipped with which model.
+
+```peace
+gene prompt summarize_ticket:
+    """
+    Summarize the support ticket in 3 bullet points.
+    Always include the customer's requested action.
+    """
+
+fitness summarize_ticket:
+    examples  "evals/tickets.jsonl"
+    score     = judge.faithfulness - 0.002 * tokens_out
+    invariant not result.contains_pii()
+
+@on_environment_change(model)            # re-evolve when the model version changes
+evolve(summarize_ticket, size=8, generations=5, strategy=ask_agent, budget=$5)
+```
+
+### Open questions
+- LLM-as-judge fitness can itself be gamed. Should Peace require a human-labeled holdout for every prompt gene?
+- How do cost budgets (`budget=$5`) interact with the provider's own rate limits?
+
+---
+
+## 11. Incident auto-remediation
+
+### The pain today
+Runbooks are written after incidents and then rot. On-call engineers repeat the same diagnostic steps at 3 a.m.
+
+### With Peace
+Runbook steps are genes. Fitness comes from replaying past incidents in a staging environment, and invariants encode what must never happen (for example, "never scale below 2 replicas" or "never delete data"). Peace *proposes* remediations with evidence. A human executes or approves.
+
+```peace
+@conserved
+def forbidden(action: Action) -> bool:
+    return action.kind in {DeleteVolume, DropTable} or action.replicas < 2
+
+gene def remediate(alert: Alert, metrics: DataFrame) -> list[Action]: ...
+
+fitness remediate:
+    replay    incidents"postmortems/2026/*.yaml" in staging
+    score     = -minutes_to_recovery
+    invariant not any(forbidden.(result))
+```
+
+### Open questions
+- Should this ever go beyond *propose*? Our position for now: no, never without a human.
 
 ---
 
