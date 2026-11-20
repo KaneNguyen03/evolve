@@ -17,7 +17,7 @@
 **☮ A programming language that makes peace with failure.**<br/>
 Programs that mutate, experiment, learn from their mistakes, and heal themselves.
 
-[🌿 Vision](docs/vision.md) · [🧪 Use cases](docs/use-cases.md) · [🗺️ Roadmap](docs/roadmap.md) · [🎨 Brand](docs/brand.md) · [🤝 Contribute](CONTRIBUTING.md)
+[🌿 Vision](docs/vision.md) · [🧪 Use cases](docs/use-cases.md) · [🗺️ Roadmap](docs/roadmap.md) · [📜 RFCs](rfcs/README.md) · [🧪 PeaceBench](bench/README.md) · [🎨 Brand](docs/brand.md) · [🤝 Contribute](CONTRIBUTING.md)
 
 </div>
 
@@ -522,8 +522,8 @@ Peace is at the idea stage, so the best contributions now are **use cases, synta
 
 | If you want to… | Do this |
 |---|---|
-| 💡 Propose a language idea | Open an **RFC** issue |
-| 🧪 Share a real-world failure | Open a **PeaceBench case** issue |
+| 💡 Propose a language idea | Read the [draft RFCs](rfcs/README.md), then open an **RFC** issue |
+| 🧪 Share a real-world failure | Open a **PeaceBench case** issue (format: [bench/README.md](bench/README.md)) |
 | 🌍 Describe a use case | Open a **Use case** issue |
 | ❓ Ask anything | Start a [Discussion](https://github.com/peace-program-project/peace/discussions) |
 

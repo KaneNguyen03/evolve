@@ -161,7 +161,7 @@ Units and uncertainty are part of the type system. Arrays and DataFrames are nat
 data = read"lab/pendulum.csv"            # columns carry units from the header
 
 gene def model(L: m, θ0: rad) -> s:
-    return 2π * sqrt(L / g) * (1 + θ0^2 / 16)
+    return 2 * π * sqrt(L / g) * (1 + θ0^2 / 16)
 
 fitness model:
     examples  data[:, [:L, :θ0]] => data[:, :period]

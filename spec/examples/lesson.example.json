@@ -1,0 +1,30 @@
+{
+  "schema": "peace.lesson/v0",
+  "id": "01JD3Q8K6Z9X2V4M7N5B1C0A8E",
+  "time": "2026-11-21T03:14:07Z",
+  "project": "orders-etl",
+  "origin": "prod",
+  "kind": "std.parse.ParseError",
+  "message": "unrecognized date format in field ordered_at",
+  "site": {
+    "module": "pipeline.normalize",
+    "function": "parse_order_date",
+    "gene": "pipeline.normalize.parse_order_date",
+    "variant": "pipeline.normalize.parse_order_date@gen-0",
+    "file": "pipeline/normalize.peace",
+    "line": 12,
+    "col": 12
+  },
+  "stack": [
+    { "module": "pipeline.nightly", "function": "run", "file": "pipeline/nightly.peace", "line": 30 },
+    { "module": "pipeline.normalize", "function": "parse_order_date", "file": "pipeline/normalize.peace", "line": 12 }
+  ],
+  "inputs": [
+    { "name": "raw", "type": "str", "fingerprint": "9c1f0e2ab47d5e8f3a6b9c0d1e2f3a4b" }
+  ],
+  "env": { "peace_version": "0.1.0", "os": "linux", "arch": "x86_64", "capabilities": [] },
+  "recorded": true,
+  "severity": "error",
+  "tags": ["vendor-x", "nightly"],
+  "redaction": { "policy": "default-v0", "fields_redacted": [] }
+}

@@ -1,0 +1,6 @@
+{"input": "2024-02-29", "expected": "2024-02-29"}
+{"input": "29/02/2024", "expected": "2024-02-29"}
+{"input": "01/02/2026", "expected": "2026-02-01"}
+{"input": "12/11/2026", "expected": "2026-11-12"}
+{"input": "not a date", "raises": "ValueError"}
+{"input": "31/02/2026", "raises": "ValueError"}

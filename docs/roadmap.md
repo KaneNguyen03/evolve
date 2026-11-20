@@ -55,10 +55,10 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 | Deliverable | Detail |
 |---|---|
 | Vision, use cases, roadmap | ✅ this repo |
-| RFC process | `rfcs/` folder, template, lightweight review rules |
-| Core RFCs | 0001 Syntax core · 0002 Lesson schema · 0003 `gene`/`fitness` semantics · 0004 Promotion & safety model · 0005 Data model (arrays, frames, units, uncertainty) |
-| Grammar draft | EBNF + a tree-sitter grammar for syntax highlighting |
-| PeaceBench v0 spec | Format and first 50 real-world failure cases (see [PeaceBench](#4-peacebench)) |
+| RFC process | ✅ [`rfcs/`](../rfcs/) folder, template, statuses, review rules |
+| Core RFCs | 🌱 drafted: [0001](../rfcs/0001-syntax-core.md) Syntax core · [0002](../rfcs/0002-lesson-schema.md) Lesson schema · [0003](../rfcs/0003-gene-fitness-semantics.md) `gene`/`fitness` semantics · [0004](../rfcs/0004-promotion-and-safety.md) Promotion & safety model · [0005](../rfcs/0005-data-model.md) Data model. Next: comment period |
+| Grammar draft | 🌱 [EBNF draft](../spec/grammar.ebnf) done; tree-sitter grammar for syntax highlighting still to do |
+| PeaceBench v0 spec | 🌱 [Case format v0 and scorer](../bench/README.md) done; 1 of 50 cases (see [PeaceBench](#4-peacebench)) |
 | Project hygiene | ✅ Apache-2.0 license, ✅ Code of Conduct, ✅ CONTRIBUTING, CI skeleton |
 
 **Exit criteria:** the five core RFCs are accepted, and Lesson schema v0 is frozen for the engine to build on.

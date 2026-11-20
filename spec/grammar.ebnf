@@ -1,0 +1,101 @@
+(* Peace core grammar, draft for RFC 0001 (Phase 1 interpreter subset).
+   Notation: ISO-ish EBNF.  { x } = zero or more, [ x ] = optional, | = choice.
+   INDENT / DEDENT / NEWLINE are produced by the lexer from indentation (Python rules).
+   Evolution blocks (fitness, population, agent, protocol, society, app) are sketched
+   at the end and refined by RFC 0003 and later RFCs. *)
+
+file            = { NEWLINE | statement } EOF ;
+
+(* ---------- statements ---------- *)
+statement       = simple_stmt NEWLINE | compound_stmt ;
+simple_stmt     = expr_stmt | assign_stmt | return_stmt | remember_stmt
+                | import_stmt | "pass" | "break" | "continue" ;
+expr_stmt       = expression ;
+assign_stmt     = target [ ":" type ] "=" expression
+                | target aug_op expression ;
+aug_op          = "+=" | "-=" | "*=" | "/=" | "^=" ;
+target          = NAME | primary "." NAME | primary "[" slices "]" | "(" target_list ")" ;
+target_list     = target { "," target } [ "," ] ;
+return_stmt     = "return" [ expression_list ] ;
+remember_stmt   = "remember" expression ;
+import_stmt     = "import" dotted_name [ "as" NAME ]
+                | "from" dotted_name "import" NAME [ "as" NAME ] { "," NAME [ "as" NAME ] } ;
+dotted_name     = NAME { "." NAME } ;
+
+compound_stmt   = { decorator } ( func_def | gene_def | module_def | schema_def | fitness_def )
+                | if_stmt | for_stmt | while_stmt | attempt_stmt ;
+decorator       = "@" dotted_name [ "(" [ arguments ] ")" ] NEWLINE ;
+func_def        = "def" NAME "(" [ params ] ")" [ "->" type ] ":" suite ;
+gene_def        = "gene" "def" NAME "(" [ params ] ")" [ "->" type ] ":" suite ;
+params          = param { "," param } [ "," ] ;
+param           = NAME [ ":" type ] [ "=" expression ] ;
+module_def      = "module" NAME [ "(" [ params ] ")" ] ":" suite ;
+schema_def      = "schema" NAME ":" NEWLINE INDENT { field_decl | invariant_clause } DEDENT ;
+field_decl      = NAME ":" type [ "=" expression ] NEWLINE ;
+
+if_stmt         = "if" expression ":" suite { "elif" expression ":" suite } [ "else" ":" suite ] ;
+for_stmt        = "for" target_list "in" expression ":" suite ;
+while_stmt      = "while" expression ":" suite ;
+attempt_stmt    = "attempt" ":" suite learn_clause { learn_clause } [ "always" ":" suite ] ;
+learn_clause    = "learn" [ type "as" ] NAME ":" suite ;
+
+suite           = simple_stmt NEWLINE | NEWLINE INDENT statement { statement } DEDENT ;
+
+(* ---------- types ---------- *)
+type            = type_atom { "|" type_atom } ;
+type_atom       = dotted_name [ "[" type { "," type } "]" ] | "none" | "(" type ")" ;
+
+(* ---------- expressions (lowest to highest precedence) ---------- *)
+expression_list = expression { "," expression } [ "," ] ;
+expression      = lambda | pipe_expr ;
+lambda          = ( NAME | "(" [ NAME { "," NAME } ] ")" ) "->" expression ;
+pipe_expr       = or_expr { "|>" or_expr } ;
+or_expr         = and_expr { "or" and_expr } ;
+and_expr        = not_expr { "and" not_expr } ;
+not_expr        = "not" not_expr | comparison ;
+comparison      = range_expr { comp_op range_expr } ;
+comp_op         = "==" | "!=" | "<" | "<=" | ">" | ">=" | "in" | "not" "in" | "is" | "is" "not" ;
+range_expr      = pm_expr [ ( ".." | "..=" ) pm_expr ] ;
+pm_expr         = arith { ( "±" | "+/-" ) arith } ;
+arith           = term { ( "+" | "-" | ".+" | ".-" ) term } ;
+term            = unary { ( "*" | "/" | "\" | "%" | ".*" | "./" | ".\" ) unary } ;
+unary           = ( "-" | "+" ) unary | power ;
+power           = postfix [ ( "^" | ".^" ) unary ] ;             (* right-assoc *)
+postfix         = atom { call | bcast_call | index | attribute } [ unit_suffix ] ;
+call            = "(" [ arguments ] ")" ;
+bcast_call      = "." "(" [ arguments ] ")" ;
+index           = "[" slices "]" ;
+attribute       = "." NAME ;
+arguments       = argument { "," argument } [ "," ] ;
+argument        = [ NAME "=" ] expression ;                       (* `_` inside makes a lambda, RFC 0001 *)
+slices          = slice { "," slice } ;
+slice           = [ expression ] [ ":" [ expression ] [ ":" [ expression ] ] ] ;
+
+atom            = NAME | "_" | NUMBER | STRING | FSTRING | string_macro | SYMBOL
+                | "true" | "false" | "none"
+                | "(" [ expression_list ] ")"
+                | "[" [ expression_list ] "]"
+                | "{" [ dict_or_set ] "}"
+                | evolvable ;
+string_macro    = NAME STRING ;                                   (* no whitespace between, lexer-enforced *)
+dict_or_set     = expression ":" expression { "," expression ":" expression } [ "," ]
+                | expression_list ;
+evolvable       = "~" arith [ "in" range_expr [ NAME ] ] ;          (* NAME: scale hint, e.g. log *)
+unit_suffix     = unit_atom { ( "*" | "/" ) unit_atom } ;           (* only directly after a NUMBER; RFC 0005 *)
+unit_atom       = NAME [ "^" NUMBER | SUPERSCRIPT ] ;
+
+(* ---------- evolution blocks (sketch, refined by RFC 0003) ---------- *)
+fitness_def     = "fitness" NAME ":" NEWLINE INDENT fitness_clause { fitness_clause } DEDENT ;
+fitness_clause  = ( "examples" | "holdout" | "benchmark" | "simulate" | "replay" ) expression_list NEWLINE
+                | "score" "=" expression NEWLINE
+                | invariant_clause ;
+invariant_clause = "invariant" expression NEWLINE ;
+
+(* ---------- lexical ---------- *)
+(* NAME     : XID_Start XID_Continue*  (keywords excluded)
+   NUMBER   : decimal | hex (0x) | binary (0b) | float with optional exponent; "_" separators
+   STRING   : '…' | "…" | '''…''' | """…"""  with Python escapes
+   FSTRING  : f"…{expression}…"
+   SYMBOL   : ":" NAME   (only where an expression is expected)
+   SUPERSCRIPT : ² ³ ⁻¹ … (unit powers)
+   Comments : "#" to end of line *)

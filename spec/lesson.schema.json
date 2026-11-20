@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/peace-program-project/peace/spec/lesson.schema.json",
+  "title": "Peace Lesson v0",
+  "description": "Structured record of one failure in the Peace fossil record. Defined by RFC 0002.",
+  "type": "object",
+  "required": ["schema", "id", "time", "project", "origin", "kind", "message", "site", "recorded", "severity", "redaction"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "peace.lesson/v0" },
+    "id": { "type": "string", "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$", "description": "ULID" },
+    "time": { "type": "string", "format": "date-time" },
+    "project": { "type": "string", "minLength": 1 },
+    "origin": { "enum": ["dev", "test", "ci", "staging", "prod", "sandbox"] },
+    "kind": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)*$" },
+    "message": { "type": "string", "maxLength": 4096 },
+    "site": {
+      "type": "object",
+      "required": ["module", "function"],
+      "additionalProperties": false,
+      "properties": {
+        "module": { "type": "string" },
+        "function": { "type": "string" },
+        "gene": { "type": "string" },
+        "variant": { "type": "string", "description": "Variant id, e.g. parse_price@gen-7" },
+        "file": { "type": "string" },
+        "line": { "type": "integer", "minimum": 1 },
+        "col": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "stack": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "required": ["module", "function"],
+        "additionalProperties": false,
+        "properties": {
+          "module": { "type": "string" },
+          "function": { "type": "string" },
+          "file": { "type": "string" },
+          "line": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "fingerprint"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{32,64}$", "description": "Keyed hash of the canonical encoding" },
+          "sample": { "description": "Redacted sample, only when opted in", "maxLength": 4096 }
+        }
+      }
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "peace_version": { "type": "string" },
+        "os": { "type": "string" },
+        "arch": { "type": "string" },
+        "dependencies": { "type": "object", "additionalProperties": { "type": "string" } },
+        "capabilities": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "recorded": { "type": "boolean" },
+    "severity": { "enum": ["info", "warn", "error", "fatal"] },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "parent": { "type": "string", "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$" },
+    "resolution": {
+      "type": "object",
+      "required": ["variant", "promoted_at", "by"],
+      "additionalProperties": false,
+      "properties": {
+        "variant": { "type": "string" },
+        "promoted_at": { "type": "string", "format": "date-time" },
+        "fitness_delta": { "type": "number" },
+        "by": { "type": "string", "description": "human:<handle> | agent:<name> | operator:<mutation-operator>" }
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "required": ["policy", "fields_redacted"],
+      "additionalProperties": false,
+      "properties": {
+        "policy": { "type": "string" },
+        "fields_redacted": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

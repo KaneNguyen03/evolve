@@ -1,0 +1,28 @@
+# PeaceBench case format v0 (see bench/README.md)
+id          = "0001-date-format-drift"
+title       = "Vendor switches order dates from ISO to day-first"
+category    = "format-drift"        # schema-drift | format-drift | api-contract | edge-case | dependency-upgrade | performance-drift
+language    = "python"
+difficulty  = "easy"                # easy | medium | hard
+source      = "synthetic"           # synthetic | anonymized-real
+
+[program]
+file        = "program.py"
+gene        = "parse_order_date"    # the function a healer may change
+signature   = "def parse_order_date(raw: str) -> datetime.date"
+
+[environment_change]
+summary = "The vendor's CSV export changed `ordered_at` from 2026-11-21 to 21/11/2026 after a locale update."
+
+[fitness]
+examples = "examples.jsonl"         # visible to healers
+holdout  = "holdout.jsonl"          # hidden; used only for scoring
+score    = "accuracy"
+
+[[invariants]]
+name = "never-invent-dates"
+rule = "2000 <= result.year <= 2100"
+
+[[invariants]]
+name = "iso-still-works"
+rule = "parse_order_date('2026-11-21') == date(2026, 11, 21)"
