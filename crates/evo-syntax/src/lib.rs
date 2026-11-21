@@ -308,6 +308,23 @@ mod tests {
         assert!(messages("s = \"a\\u202eb\"\n").is_empty());
     }
 
+    /// RFC 0001 "Source text": the NUL character is an error anywhere.
+    #[test]
+    fn nul_is_an_error_even_in_strings_and_comments() {
+        for src in [
+            "x = 1 \0\n",
+            "s = \"a\0b\"\n",
+            "s = r\"a\0b\"\n",
+            "s = f\"a\0b\"\n",
+            "x = 1  # a\0b\n",
+        ] {
+            let found = messages(src);
+            assert_eq!(found.len(), 1, "{src:?}: {found:?}");
+            assert!(found[0].contains("NUL"), "{src:?}: {found:?}");
+        }
+        assert!(messages("s = \"a\\0b\"\n").is_empty());
+    }
+
     #[test]
     fn superscripts_never_join_a_name() {
         let kinds: Vec<_> = lexer::raw_lex("x²", &mut Vec::new())

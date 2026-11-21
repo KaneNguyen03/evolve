@@ -160,6 +160,13 @@ pub(crate) fn raw_lex(src: &str, errors: &mut Vec<SyntaxError>) -> Vec<Token> {
         ));
     }
 
+    for (i, _) in src.match_indices('\0') {
+        errors.push(SyntaxError::new(
+            "the NUL character is not allowed in source, even in strings and comments; inside a string write it as `\\0`",
+            range(i, i + 1),
+        ));
+    }
+
     let mut tokens: Vec<Token> = Vec::new();
     let mut i = 0;
     while i < src.len() {
@@ -237,7 +244,7 @@ pub(crate) fn raw_lex(src: &str, errors: &mut Vec<SyntaxError>) -> Vec<Token> {
             _ => match PUNCT.iter().find(|(p, _)| rest.starts_with(p)) {
                 Some(&(p, kind)) => (kind, p.len()),
                 // already reported above; lexed as whitespace so parsing goes on undisturbed
-                None if is_bidi_control(c) => (WHITESPACE, c.len_utf8()),
+                None if is_bidi_control(c) || c == '\0' => (WHITESPACE, c.len_utf8()),
                 None => {
                     errors.push(SyntaxError::new(
                         format!("unexpected character {c:?}"),
