@@ -160,14 +160,14 @@ Units and uncertainty are part of the type system. Arrays and DataFrames are nat
 ```peace
 data = read"lab/pendulum.csv"            # columns carry units from the header
 
-gene def model(L: m, θ0: rad) -> s:
+gene def pendulum(L: m, θ0: rad) -> s:
     return 2 * π * sqrt(L / g) * (1 + θ0^2 / 16)
 
-fitness model:
+fitness pendulum:
     examples  data[:, [:L, :θ0]] => data[:, :period]
     score     = -chi2(result, expected)  # uncertainty-weighted
 
-pop = evolve(model, size=32, generations=50, strategy=mutate.structural, seed=7)
+pop = evolve(pendulum, size=32, generations=50, strategy=mutate.structural, seed=7)
 print(pop.fittest().source)              # readable formula, not a black box
 print(pop.fittest().fitness)             # e.g. χ²/ν = 1.04 ± 0.12
 ```

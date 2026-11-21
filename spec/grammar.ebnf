@@ -1,101 +1,233 @@
-(* Peace core grammar, draft for RFC 0001 (Phase 1 interpreter subset).
-   Notation: ISO-ish EBNF.  { x } = zero or more, [ x ] = optional, | = choice.
-   INDENT / DEDENT / NEWLINE are produced by the lexer from indentation (Python rules).
-   Evolution blocks (fitness, population, agent, protocol, society, app) are sketched
-   at the end and refined by RFC 0003 and later RFCs. *)
+# Peace core grammar: RFC 0001 (core syntax), revision 2.
+#
+# Notation follows the Python 3.16 reference ("Notation" and "Full Grammar specification"):
+#
+#   rule: a | b      ordered choice: the first alternative that matches wins (PEG)
+#   a b              sequence
+#   e*  e+  [e]      zero or more, one or more, optional
+#   s.e+             one or more e separated by s; the separators are not repeated in the rule
+#   &e  !e           positive / negative lookahead: checks without consuming
+#   'def'  '+'       hard keyword or operator token
+#   "model"          soft keyword: a keyword only in the position shown, an ordinary NAME elsewhere
+#   NAME, NUMBER …   tokens from the lexer (see "Lexical" at the end)
+#   # error: …       a mistake the parser must diagnose with this hint (RFC 0001 "Diagnostics")
+#
+# The parser (crates/peace-syntax) is hand-written recursive descent that builds a lossless
+# CST and recovers from errors; this file is its contract, checked by tests/syntax/.
+# Declaration blocks from later RFCs (population, agent, protocol, society, app, model,
+# pipeline) are not here yet; their keywords are soft, so the names stay usable meanwhile.
 
-file            = { NEWLINE | statement } EOF ;
+# ============================================================ start rules ====
 
-(* ---------- statements ---------- *)
-statement       = simple_stmt NEWLINE | compound_stmt ;
-simple_stmt     = expr_stmt | assign_stmt | return_stmt | remember_stmt
-                | import_stmt | "pass" | "break" | "continue" ;
-expr_stmt       = expression ;
-assign_stmt     = target [ ":" type ] "=" expression
-                | target aug_op expression ;
-aug_op          = "+=" | "-=" | "*=" | "/=" | "^=" ;
-target          = NAME | primary "." NAME | primary "[" slices "]" | "(" target_list ")" ;
-target_list     = target { "," target } [ "," ] ;
-return_stmt     = "return" [ expression_list ] ;
-remember_stmt   = "remember" expression ;
-import_stmt     = "import" dotted_name [ "as" NAME ]
-                | "from" dotted_name "import" NAME [ "as" NAME ] { "," NAME [ "as" NAME ] } ;
-dotted_name     = NAME { "." NAME } ;
+file:            statement* ENDMARKER
+repl:            statement                              # a compound statement ends at a blank line
+eval:            expression NEWLINE* ENDMARKER
 
-compound_stmt   = { decorator } ( func_def | gene_def | module_def | schema_def | fitness_def )
-                | if_stmt | for_stmt | while_stmt | attempt_stmt ;
-decorator       = "@" dotted_name [ "(" [ arguments ] ")" ] NEWLINE ;
-func_def        = "def" NAME "(" [ params ] ")" [ "->" type ] ":" suite ;
-gene_def        = "gene" "def" NAME "(" [ params ] ")" [ "->" type ] ":" suite ;
-params          = param { "," param } [ "," ] ;
-param           = NAME [ ":" type ] [ "=" expression ] ;
-module_def      = "module" NAME [ "(" [ params ] ")" ] ":" suite ;
-schema_def      = "schema" NAME ":" NEWLINE INDENT { field_decl | invariant_clause } DEDENT ;
-field_decl      = NAME ":" type [ "=" expression ] NEWLINE ;
+# ============================================================= statements ====
 
-if_stmt         = "if" expression ":" suite { "elif" expression ":" suite } [ "else" ":" suite ] ;
-for_stmt        = "for" target_list "in" expression ":" suite ;
-while_stmt      = "while" expression ":" suite ;
-attempt_stmt    = "attempt" ":" suite learn_clause { learn_clause } [ "always" ":" suite ] ;
-learn_clause    = "learn" [ type "as" ] NAME ":" suite ;
+statement:       compound_stmt | simple_stmt NEWLINE
+                 # error: ';' between statements -> "one statement per line"
 
-suite           = simple_stmt NEWLINE | NEWLINE INDENT statement { statement } DEDENT ;
+simple_stmt:
+    | assignment
+    | return_stmt | raise_stmt | assert_stmt | remember_stmt
+    | import_stmt
+    | 'pass' | 'break' | 'continue'
+    | expression
 
-(* ---------- types ---------- *)
-type            = type_atom { "|" type_atom } ;
-type_atom       = dotted_name [ "[" type { "," type } "]" ] | "none" | "(" type ")" ;
+assignment:
+    | single_target ':' type ['=' expression]            # annotated: exactly one target
+    | (target_list '=')+ expression_list                 # right side first, then targets left to right
+    | single_target aug_op expression                    # never unpacks
+aug_op:          '+=' | '-=' | '*=' | '/=' | '//=' | '%=' | '^='
 
-(* ---------- expressions (lowest to highest precedence) ---------- *)
-expression_list = expression { "," expression } [ "," ] ;
-expression      = lambda | pipe_expr ;
-lambda          = ( NAME | "(" [ NAME { "," NAME } ] ")" ) "->" expression ;
-pipe_expr       = or_expr { "|>" or_expr } ;
-or_expr         = and_expr { "or" and_expr } ;
-and_expr        = not_expr { "and" not_expr } ;
-not_expr        = "not" not_expr | comparison ;
-comparison      = range_expr { comp_op range_expr } ;
-comp_op         = "==" | "!=" | "<" | "<=" | ">" | ">=" | "in" | "not" "in" | "is" | "is" "not" ;
-range_expr      = pm_expr [ ( ".." | "..=" ) pm_expr ] ;
-pm_expr         = arith { ( "±" | "+/-" ) arith } ;
-arith           = term { ( "+" | "-" | ".+" | ".-" ) term } ;
-term            = unary { ( "*" | "/" | "\" | "%" | ".*" | "./" | ".\" ) unary } ;
-unary           = ( "-" | "+" ) unary | power ;
-power           = postfix [ ( "^" | ".^" ) unary ] ;             (* right-assoc *)
-postfix         = atom { call | bcast_call | index | attribute } [ unit_suffix ] ;
-call            = "(" [ arguments ] ")" ;
-bcast_call      = "." "(" [ arguments ] ")" ;
-index           = "[" slices "]" ;
-attribute       = "." NAME ;
-arguments       = argument { "," argument } [ "," ] ;
-argument        = [ NAME "=" ] expression ;                       (* `_` inside makes a lambda, RFC 0001 *)
-slices          = slice { "," slice } ;
-slice           = [ expression ] [ ":" [ expression ] [ ":" [ expression ] ] ] ;
+target_list:     ','.star_target+ [',']                  # at most one starred target
+star_target:     '*' target | target
+target:
+    | single_target                                      # NAME '_' discards the value
+    | '(' target_list ')'
+    | '[' target_list ']'
+single_target:   NAME | primary '.' NAME | primary '[' slices ']'
 
-atom            = NAME | "_" | NUMBER | STRING | FSTRING | string_macro | SYMBOL
-                | "true" | "false" | "none"
-                | "(" [ expression_list ] ")"
-                | "[" [ expression_list ] "]"
-                | "{" [ dict_or_set ] "}"
-                | evolvable ;
-string_macro    = NAME STRING ;                                   (* no whitespace between, lexer-enforced *)
-dict_or_set     = expression ":" expression { "," expression ":" expression } [ "," ]
-                | expression_list ;
-evolvable       = "~" arith [ "in" range_expr [ NAME ] ] ;          (* NAME: scale hint, e.g. log *)
-unit_suffix     = unit_atom { ( "*" | "/" ) unit_atom } ;           (* only directly after a NUMBER; RFC 0005 *)
-unit_atom       = NAME [ "^" NUMBER | SUPERSCRIPT ] ;
+return_stmt:     'return' [expression_list]
+raise_stmt:      'raise' [expression ['from' expression]] # bare raise: only inside learn
+assert_stmt:     'assert' expression [',' expression]    # never compiled out
+remember_stmt:   'remember' expression
 
-(* ---------- evolution blocks (sketch, refined by RFC 0003) ---------- *)
-fitness_def     = "fitness" NAME ":" NEWLINE INDENT fitness_clause { fitness_clause } DEDENT ;
-fitness_clause  = ( "examples" | "holdout" | "benchmark" | "simulate" | "replay" ) expression_list NEWLINE
-                | "score" "=" expression NEWLINE
-                | invariant_clause ;
-invariant_clause = "invariant" expression NEWLINE ;
+import_stmt:
+    | 'import' ','.(dotted_name ['as' NAME])+
+    | 'from' dotted_name 'import' '(' ','.import_item+ [','] ')'
+    | 'from' dotted_name 'import' ','.import_item+
+                 # error: 'from m import *' -> "name what you import"
+import_item:     NAME ['as' NAME]
+dotted_name:     '.'.NAME+
 
-(* ---------- lexical ---------- *)
-(* NAME     : XID_Start XID_Continue*  (keywords excluded)
-   NUMBER   : decimal | hex (0x) | binary (0b) | float with optional exponent; "_" separators
-   STRING   : '…' | "…" | '''…''' | """…"""  with Python escapes
-   FSTRING  : f"…{expression}…"
-   SYMBOL   : ":" NAME   (only where an expression is expected)
-   SUPERSCRIPT : ² ³ ⁻¹ … (unit powers)
-   Comments : "#" to end of line *)
+compound_stmt:
+    | decorator* (func_def | gene_def | module_def | schema_def)
+    | fitness_def
+    | if_stmt | for_stmt | while_stmt | attempt_stmt | with_stmt
+                 # error: 'try' / 'except' / 'finally' -> "use attempt / learn / always"
+                 # error: 'function f' / 'fn f' / 'func f' -> "use def"
+
+decorator:       '@' expression NEWLINE                  # any expression (PEP 614)
+
+func_def:        'def' NAME '(' [params] ')' ['->' type] ':' block
+gene_def:        "gene" 'def' NAME '(' [params] ')' ['->' type] ':' block
+module_def:      "module" NAME ['(' [params] ')'] ':' block
+schema_def:      "schema" NAME ':' NEWLINE INDENT (field_decl | invariant_clause)+ DEDENT
+field_decl:      NAME ':' type ['=' expression] NEWLINE
+
+params:          ','.param_item+ [',']
+param_item:
+    | '**' param                                         # must be last
+    | '*' [param]                                        # after it: keyword-only; at most one
+    | param
+param:           NAME [':' type] ['=' expression]        # defaults are evaluated at every call
+
+if_stmt:         'if' expression ':' block ('elif' expression ':' block)* ['else' ':' block]
+                 # error: 'else' 'if' -> "use elif"
+for_stmt:        'for' target_list 'in' expression_list ':' block
+while_stmt:      'while' expression ':' block
+                 # error: 'else' ':' right after a for or while block -> "loops have no else"
+
+attempt_stmt:    'attempt' ':' block learn_clause+ ['always' ':' block]
+learn_clause:    'learn' [type 'as'] NAME ':' block     # learn A | B as err: catches either
+                 # error: 'return' / 'break' / 'continue' inside always -> "would discard the failure"
+
+with_stmt:                                               # "with" is a keyword only if the line has ':' outside brackets
+    | "with" '(' ','.with_item+ [','] ')' ':' block
+    | "with" ','.with_item+ ':' block
+with_item:       expression ['as' star_target]
+
+block:           NEWLINE INDENT statement+ DEDENT | simple_stmt NEWLINE
+
+# ================================================================== types ====
+
+type:            '|'.type_atom+
+type_atom:       dotted_name ['[' ','.type+ ']'] | 'none' | '(' type ')'
+
+# ============================================ expressions, lowest to highest ====
+
+expression_list: ','.(starred | expression)+ [',']
+starred:         '*' pipe_expr
+
+expression:      lambda | conditional
+lambda:          lambda_params '->' expression
+lambda_params:   NAME | '(' [','.NAME+ [',']] ')'
+conditional:     pipe_expr ['if' pipe_expr 'else' expression]   # binds looser than |>
+pipe_expr:       or_expr ('|>' or_expr)*                 # x |> f(a) is f(x, a)
+or_expr:         'or'.and_expr+
+and_expr:        'and'.not_expr+
+not_expr:        'not' not_expr | comparison
+
+comparison:      range_expr (comp_op range_expr)*
+                 # Chains: only {< <= ==} or only {> >= ==}. != in not-in is is-not never chain.
+                 # error: mixed directions or a chained in/is/!= -> "split the chain or add parentheses"
+                 # error: 'is' NUMBER / 'is' STRING -> "use =="
+comp_op:         '==' | '!=' | '<' | '<=' | '>' | '>=' | 'in' | 'not' 'in' | 'is' 'not' | 'is'
+
+range_expr:      pm_expr [('..' | '..=') pm_expr]        # non-associative
+pm_expr:         arith (('±' | '+/-') arith)*
+arith:           term (('+' | '-' | '.+' | '.-') term)*
+term:            unary (('*' | '/' | '//' | '\' | '%' | '.*' | './' | '.\') unary)*
+                 # error: '@' as an operator -> "* is matrix multiply; .* is element-wise"
+unary:           ('-' | '+') unary | power
+                 # error: '!' expression -> "use not"
+power:           postfix [('^' | '.^') unary]            # right-assoc; -x^2 is -(x^2); 2^-1 is fine
+                 # error: '**' as an operator -> "use ^ for powers"
+
+postfix:         primary [unit_suffix]
+primary:         atom (call | bcast_call | index | attribute)*
+call:            '(' genexp_body ')' | '(' [arguments] ')' # sum(x for x in xs)
+bcast_call:      '.' '(' [arguments] ')'
+index:           '[' slices ']'
+attribute:       '.' NAME                                # keywords allowed after '.'
+
+arguments:       ','.argument+ [',']                     # positional and *splat before name= and **splat
+argument:
+    | NAME '=' expression
+    | '**' expression
+    | '*' expression
+    | expression                                         # '_' inside makes a lambda (RFC 0001)
+
+slices:          ','.slice+ [',']
+slice:           [expression] ':' [expression] [':' [expression]] | expression
+                 # ':' directly followed by a NAME is a SYMBOL, not a slice: df[:, :period]
+
+atom:
+    | NAME | NUMBER | strings | SYMBOL
+    | 'true' | 'false' | 'none' | '...'
+    | paren | list | brace
+    | evolvable
+                 # error: True / False / None / lambda -> Python spelling hint
+
+strings:         STRING | FSTRING | string_macro
+                 # error: two adjacent string literals -> "missing comma, or use +"
+string_macro:    NAME STRING                             # no whitespace between (lexer); f t r b are built in
+
+paren:
+    | '(' ')'                                            # empty tuple
+    | '(' genexp_body ')'
+    | '(' expression ')'
+    | '(' expression_list ')'                            # a tuple needs a comma: (1,)
+list:
+    | '[' (starred | expression) comp_for+ ']'
+    | '[' [expression_list] ']'
+brace:
+    | '{' '}'                                            # empty dict; an empty set is set()
+    | '{' dict_item comp_for+ '}'
+    | '{' ','.dict_item+ [','] '}'
+    | '{' (starred | expression) comp_for+ '}'
+    | '{' expression_list '}'
+dict_item:       expression ':' expression | '**' pipe_expr
+
+genexp_body:     (starred | expression) comp_for+
+comp_for:        'for' target_list 'in' pipe_expr ('if' pipe_expr)*   # conditional needs parentheses here
+
+evolvable:       '~' arith ['in' range_expr [NAME]]      # NAME: scale hint, e.g. log (RFC 0003)
+unit_suffix:     unit_atom (('*' | '/') unit_atom)*      # only after a NUMBER and a space (RFC 0005)
+unit_atom:       NAME ['^' NUMBER | SUPERSCRIPT]
+
+# ============================================= evolution blocks (RFC 0003) ====
+
+fitness_def:     "fitness" NAME ':' NEWLINE INDENT fitness_clause+ DEDENT
+fitness_clause:
+    | ("examples" | "holdout" | "benchmark" | "simulate" | "replay") expression_list NEWLINE
+    | "score" '=' expression NEWLINE
+    | invariant_clause
+invariant_clause: "invariant" expression NEWLINE
+
+# ================================================================ lexical ====
+#
+# Source    UTF-8. BOM only at offset 0 (trivia). LF or CRLF; a lone CR is an error. NUL is an error.
+#           U+202A..U+202E and U+2066..U+2069 (bidi controls) are an error anywhere, strings and
+#           comments included; write them as escapes.
+# NEWLINE   end of a logical line. Lines join inside () [] {}, after a line ending in a binary
+#           operator, and before a line starting with '|>'. No backslash joining.
+# INDENT, DEDENT
+#           Zero-width; Python's indent-stack algorithm. Spaces only: a tab in indentation is an error.
+# ENDMARKER end of input.
+# NAME      ('_' | XID_Start) XID_Continue*, minus superscripts, minus hard keywords.
+#           Names are compared after NFC normalization; the CST keeps the original text.
+# Hard keywords
+#           and as assert attempt always break continue def elif else false for from if
+#           import in is learn none not or pass raise remember return true while
+# Soft keywords
+#           gene fitness module schema with, and clause words inside their blocks; reserved for
+#           later RFCs: model agent protocol society app population species pipeline match case
+#           type async await yield
+# NUMBER    decimal | 0x hex | 0o octal | 0b binary, '_' only between digits, no leading zeros;
+#           one '_' may also follow 0x/0o/0b; floats need digits on both sides of '.',
+#           optional exponent (e|E)[+-]digits.
+#           error: a NUMBER directly followed by a letter or '_' -> "write 5 kg or 2 * π"
+# STRING    '…' "…" '''…''' """…""" with escapes \\ \' \" \n \r \t \0 \xhh \uXXXX \UXXXXXXXX
+#           \N{name} and backslash-newline. Any other escape is an error. b"…" is ASCII only.
+#           r"…" and user string macros are not checked: the macro receives the raw text.
+# FSTRING   f"…{expression[=][!conv][:spec]}…" and t"…" per PEP 701 (nesting and quote reuse
+#           allowed). In a single-quoted one, a replacement field stays on one line.
+# SYMBOL    ':' NAME with no space between, wherever an expression may start.
+# SUPERSCRIPT
+#           ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⁻ (unit powers)
+# COMMENT   '#' to end of line.
+# Errors    ` $ ? and '!' (outside '!=' and f-string conversions) are errors.
+#           Hints: '&&' -> and, '||' -> or.
