@@ -1,0 +1,5 @@
+{"input": "color=red&size=m", "expected": {"color": ["red"], "size": ["m"]}}
+{"input": "color=red;size=m", "expected": {"color": ["red"], "size": ["m"]}}
+{"input": "tag=new;tag=sale", "expected": {"tag": ["new", "sale"]}}
+{"input": "q=wool+socks&page=2", "expected": {"q": ["wool socks"], "page": ["2"]}}
+{"input": "ref=&brand=acme", "expected": {"brand": ["acme"]}}

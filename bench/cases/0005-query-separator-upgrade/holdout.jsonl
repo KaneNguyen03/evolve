@@ -1,0 +1,6 @@
+{"input": "size=l&color=blue", "expected": {"size": ["l"], "color": ["blue"]}}
+{"input": "a=1&b=2;c=3", "expected": {"a": ["1"], "b": ["2"], "c": ["3"]}}
+{"input": "note=a%3Bb;x=1", "expected": {"note": ["a;b"], "x": ["1"]}}
+{"input": "", "expected": {}}
+{"input": "tag=a&tag=b;tag=c", "expected": {"tag": ["a", "b", "c"]}}
+{"input": "empty=;size=s", "expected": {"size": ["s"]}}

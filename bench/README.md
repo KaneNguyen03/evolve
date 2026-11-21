@@ -61,3 +61,4 @@ A case that passes can tell a real fix from the shortcut you thought of. It can'
 | [0002](cases/0002-customer-email-moved/) | schema-drift | easy | Orders API moves the customer's email into a nested object |
 | [0003](cases/0003-not-found-becomes-error/) | api-contract | medium | Geocoding API v2 reports an unknown address as an error object |
 | [0004](cases/0004-leap-day-renewal/) | edge-case | medium | Subscriptions that started on a leap day reach their first renewal |
+| [0005](cases/0005-query-separator-upgrade/) | dependency-upgrade | medium | A runtime security update stops `parse_qs` splitting on `;` |

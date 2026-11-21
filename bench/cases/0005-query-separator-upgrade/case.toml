@@ -1,0 +1,32 @@
+# EvoBench case format v0 (see bench/README.md)
+id          = "0005-query-separator-upgrade"
+title       = "A runtime security update stops `parse_qs` splitting on `;`"
+category    = "dependency-upgrade"
+language    = "python"
+difficulty  = "medium"
+source      = "synthetic"
+
+[program]
+file        = "program.py"
+gene        = "parse_filters"
+signature   = "def parse_filters(query: str) -> dict[str, list[str]]"
+
+[environment_change]
+summary = "A Python security update (3.9.2, bpo-42967) changed `urllib.parse.parse_qs`: it now splits on `&` only, no longer on `;`. Partner links written years ago use `;`, and some mix both. Nothing raises: such a link collapses into one wrong value. Both separators must keep working. A percent-encoded `;` (`%3B`) is data, not a separator."
+
+[fitness]
+examples = "examples.jsonl"
+holdout  = "holdout.jsonl"
+score    = "accuracy"
+
+[[invariants]]
+name = "lists-of-values"
+rule = "isinstance(result, dict) and all(isinstance(v, list) and len(v) > 0 for v in result.values())"
+
+[[invariants]]
+name = "no-separator-in-keys"
+rule = "all(';' not in k and '&' not in k for k in result)"
+
+[[invariants]]
+name = "ampersand-still-works"
+rule = "parse_filters('color=red&size=m') == {'color': ['red'], 'size': ['m']}"
