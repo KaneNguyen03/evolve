@@ -58,3 +58,4 @@ A case that passes can tell a real fix from the shortcut you thought of. It can'
 | Id | Category | Difficulty | Summary |
 |---|---|---|---|
 | [0001](cases/0001-date-format-drift/) | format-drift | easy | Vendor switches order dates from ISO to day-first |
+| [0002](cases/0002-customer-email-moved/) | schema-drift | easy | Orders API moves the customer's email into a nested object |

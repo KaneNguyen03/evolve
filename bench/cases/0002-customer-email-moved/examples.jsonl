@@ -1,0 +1,5 @@
+{"input": {"id": 1001, "customer_email": "ana@example.com"}, "expected": "ana@example.com"}
+{"input": {"id": 1002, "customer_email": " Bo@Example.com "}, "expected": "bo@example.com"}
+{"input": {"id": 1003, "customer": {"email": "chen@example.com", "name": "Chen"}}, "expected": "chen@example.com"}
+{"input": {"id": 1004, "customer": {"email": "dee@example.org", "name": "Dee"}}, "expected": "dee@example.org"}
+{"input": {"id": 1005, "customer": {"email": "eli@example.com"}, "customer_email": "eli@example.com"}, "expected": "eli@example.com"}

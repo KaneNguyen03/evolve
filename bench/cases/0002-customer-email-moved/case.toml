@@ -1,0 +1,28 @@
+# EvoBench case format v0 (see bench/README.md)
+id          = "0002-customer-email-moved"
+title       = "Orders API moves the customer's email into a nested object"
+category    = "schema-drift"
+language    = "python"
+difficulty  = "easy"
+source      = "synthetic"
+
+[program]
+file        = "program.py"
+gene        = "customer_email"
+signature   = "def customer_email(order: dict) -> str"
+
+[environment_change]
+summary = "The orders API moved `customer_email` to `customer.email`. Records written before the change keep the flat field, and during the migration a record may carry both. Use `customer.email` when it is present, otherwise the flat field. A record with neither is still an error (KeyError)."
+
+[fitness]
+examples = "examples.jsonl"
+holdout  = "holdout.jsonl"
+score    = "accuracy"
+
+[[invariants]]
+name = "normalized-address"
+rule = "isinstance(result, str) and result == result.strip().lower() and '@' in result"
+
+[[invariants]]
+name = "flat-field-still-works"
+rule = "customer_email({'id': 1, 'customer_email': 'a@example.com'}) == 'a@example.com'"

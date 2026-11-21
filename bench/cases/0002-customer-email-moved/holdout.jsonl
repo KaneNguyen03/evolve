@@ -1,0 +1,6 @@
+{"input": {"id": 2001, "customer_email": "fay@example.com"}, "expected": "fay@example.com"}
+{"input": {"id": 2002, "customer": {"email": " Gus@Example.COM ", "name": "Gus"}}, "expected": "gus@example.com"}
+{"input": {"id": 2003, "customer": {"email": "new@example.com"}, "customer_email": "old@example.com"}, "expected": "new@example.com"}
+{"input": {"id": 2004, "customer": {"name": "Ira"}}, "raises": "KeyError"}
+{"input": {"id": 2005}, "raises": "KeyError"}
+{"input": {"id": 2006, "customer": {"name": "Jo"}, "customer_email": "jo@example.com"}, "expected": "jo@example.com"}
