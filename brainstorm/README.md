@@ -13,3 +13,4 @@ Raw ideas live here before they're ready to become [RFCs](../rfcs/). Rough is fi
 | Date | Topic | Ideas | Graduated |
 |---|---|---|---|
 | [2026-11-21](2026-11-21-kickoff.md) | Kickoff: open questions from the README | 10 | RFC 0001–0005 drafts |
+| [2026-11-21](2026-11-21-memory-model.md) | Memory model | 8 | none yet (recommended: C + F) |
