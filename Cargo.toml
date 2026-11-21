@@ -6,7 +6,7 @@ members = ["crates/*"]
 version = "0.0.1"
 edition = "2024"
 license = "Apache-2.0"
-repository = "https://github.com/peace-program-project/peace"
+repository = "https://github.com/maison-protocol/evolve"
 rust-version = "1.85"
 
 [workspace.dependencies]

@@ -2,7 +2,7 @@
 rfc: 0004
 title: Promotion and safety model
 status: draft
-authors: [peace-program-project]
+authors: [maison-protocol]
 created: 2026-11-21
 phase: Branch → Bloom
 requires: [0002, 0003]

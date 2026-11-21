@@ -6,7 +6,7 @@ Evolve is designed around **safe self-modification**: sandboxed mutations, capab
 
 Please **do not open a public issue**. Instead, use GitHub's private reporting:
 
-➡️ **[Report a vulnerability](https://github.com/peace-program-project/peace/security/advisories/new)**
+➡️ **[Report a vulnerability](https://github.com/maison-protocol/evolve/security/advisories/new)**
 
 Please include what you found, how to reproduce it (or why the design allows it), and its potential impact. We'll acknowledge your report within a few days.
 

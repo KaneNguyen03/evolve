@@ -2,7 +2,7 @@
 rfc: 0003
 title: gene, fitness, and selection semantics
 status: draft
-authors: [peace-program-project]
+authors: [maison-protocol]
 created: 2026-11-21
 phase: Sprout → Branch
 requires: [0001, 0002]

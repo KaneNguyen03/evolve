@@ -512,7 +512,7 @@ These are deliberately unresolved. They're the most interesting part. 🤔
 9. 🔐 **Lesson privacy:** Lessons capture inputs. How do we redact PII by default?
 10. 🌐 **Ecosystem sharing:** should Lessons be shareable across projects, like a global immune system?
 
-💬 Have an opinion? [Open an RFC issue](https://github.com/peace-program-project/peace/issues/new/choose).
+💬 Have an opinion? [Open an RFC issue](https://github.com/maison-protocol/evolve/issues/new/choose).
 
 ---
 
@@ -525,7 +525,7 @@ Evolve is at the idea stage, so the best contributions now are **use cases, synt
 | 💡 Propose a language idea | Read the [draft RFCs](rfcs/README.md), then open an **RFC** issue |
 | 🧪 Share a real-world failure | Open a **EvoBench case** issue (format: [bench/README.md](bench/README.md)) |
 | 🌍 Describe a use case | Open a **Use case** issue |
-| ❓ Ask anything | Start a [Discussion](https://github.com/peace-program-project/peace/discussions) |
+| ❓ Ask anything | Start a [Discussion](https://github.com/maison-protocol/evolve/discussions) |
 
 Read **[CONTRIBUTING.md](CONTRIBUTING.md)** and [how to help right now](docs/roadmap.md#10-how-to-help-right-now). Everyone participating agrees to our **[Code of Conduct](CODE_OF_CONDUCT.md)**. 🕊️
 
@@ -546,6 +546,6 @@ Unless you explicitly state otherwise, any contribution you intentionally submit
 <i>"Nothing in biology makes sense except in the light of evolution."</i> (Theodosius Dobzhansky)<br/>
 <b><i>Nothing in Evolve makes sense except in the light of failure.</i></b> 🧬
 
-<sub>Made with 🕊️ by the <a href="https://github.com/peace-program-project">Evolve Program Project</a></sub>
+<sub>Made with 🧬 by <a href="https://github.com/maison-protocol">MAISON</a></sub>
 
 </div>

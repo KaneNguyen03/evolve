@@ -2,7 +2,7 @@
 rfc: 0002
 title: Lesson schema and fossil record
 status: draft
-authors: [peace-program-project]
+authors: [maison-protocol]
 created: 2026-11-21
 phase: Seed → Sprout
 requires: [0001]

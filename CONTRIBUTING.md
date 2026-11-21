@@ -10,11 +10,11 @@ Thank you for wanting to help Evolve grow! 🌱 Evolve is in its **Seed** phase:
 
 | | Contribution | How |
 |:---:|---|---|
-| 💡 | **Language idea or design change** | Open an [RFC issue](https://github.com/peace-program-project/peace/issues/new?template=rfc.yml) |
-| 🧪 | **A real-world failure for EvoBench** | Open a [EvoBench case](https://github.com/peace-program-project/peace/issues/new?template=evobench.yml) |
-| 🌍 | **A use case or application** | Open a [Use case issue](https://github.com/peace-program-project/peace/issues/new?template=use-case.yml) |
+| 💡 | **Language idea or design change** | Open an [RFC issue](https://github.com/maison-protocol/evolve/issues/new?template=rfc.yml) |
+| 🧪 | **A real-world failure for EvoBench** | Open an [EvoBench case](https://github.com/maison-protocol/evolve/issues/new?template=evobench.yml) |
+| 🌍 | **A use case or application** | Open a [Use case issue](https://github.com/maison-protocol/evolve/issues/new?template=use-case.yml) |
 | 📝 | **Docs fixes** | Open a pull request directly |
-| ❓ | **Questions and open-ended discussion** | Use [Discussions](https://github.com/peace-program-project/peace/discussions) |
+| ❓ | **Questions and open-ended discussion** | Use [Discussions](https://github.com/maison-protocol/evolve/discussions) |
 
 ---
 

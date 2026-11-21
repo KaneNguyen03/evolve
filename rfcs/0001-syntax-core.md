@@ -2,7 +2,7 @@
 rfc: 0001
 title: Core syntax
 status: draft
-authors: [peace-program-project]
+authors: [maison-protocol]
 created: 2026-11-21
 phase: Seed → Sprout
 requires: []

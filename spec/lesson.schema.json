@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/peace-program-project/peace/spec/lesson.schema.json",
+  "$id": "https://github.com/maison-protocol/evolve/spec/lesson.schema.json",
   "title": "Evolve Lesson v0",
   "description": "Structured record of one failure in the Evolve fossil record. Defined by RFC 0002.",
   "type": "object",

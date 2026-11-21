@@ -107,7 +107,7 @@ def social():
         text(492, 358, "Programs that learn from failure.", 40, t["text"], 600),
         text(492, 406, "Python-readable · Julia data-native · Rust-built", 25, t["muted"], 500),
         loop_chips(492, 442, t, 17),
-        text(640, 590, "github.com/peace-program-project/peace", 22, t["muted"], 500, "middle", MONO),
+        text(640, 590, "github.com/maison-protocol/evolve", 22, t["muted"], 500, "middle", MONO),
     ]
     return svg(W, H, "\n".join(body), "Evolve programming language")
 

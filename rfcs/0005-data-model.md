@@ -2,7 +2,7 @@
 rfc: 0005
 title: "Data model: arrays, frames, units, uncertainty"
 status: draft
-authors: [peace-program-project]
+authors: [maison-protocol]
 created: 2026-11-21
 phase: Root
 requires: [0001]

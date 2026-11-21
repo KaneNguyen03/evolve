@@ -16,7 +16,7 @@ RFCs ("requests for comments") are how Evolve decides anything that changes the 
 
 ## Process
 
-1. 💬 Open an issue with the [RFC form](https://github.com/peace-program-project/peace/issues/new?template=rfc.yml) to test the idea.
+1. 💬 Open an issue with the [RFC form](https://github.com/maison-protocol/evolve/issues/new?template=rfc.yml) to test the idea.
 2. 📄 Copy [`0000-template.md`](0000-template.md) to `NNNN-short-name.md` (next free number) and open a PR.
 3. 🔍 Comment period: at least two weeks, at least one core maintainer review.
 4. ✅ Decision recorded in the RFC header with a short rationale. Declined RFCs stay in the repo.
