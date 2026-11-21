@@ -352,6 +352,15 @@ fn lex_fstring(s: &str, offset: usize, errors: &mut Vec<SyntaxError>) -> usize {
     unterminated(s, offset, i, errors)
 }
 
+/// True when `s` starts with `{name}`. Unicode character names are made of ASCII
+/// letters, digits, spaces, and hyphens; whether the name exists is checked later.
+fn has_char_name(s: &str) -> bool {
+    s.strip_prefix('{').is_some_and(|rest| {
+        let name = take_while(rest, |c| c.is_ascii_alphanumeric() || c == ' ' || c == '-');
+        name > 0 && rest[name..].starts_with('}')
+    })
+}
+
 /// Checks the escape after a backslash (`s` starts just after it).
 fn check_escape(s: &str, offset: usize, mode: StrMode, errors: &mut Vec<SyntaxError>) {
     let hex = |n: usize| {
@@ -374,7 +383,7 @@ fn check_escape(s: &str, offset: usize, mode: StrMode, errors: &mut Vec<SyntaxEr
         'u' => Some("`\\u` needs exactly 4 hex digits".to_string()),
         'U' if hex(8) => None,
         'U' => Some("`\\U` needs exactly 8 hex digits".to_string()),
-        'N' if s[1..].starts_with('{') && s.contains('}') => None,
+        'N' if has_char_name(&s[1..]) => None,
         'N' => Some("`\\N` needs a character name: `\\N{name}`".to_string()),
         c => Some(format!(
             "unknown escape `\\{c}`: write `\\\\{c}` for a backslash, or use a raw string `r\"…\"`"
