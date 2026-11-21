@@ -62,7 +62,13 @@ impl Parse {
                 let offset = usize::from(e.range.start()).min(src.len());
                 let before = &src[..offset];
                 let line = before.matches('\n').count() + 1;
-                let col = before.rsplit('\n').next().map_or(0, |l| l.chars().count()) + 1;
+                let line_start = before.rfind('\n').map_or(0, |i| i + 1);
+                let mut text = &before[line_start..];
+                if line_start == 0 {
+                    // A byte-order mark at the start of the file is not a column.
+                    text = text.strip_prefix('\u{feff}').unwrap_or(text);
+                }
+                let col = text.chars().count() + 1;
                 format!("{line}:{col}: {}", e.message)
             })
             .collect::<Vec<_>>()
@@ -268,6 +274,16 @@ mod tests {
         assert!(messages("\u{feff}x = 1\n").is_empty());
         assert!(messages("\u{feff}if x:\n    y = 1\n").is_empty());
         assert!(messages("x = 1\u{feff}\n")[0].contains("byte-order mark"));
+    }
+
+    /// The mark is invisible in an editor, so it must not count as a column.
+    #[test]
+    fn a_leading_byte_order_mark_does_not_shift_columns() {
+        let plain = "x = 2 ** 8\ny = 2 ** 8\n";
+        let marked = format!("\u{feff}{plain}");
+        let expected = parse(plain).render_errors(plain);
+        assert!(expected.starts_with("1:7: "), "{expected}");
+        assert_eq!(parse(&marked).render_errors(&marked), expected);
     }
 
     #[test]
