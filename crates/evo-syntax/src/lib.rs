@@ -279,6 +279,21 @@ mod tests {
         assert!(messages("x = 1\r\ny = 2\r\n").is_empty());
     }
 
+    /// RFC 0001 "Strings": `\` followed by a newline is an escape, and a line ends
+    /// in LF or CRLF.
+    #[test]
+    fn backslash_newline_in_a_string_works_with_lf_and_crlf() {
+        for src in [
+            "s = \"a\\\nb\"\n",
+            "s = \"a\\\r\nb\"\r\n",
+            "s = f\"a\\\r\nb\"\r\n",
+            "s = b'a\\\r\nb'\r\n",
+        ] {
+            let found = messages(src);
+            assert!(found.is_empty(), "{src:?}: {found:?}");
+        }
+    }
+
     #[test]
     fn bidi_controls_are_errors_even_in_strings_and_comments() {
         for src in [

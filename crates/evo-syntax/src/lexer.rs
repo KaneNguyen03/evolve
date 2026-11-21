@@ -127,6 +127,16 @@ fn char_len(s: &str) -> usize {
     s.chars().next().map_or(0, char::len_utf8)
 }
 
+/// The byte length of the escape body after a backslash (`s` starts just after it).
+/// A CRLF line ending is one newline, so `\` before it escapes both bytes.
+fn escape_len(s: &str) -> usize {
+    if s.starts_with("\r\n") {
+        2
+    } else {
+        char_len(s)
+    }
+}
+
 /// How a string literal's body is checked.
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum StrMode {
@@ -273,7 +283,7 @@ fn lex_string(s: &str, offset: usize, mode: StrMode, errors: &mut Vec<SyntaxErro
             if mode != StrMode::Raw {
                 check_escape(escaped, offset + i, mode, errors);
             }
-            i += 1 + char_len(escaped);
+            i += 1 + escape_len(escaped);
         } else if rest.starts_with(delim) {
             return i + delim.len();
         } else if !multiline && (rest.starts_with('\n') || rest.starts_with('\r')) {
@@ -308,7 +318,7 @@ fn lex_fstring(s: &str, offset: usize, errors: &mut Vec<SyntaxError>) -> usize {
         if depth == 0 {
             if let Some(escaped) = rest.strip_prefix('\\') {
                 check_escape(escaped, offset + i, StrMode::Plain, errors);
-                i += 1 + char_len(escaped);
+                i += 1 + escape_len(escaped);
             } else if rest.starts_with(delim) {
                 return i + delim.len();
             } else if rest.starts_with("{{") || rest.starts_with("}}") {
