@@ -1,0 +1,32 @@
+# EvoBench case format v0 (see bench/README.md)
+id          = "0004-leap-day-renewal"
+title       = "Subscriptions that started on a leap day reach their first renewal"
+category    = "edge-case"
+language    = "python"
+difficulty  = "medium"
+source      = "synthetic"
+
+[program]
+file        = "program.py"
+gene        = "next_renewal"
+signature   = "def next_renewal(start: str) -> datetime.date"
+
+[environment_change]
+summary = "The first subscriptions that started on 2024-02-29 came up for renewal, and `date.replace` raised ValueError because there is no 2025-02-29. Policy: a subscription renews on the same month and day one year later; one that started on February 29 renews on February 28."
+
+[fitness]
+examples = "examples.jsonl"
+holdout  = "holdout.jsonl"
+score    = "accuracy"
+
+[[invariants]]
+name = "never-february-29"
+rule = "not (result.month == 2 and result.day == 29)"
+
+[[invariants]]
+name = "plausible-year"
+rule = "2000 <= result.year <= 2100"
+
+[[invariants]]
+name = "ordinary-dates-still-work"
+rule = "next_renewal('2025-01-15') == date(2026, 1, 15)"
