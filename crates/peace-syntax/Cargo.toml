@@ -1,0 +1,15 @@
+[package]
+name = "peace-syntax"
+description = "Lexer and lossless, error-tolerant parser for the Peace language (RFC 0001)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+rowan.workspace = true
+unicode-ident.workspace = true
+
+[lints]
+workspace = true

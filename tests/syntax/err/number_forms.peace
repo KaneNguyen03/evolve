@@ -1,0 +1,10 @@
+a = 0123
+b = .5
+c = 5.
+d = 1__000
+e = 0_0
+
+# expect: 1:5: leading zeros are not allowed: write `0o123` for octal or `123` for decimal
+# expect: 2:5: write `0.5`, not `.5`
+# expect: 3:5: write `5.0`, not `5.`
+# expect: 4:5: `_` in a number must sit between two digits

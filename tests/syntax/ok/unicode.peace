@@ -1,0 +1,7 @@
+# Non-ASCII right after quotes and in names, a regression corpus for the lexer.
+s = "π is close to 3.14159"
+t = 'é'
+u = """θ0 starts here"""
+β = 0.5
+area = π * r ^ 2
+g = 9.81 m/s²

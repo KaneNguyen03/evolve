@@ -1,0 +1,11 @@
+x = 1 2 3
+def (:
+y = )
+after = 1
+
+# expect: 1:7: expected end of line
+# expect: 2:5: expected a function name
+# expect: 2:6: expected a parameter name
+# expect: 3:5: expected an expression
+# expect: 3:6: expected `:`
+# expect: 4:1: expected an indented block

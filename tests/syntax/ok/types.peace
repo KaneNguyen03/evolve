@@ -1,0 +1,14 @@
+# Schemas, modules, multiple dispatch, union types
+schema Order:
+    customer_id: str
+    ordered_at:  Date
+    total:       Money
+    invariant total.amount >= 0
+
+module Encoder(dim: int):
+    layers = [Attention(dim, heads=~8 in 4..16)]
+
+def collide(a: Asteroid, b: Ship):   return damage(b, a.mass)
+def collide(a: Ship, b: Asteroid):   return collide(b, a)
+def find(key: str) -> Order | none:
+    return orders.get(key)

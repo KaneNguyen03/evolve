@@ -1,0 +1,6 @@
+if a:
+    pass
+else if b:
+    pass
+
+# expect: 3:1: write `elif`, not `else if`

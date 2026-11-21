@@ -1,0 +1,18 @@
+# Evolution syntax: decorators, gene def, evolvable constants, fitness
+@heal(strategies=[retry, mutate, ask_agent], budget=20, approve="human")
+gene def parse_price(raw: str) -> Money:
+    return Money.parse(raw.strip(), currency="USD")
+
+gene def train(data: Dataset) -> Model:
+    lr     = ~0.001 in 1e-5..1e-1 log
+    layers = ~4 in 2..12
+    return mlp(layers=layers).fit(data, lr=lr, epochs=20)
+
+fitness parse_price:
+    examples  "tests/prices.csv"
+    holdout   recorded"contracts/prices/*.json"
+    score     = accuracy - 0.001 * latency_ms
+    invariant result.amount >= 0
+
+@conserved
+def charge(card: Card, amount: Money) -> Receipt: ...

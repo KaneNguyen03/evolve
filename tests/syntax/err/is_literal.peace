@@ -1,0 +1,6 @@
+ok = x is none
+bad = x is 7
+bad2 = s is not "a"
+
+# expect: 2:12: `is` compares identity, which literals don't have: use `==`
+# expect: 3:17: `is` compares identity, which literals don't have: use `==`

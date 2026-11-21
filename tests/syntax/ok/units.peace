@@ -1,0 +1,7 @@
+# Units and uncertainty
+g     = 9.81 ± 0.02 m/s²
+t     = 1.30 +/- 0.05 s
+drop  = 0.5 * g * t ^ 2
+limit = 5 N*m
+speed = 12.5 km/h
+tiny  = 1e-3 kg

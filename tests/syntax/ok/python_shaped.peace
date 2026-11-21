@@ -1,0 +1,78 @@
+# RFC 0001 revision 2: constructs taken from Python 3.16, and soft keywords.
+from std.io import (
+    open,
+    write as save,
+)
+import std.math, std.stats as st
+
+# soft keywords are ordinary names outside their declaration position
+model = load("pendulum.onnx")
+schema = model.schema
+agent = population(size=64).best()
+rows = rows |> with(total = _.a + _.b)
+gene = 3
+
+# comprehensions and generator expressions
+evens = [x ^ 2 for x in 0..10 if x % 2 == 0]
+pairs = [(i, j) for i in 0..3 for j in 0..3 if i != j]
+by_id = {r.id: r for r in rows}
+tags = {t for r in rows for t in r.tags}
+flat = [*g for g in groups]
+total = sum(x ^ 2 for x in xs)
+lazy = (line.strip() for line in lines)
+
+# conditional expressions bind looser than |>
+label = "hot" if temp > 30 else "ok"
+avg = xs |> mean if xs else 0.0
+
+# unpacking, floor division, augmented assignment
+first, *rest = sorted(xs)
+merged = {**defaults, **overrides, "k": 1}
+both = [*a, *b]
+mid = len(xs) // 2
+mid //= 2
+mid %= 7
+
+# comparison chains in one direction
+ok = 0 <= p <= 1
+same = a == b == c
+down = z >= y > x
+
+@cache
+@retry(times=3).on(TimeoutError)
+def fetch(url: str, *, retries: int = 3, **headers) -> Response:
+    assert retries >= 0, "retries must be non-negative"
+    if not url:
+        raise ValueError("empty url")
+    elif url.startswith("ftp"):
+        raise UnsupportedError(url) from none
+    with open(url) as conn, timer() as t:
+        return conn.read(**headers)
+
+def collect(*parts, sep: str = "") -> str:
+    return sep.join(parts)
+
+with (
+    open("a.csv") as a,
+    open("b.csv") as b,
+):
+    save(join(a, b))
+
+attempt:
+    data = read"prices.csv"
+learn ParseError | IOError as err:
+    remember err
+    raise
+always:
+    for x in pending:
+        if x.done:
+            continue
+        break
+    close(pending)
+
+# strings: nested f-strings reuse quotes (PEP 701), templates, raw, bytes
+greeting = f"{user["name"]!r} has {len(f"{items}")} items, {ratio=:.2f}"
+query = t"select * from orders where id = {order_id}"
+pattern = r"\d+\.\d+"
+magic = b"\x89PNG"
+hex = 0x_FF

@@ -1,0 +1,21 @@
+def f():
+    attempt:
+        work()
+    learn err:
+        remember err
+    always:
+        for x in xs:
+            break
+        def g():
+            return 1
+        return 2
+    while true:
+        attempt:
+            work()
+        learn err:
+            pass
+        always:
+            continue
+
+# expect: 11:9: `return` inside `always` would discard the failure in flight
+# expect: 18:13: `continue` inside `always` would discard the failure in flight

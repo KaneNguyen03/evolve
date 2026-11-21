@@ -1,0 +1,10 @@
+function f(x):
+    return x
+fn g(x):
+    return x
+func h(x):
+    return x
+
+# expect: 1:1: `function` is not Peace: define functions with `def`
+# expect: 3:1: `fn` is not Peace: define functions with `def`
+# expect: 5:1: `func` is not Peace: define functions with `def`

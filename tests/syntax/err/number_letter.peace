@@ -1,0 +1,5 @@
+mass = 5kg
+area = 2π * r ^ 2
+
+# expect: 1:8: a number can't be directly followed by a letter: write `5 kg` for a unit, or `5 * kg` to multiply
+# expect: 2:8: a number can't be directly followed by a letter: write `2 π` for a unit, or `2 * π` to multiply

@@ -1,0 +1,3 @@
+names = ["ada" "grace", "alan"]
+
+# expect: 1:16: two string literals in a row: add the missing comma, or join them with `+`

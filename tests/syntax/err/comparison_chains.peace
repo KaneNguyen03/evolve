@@ -1,0 +1,9 @@
+ok = 0 <= p <= 1
+ok2 = a == b == c
+bad = x < y > z
+bad2 = a in b in c
+bad3 = a != b != c
+
+# expect: 3:13: this comparison chain goes both ways: split it with `and`, e.g. `x < y and z < y`
+# expect: 4:15: `!=`, `in`, and `is` don't chain: add parentheses, or split the chain with `and`
+# expect: 5:15: `!=`, `in`, and `is` don't chain: add parentheses, or split the chain with `and`

@@ -1,0 +1,10 @@
+try:
+    x = parse(raw)
+except ValueError as err:
+    x = 0
+finally:
+    log("done")
+
+# expect: 1:1: `try` is Python spelling: use `attempt:`
+# expect: 3:1: `except` is Python spelling: use `learn`
+# expect: 5:1: `finally` is Python spelling: use `always:`

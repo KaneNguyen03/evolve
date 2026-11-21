@@ -1,0 +1,20 @@
+# Doc code samples that use syntax no RFC specifies yet.
+#
+# Format: <file>#<n-th peace block>  <reason>
+# The conformance test requires these blocks to still FAIL, so this list shrinks as
+# RFCs land. Each reason is a to-do for a future RFC. Remove an entry when its
+# construct is specified and the sample parses.
+
+README.md#7               population blocks (`population x = evolve(...):`) and `ndcg@10` names need an RFC
+README.md#8               `gene model`, `train ... on ... with`, `species(by=...)`, `@conserved` fields need an RFC (AI-model mission)
+README.md#9               `app` blocks, `gene prompt`, and `on <event>:` handlers need an RFC (AI-native apps mission)
+README.md#10              `agent`, `protocol`, `society` constructs need an RFC (agent-to-agent mission)
+docs/use-cases.md#1       `pipeline <name>:` blocks need an RFC
+docs/use-cases.md#4       `examples inputs => expected` pairs in fitness clauses need an RFC (RFC 0003)
+docs/use-cases.md#7       unit types in annotations (`derr: rad/s`) and `simulate ... with ...` need grammar (RFC 0005)
+docs/use-cases.md#8       `species` blocks need an RFC
+docs/use-cases.md#9       `gene prompt`, `@on_environment_change`, and money literals (`$5`) need an RFC
+docs/use-cases.md#11      `gene model`, `train`, and context dispatch inside models need an RFC (AI-model mission)
+docs/use-cases.md#12      `app` blocks and `on <event>:` handlers need an RFC (AI-native apps mission)
+docs/use-cases.md#13      `agent`, `protocol`, `society` constructs need an RFC (agent-to-agent mission)
+rfcs/0005-data-model.md#1 unit suffix on an array literal (`[0.5, 0.75] m`) needs grammar (RFC 0005 unresolved)

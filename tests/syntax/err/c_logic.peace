@@ -1,0 +1,7 @@
+a = x && y
+b = x || y
+c = !x
+
+# expect: 1:7: use `and`, not `&&`
+# expect: 2:7: use `or`, not `||`
+# expect: 3:5: use `not x`, not `!x`

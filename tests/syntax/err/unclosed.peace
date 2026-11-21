@@ -1,0 +1,4 @@
+x = foo(1, 2
+y = 3
+
+# expect: 2:3: expected `,` or `)`

@@ -1,0 +1,11 @@
+x = 2 ** 8
+ok = True
+no = False
+nothing = None
+f = lambda
+
+# expect: 1:7: `**` is not Peace syntax; use `^` for powers
+# expect: 2:6: `True` is Python spelling: use `true`
+# expect: 3:6: `False` is Python spelling: use `false`
+# expect: 4:11: `None` is Python spelling: use `none`
+# expect: 5:5: `lambda` is Python spelling: lambdas are written `x -> expr`

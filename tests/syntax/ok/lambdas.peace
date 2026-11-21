@@ -1,0 +1,5 @@
+# Lambdas, placeholders, pipes
+sq = x -> x ^ 2
+add = (a, b) -> a + b
+evens = nums |> filter(_ % 2 == 0) |> map(n -> n * 10)
+names = users |> map(_.name.upper())

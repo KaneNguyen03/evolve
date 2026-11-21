@@ -1,0 +1,3 @@
+a = 1; b = 2
+
+# expect: 1:6: one statement per line: start a new line instead of `;`

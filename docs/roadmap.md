@@ -57,7 +57,7 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 | Vision, use cases, roadmap | ✅ this repo |
 | RFC process | ✅ [`rfcs/`](../rfcs/) folder, template, statuses, review rules |
 | Core RFCs | 🌱 drafted: [0001](../rfcs/0001-syntax-core.md) Syntax core · [0002](../rfcs/0002-lesson-schema.md) Lesson schema · [0003](../rfcs/0003-gene-fitness-semantics.md) `gene`/`fitness` semantics · [0004](../rfcs/0004-promotion-and-safety.md) Promotion & safety model · [0005](../rfcs/0005-data-model.md) Data model. Next: comment period |
-| Grammar draft | 🌱 [EBNF draft](../spec/grammar.ebnf) done; tree-sitter grammar for syntax highlighting still to do |
+| Grammar draft | 🌱 [Grammar revision 2](../spec/grammar.ebnf) (PEG notation, reviewed against the Python 3.16 reference) done; tree-sitter grammar for syntax highlighting still to do |
 | PeaceBench v0 spec | 🌱 [Case format v0 and scorer](../bench/README.md) done; 1 of 50 cases (see [PeaceBench](#4-peacebench)) |
 | Project hygiene | ✅ Apache-2.0 license, ✅ Code of Conduct, ✅ CONTRIBUTING, CI skeleton |
 
@@ -70,7 +70,7 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 
 | Track A: Engine | Track B: Language |
 |---|---|
-| `peace-fossil`: append-only Lesson + lineage store (Parquet + SQLite index) | `peace-syntax`: lexer + lossless CST (rowan), error-tolerant parser |
+| `peace-fossil`: append-only Lesson + lineage store (Parquet + SQLite index) | 🌱 `peace-syntax`: lexer + lossless CST (rowan), error-tolerant parser: **prototype done** against draft RFC 0001 revision 2 ([crate](../crates/peace-syntax/)) |
 | `peace-evolve`: fitness runner, **parametric** mutation, selection, seeds | Tree-walking interpreter: Python-like core (functions, classes, control flow, f-strings) |
 | `peace-engine` Python package (PyO3): `@gene`, `fitness`, `attempt/learn` context manager | `attempt / learn` with Lessons written to the same fossil store |
 | CLI: `peace lessons`, `peace lineage`, `peace evolve`, `peace revert` | `peace run`, `peace repl` |
@@ -295,7 +295,7 @@ Beyond 1.0, these are directions worth exploring. They're ideas, not commitments
 | A language designer | Comment on or draft the core RFCs (syntax, gene semantics) |
 | A data or platform engineer | Contribute **PeaceBench cases** from real failures you've fixed (anonymized) |
 | An ML or agents person | Propose mutation operators and fitness designs; critique the anti-gaming plan |
-| A Rust developer | Prototype `peace-fossil` or the rowan-based `peace-syntax` crate |
+| A Rust developer | Prototype `peace-fossil`, or help specify the constructs in [`tests/syntax/docs-allowlist.txt`](../tests/syntax/docs-allowlist.txt) so `peace-syntax` can parse them |
 | A teacher | Tell us what a "failure-friendly" first programming course would need |
 
 Open an issue titled `RFC: <idea>`, `Bench: <failure case>`, or `Question: <topic>`.

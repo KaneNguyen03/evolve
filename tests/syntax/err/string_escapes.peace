@@ -1,0 +1,9 @@
+a = "C:\path"
+b = "\x4"
+c = b"café"
+d = r"\d+ is fine raw"
+e = re"\w+ is fine in a macro"
+
+# expect: 1:8: unknown escape `\p`: write `\\p` for a backslash, or use a raw string `r"…"`
+# expect: 2:6: `\x` needs exactly 2 hex digits
+# expect: 3:10: bytes literals are ASCII only; write other bytes as `\xhh`

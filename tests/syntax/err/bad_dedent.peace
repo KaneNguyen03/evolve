@@ -1,0 +1,5 @@
+if x:
+        a = 1
+    b = 2
+
+# expect: 3:5: unindent does not match any outer indentation level

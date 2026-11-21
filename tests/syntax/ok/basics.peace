@@ -1,0 +1,32 @@
+# Core statements: imports, functions, control flow, literals
+import std.data as data
+from std.text import strip as trim, upper
+
+def mean(xs: list[float]) -> float:
+    """Average of a non-empty list."""
+    return sum(xs) / len(xs)
+
+def classify(n: int) -> str:
+    if n < 0:
+        return "negative"
+    elif n == 0 or n is none:
+        return "zero"
+    else:
+        return f"positive {n}"
+
+total: int = 0
+for i in 0..10:
+    if i % 2 == 0:
+        continue
+    total += i
+while total > 100:
+    total -= 1
+    if not total:
+        break
+flags = [true, false, none]
+config = {"retries": 3, "verbose": false}
+unique = {1, 2, 3}
+point = (1, 2)
+empty = ()
+nums = 0x_FF + 0b1010 + 1_000_000
+pass

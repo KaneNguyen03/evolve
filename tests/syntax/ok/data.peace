@@ -1,0 +1,16 @@
+# Data-native syntax (RFC 0001 + RFC 0005)
+xs = [1.0, 2.0, 3.0, 4.0]
+ys = sin.(xs) .+ 1
+zs = xs .* ys .^ 2 ./ 3
+A = rand(4, 4)
+β = A \ ys
+sales = read"data/sales.parquet"
+by_month = sales
+  |> filter(_.region == "EU")
+  |> groupby(:month)
+  |> sum(:revenue)
+first_three = xs[0:3]
+tail = xs[-1]
+grid = m[1:, ::2]
+cols = df[:, [:L, :θ0]]
+closed = 0..=10

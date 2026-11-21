@@ -1,0 +1,5 @@
+gene model Assistant:
+    encoder = Encoder(dim=1024)
+after = 1
+
+# expect: 1:1: only `gene def` is specified (RFC 0001); other `gene` forms need an RFC

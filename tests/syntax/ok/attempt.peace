@@ -1,0 +1,12 @@
+# attempt / learn / always / remember
+attempt:
+    config = load_toml("app.toml")
+learn ParseError as err:
+    remember err
+    config = Config.defaults()
+learn std.io.IoError as err:
+    remember err
+learn err:
+    raise_again(err)
+always:
+    log("done")
