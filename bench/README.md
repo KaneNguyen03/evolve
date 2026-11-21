@@ -15,6 +15,8 @@ Each case is a folder in `cases/` named `NNNN-short-name`:
 
 Invariants in `case.toml` are Python expressions. A rule that mentions `result` is checked on every example's result. Any other rule is checked once, with the gene function and `date` in scope.
 
+The scorer tells the two kinds apart by the word `result` anywhere in the rule, so keep that word out of a rule that is checked once, including inside its string literals.
+
 ## Scoring
 
 ```bash
@@ -30,6 +32,26 @@ A case is **healed** when the candidate passes every holdout row and violates no
 - 🎯 Holdout must contain cases that a fix tailored only to the visible examples would get wrong.
 - 🧱 At least one invariant that stops a "cheating" fix (for example, returning a constant).
 - 📏 Keep programs small: one gene, under 50 lines.
+
+## Checking a case
+
+The rules above are easy to state and easy to miss, so a gate checks them:
+
+```bash
+python3 bench/check.py                                     # every case
+python3 bench/check.py bench/cases/0001-date-format-drift  # one case
+```
+
+Each case has two reference programs in `checks/NNNN-short-name/`, kept outside the case folder so that folder stays exactly what a healer is given:
+
+| File | What it is | The gate requires |
+|---|---|---|
+| `healed.py` | A correct fix | It heals the case and passes every visible example |
+| `shortcut.py` | A plausible fix that only fits the visible examples | It passes every visible example and is **not** healed |
+
+The gate also builds two programs of its own, a memorizer that is right only on the visible inputs and one that always returns a visible answer, and requires that neither is healed. It checks the original program too: it must fail in a way the examples show, and still pass some rows, so a fix that drops the old inputs is caught.
+
+A case that passes can tell a real fix from the shortcut you thought of. It can't promise more than that, so choose the shortcut a hurried healer would write.
 
 ## Cases
 
