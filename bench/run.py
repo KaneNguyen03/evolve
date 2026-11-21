@@ -8,6 +8,7 @@ Scores a program against a case's visible examples and hidden holdout, and check
 Exit code 0 when every holdout case and every invariant passes, 1 otherwise.
 """
 import argparse
+import ast
 import datetime
 import importlib.util
 import json
@@ -68,8 +69,8 @@ def main():
         sys.exit(1)
 
     invariants = case.get("invariants", [])
-    per_result = [i for i in invariants if "result" in i["rule"]]
-    global_violations = [i["name"] for i in invariants if "result" not in i["rule"]
+    per_result = [i for i in invariants if reads_result(i["rule"])]
+    global_violations = [i["name"] for i in invariants if not reads_result(i["rule"])
                          and not _safe_eval(i["rule"], {gene: fn, "date": datetime.date})]
 
     vis = run_set(fn, args.case / case["fitness"]["examples"], per_result)
@@ -81,6 +82,18 @@ def main():
     print(f"holdout   {hold[0]}/{hold[1]}")
     print(f"invariants {'ok' if not violations else 'VIOLATED: ' + '; '.join(violations)}")
     sys.exit(0 if hold[0] == hold[1] and not violations else 1)
+
+
+def reads_result(rule):
+    """True when the rule reads the name `result`: such a rule is checked on every result.
+
+    The word inside a string (`f({'result': 1})`) or a longer name (`results`) does not count.
+    """
+    try:
+        tree = ast.parse(rule, mode="eval")
+    except SyntaxError:
+        return False  # checked once, where it fails and is reported as violated
+    return any(isinstance(node, ast.Name) and node.id == "result" for node in ast.walk(tree))
 
 
 def _safe_eval(rule, ns):

@@ -6,6 +6,7 @@ The scorer's contract is its exit code (0 = healed), so each test runs it the wa
 healer would: as a subprocess, with a candidate program on disk.
 """
 import pathlib
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -29,10 +30,17 @@ HEALED = """
 """
 
 
-def score(candidate=None):
-    """Runs the scorer on case 0001, optionally with `candidate` as the program source."""
+def score(candidate=None, extra_invariant=None):
+    """Runs the scorer on case 0001, optionally with `candidate` as the program source
+    and with one more invariant rule added to a copy of the case."""
     with tempfile.TemporaryDirectory() as tmp:
-        cmd = [sys.executable, str(BENCH / "run.py"), str(CASE)]
+        case = CASE
+        if extra_invariant is not None:
+            case = pathlib.Path(tmp) / CASE.name
+            shutil.copytree(CASE, case)
+            with open(case / "case.toml", "a", encoding="utf-8") as f:
+                f.write(f"\n[[invariants]]\nname = \"extra\"\nrule = {extra_invariant!r}\n")
+        cmd = [sys.executable, str(BENCH / "run.py"), str(case)]
         if candidate is not None:
             program = pathlib.Path(tmp) / "candidate.py"
             program.write_text(textwrap.dedent(candidate), encoding="utf-8")
@@ -94,6 +102,25 @@ class ScorerTest(unittest.TestCase):
         self.assertNotIn("Traceback", run.stderr)
         self.assertIn("invariants VIOLATED", run.stdout)
         self.assertIn("never-invent-dates on input", run.stdout)
+
+    # A rule is checked on every result only when it reads the name `result`.
+
+    def test_rule_with_the_word_result_in_a_string_is_checked_once(self):
+        rule = "len('result') == 6 and parse_order_date('2026-11-21') == date(2026, 11, 21)"
+        run = score(HEALED, extra_invariant=rule)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertIn("invariants ok", run.stdout)
+
+    def test_rule_with_result_inside_a_longer_name_is_checked_once(self):
+        rule = "[results for results in [parse_order_date('2026-11-21')]] == [date(2026, 11, 21)]"
+        run = score(HEALED, extra_invariant=rule)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+
+    def test_rule_that_reads_result_is_still_checked_on_every_row(self):
+        run = score(HEALED, extra_invariant="result.year != 2024")
+        self.assertEqual(run.returncode, 1)
+        self.assertIn("extra on input '2024-02-29'", run.stdout)
+        self.assertIn("extra on input '29/02/2024'", run.stdout)
 
 
 if __name__ == "__main__":
