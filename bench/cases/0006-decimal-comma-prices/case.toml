@@ -1,0 +1,32 @@
+# EvoBench case format v0 (see bench/README.md)
+id          = "0006-decimal-comma-prices"
+title       = "ERP export switches prices from 1,234.50 to 1.234,50"
+category    = "format-drift"
+language    = "python"
+difficulty  = "medium"
+source      = "synthetic"
+
+[program]
+file        = "program.py"
+gene        = "price_cents"
+signature   = "def price_cents(raw: str) -> int"
+
+[environment_change]
+summary = "The ERP export switched locale. A price that was written `1,234.50` is now written `1.234,50`: `.` groups thousands and `,` marks the decimals. Every price has exactly two decimals in both formats, and files from before the switch are still re-imported. Nothing raises on the new format: `1.234,50` is read as 123 cents instead of 123450."
+
+[fitness]
+examples = "examples.jsonl"
+holdout  = "holdout.jsonl"
+score    = "accuracy"
+
+[[invariants]]
+name = "whole-cents"
+rule = "isinstance(result, int) and not isinstance(result, bool)"
+
+[[invariants]]
+name = "old-format-still-works"
+rule = "price_cents('1,234.50') == 123450"
+
+[[invariants]]
+name = "plain-price-still-works"
+rule = "price_cents('12.00') == 1200"

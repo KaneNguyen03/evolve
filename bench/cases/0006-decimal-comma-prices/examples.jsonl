@@ -1,0 +1,6 @@
+{"input": "1,234.50", "expected": 123450}
+{"input": "12.00", "expected": 1200}
+{"input": "1.234,50", "expected": 123450}
+{"input": "89,90", "expected": 8990}
+{"input": " 0,05 ", "expected": 5}
+{"input": "7.50", "expected": 750}

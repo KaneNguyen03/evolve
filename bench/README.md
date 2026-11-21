@@ -62,3 +62,4 @@ A case that passes can tell a real fix from the shortcut you thought of. It can'
 | [0003](cases/0003-not-found-becomes-error/) | api-contract | medium | Geocoding API v2 reports an unknown address as an error object |
 | [0004](cases/0004-leap-day-renewal/) | edge-case | medium | Subscriptions that started on a leap day reach their first renewal |
 | [0005](cases/0005-query-separator-upgrade/) | dependency-upgrade | medium | A runtime security update stops `parse_qs` splitting on `;` |
+| [0006](cases/0006-decimal-comma-prices/) | format-drift | medium | ERP export switches prices from 1,234.50 to 1.234,50 |
