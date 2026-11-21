@@ -1,0 +1,6 @@
+{"input": {"match": {"city": "Gdansk", "country": "PL"}}, "expected": "Gdansk"}
+{"input": {"error": {"code": "NOT_FOUND"}, "request_id": "r-311"}, "expected": null}
+{"input": {"error": {"code": "RATE_LIMITED", "retry_after": 30}}, "raises": "RuntimeError"}
+{"input": {"error": {"code": "INTERNAL"}}, "raises": "RuntimeError"}
+{"input": {"match": null, "request_id": "r-312"}, "expected": null}
+{"input": {"error": {"code": "QUOTA_EXCEEDED"}}, "raises": "RuntimeError"}

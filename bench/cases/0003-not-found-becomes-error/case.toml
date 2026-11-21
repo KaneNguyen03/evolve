@@ -1,0 +1,32 @@
+# EvoBench case format v0 (see bench/README.md)
+id          = "0003-not-found-becomes-error"
+title       = "Geocoding API v2 reports an unknown address as an error object"
+category    = "api-contract"
+language    = "python"
+difficulty  = "medium"
+source      = "synthetic"
+
+[program]
+file        = "program.py"
+gene        = "city_of"
+signature   = "def city_of(response: dict) -> str | None"
+
+[environment_change]
+summary = "Geocoding API v2 no longer answers an unknown address with `{\"match\": null}`. It answers `{\"error\": {\"code\": \"NOT_FOUND\"}}`. Every other error code (`RATE_LIMITED`, `INTERNAL`, and codes added later) means the lookup did not happen: it must raise RuntimeError and never be reported as \"no such address\". Successful answers are unchanged, and v1 answers still arrive from the cache."
+
+[fitness]
+examples = "examples.jsonl"
+holdout  = "holdout.jsonl"
+score    = "accuracy"
+
+[[invariants]]
+name = "city-or-none"
+rule = "result is None or (isinstance(result, str) and result != '')"
+
+[[invariants]]
+name = "v1-success-still-works"
+rule = "city_of({'match': {'city': 'Lyon', 'country': 'FR'}}) == 'Lyon'"
+
+[[invariants]]
+name = "v1-not-found-still-works"
+rule = "city_of({'match': None}) is None"

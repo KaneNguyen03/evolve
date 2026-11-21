@@ -1,0 +1,5 @@
+{"input": {"match": {"city": "Lyon", "country": "FR"}}, "expected": "Lyon"}
+{"input": {"match": null}, "expected": null}
+{"input": {"error": {"code": "NOT_FOUND"}}, "expected": null}
+{"input": {"error": {"code": "NOT_FOUND", "message": "no match for query"}}, "expected": null}
+{"input": {"match": {"city": "Porto", "country": "PT"}, "request_id": "r-104"}, "expected": "Porto"}
