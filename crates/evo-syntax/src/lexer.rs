@@ -384,20 +384,36 @@ fn lex_number(s: &str, offset: usize, errors: &mut Vec<SyntaxError>) -> usize {
     let digits = |s: &str, radix: u32| take_while(s, |c| c == '_' || c.is_digit(radix));
     let mut segments: Vec<(usize, usize)> = Vec::new();
     let mut end = None;
-    for (prefix, radix) in [
-        ("0x", 16),
-        ("0X", 16),
-        ("0b", 2),
-        ("0B", 2),
-        ("0o", 8),
-        ("0O", 8),
+    for (prefix, radix, digit, digit_set, example) in [
+        ("0x", 16, "a hex", "", "0xFF"),
+        ("0X", 16, "a hex", "", "0xFF"),
+        ("0b", 2, "a binary", "binary uses `0` and `1`", "0b1010"),
+        ("0B", 2, "a binary", "binary uses `0` and `1`", "0b1010"),
+        ("0o", 8, "an octal", "octal uses `0` to `7`", "0o17"),
+        ("0O", 8, "an octal", "octal uses `0` to `7`", "0o17"),
     ] {
         if s.starts_with(prefix) {
             let n = digits(&s[2..], radix);
+            // Decimal digits the radix doesn't have (`0b102`, `0o78`) stay in the token,
+            // so they get one precise error instead of the number-then-letter hint.
+            let stray = take_while(&s[2 + n..], |c| c == '_' || c.is_ascii_digit());
+            let len = 2 + n + stray;
+            if stray > 0 {
+                let bad = &s[2 + n..2 + n + 1];
+                errors.push(SyntaxError::new(
+                    format!("`{bad}` is not {digit} digit: {digit_set}"),
+                    range(offset + 2 + n, offset + 2 + n + 1),
+                ));
+            } else if !s[2..len].contains(|c: char| c.is_digit(radix)) {
+                errors.push(SyntaxError::new(
+                    format!("`{prefix}` must be followed by {digit} digit, as in `{example}`"),
+                    range(offset, offset + len),
+                ));
+            }
             // one `_` may follow the prefix, as in Python: 0x_FF
             let first = 2 + usize::from(s[2..].starts_with('_'));
-            segments.push((first, 2 + n));
-            end = Some(2 + n);
+            segments.push((first, len));
+            end = Some(len);
             break;
         }
     }
