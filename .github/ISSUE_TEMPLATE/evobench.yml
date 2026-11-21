@@ -1,7 +1,7 @@
-name: "🧪 PeaceBench case: real-world failure"
+name: "🧪 EvoBench case: real-world failure"
 description: Contribute a real software failure caused by a changing environment.
 title: "Bench: "
-labels: ["peacebench"]
+labels: ["evobench"]
 body:
   - type: markdown
     attributes:

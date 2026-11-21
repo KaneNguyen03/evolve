@@ -1,6 +1,6 @@
 # 🔒 Security Policy
 
-Peace is designed around **safe self-modification**: sandboxed mutations, capabilities, `@conserved` code, budgets, and human promotion gates. We take weaknesses in that model seriously, even at the design stage.
+Evolve is designed around **safe self-modification**: sandboxed mutations, capabilities, `@conserved` code, budgets, and human promotion gates. We take weaknesses in that model seriously, even at the design stage.
 
 ## 📮 Reporting a vulnerability
 
@@ -18,4 +18,4 @@ Please include what you found, how to reproduce it (or why the design allows it)
 
 ## 🗓️ Supported versions
 
-Peace has no releases yet. This policy will list supported versions starting with `v0.1`.
+Evolve has no releases yet. This policy will list supported versions starting with `v0.1`.

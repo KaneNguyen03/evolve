@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="Evolve: programs that learn from failure">
+<title>Evolve: programs that learn from failure</title>
+<rect x="0.5" y="0.5" width="1279" height="419" rx="28" fill="#000000"/>
+<g transform="translate(80.0 85.0) scale(0.9766)" fill="none" stroke="#FFFFFF" stroke-width="30">
+<path d="M212.0,128.0 A84,84 0 1 0 172.5,199.2"/>
+<line x1="44" y1="128" x2="225.9" y2="128"/>
+<circle cx="199.2" cy="172.5" r="15.0" fill="#FFFFFF" stroke="none"/>
+</g>
+<text x="380.0" y="190.0" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="112" font-weight="800" fill="#FFFFFF" text-anchor="start" letter-spacing="-3">Evolve</text>
+<text x="384.0" y="246.0" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="33" font-weight="600" fill="#FFFFFF" text-anchor="start" >Programs that learn from failure.</text>
+<text x="384.0" y="290.0" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="21" font-weight="500" fill="#A3A3A3" text-anchor="start" >Python-readable  ·  Julia data-native  ·  Rust-built  ·  AI-agent ready</text>
+<rect x="384.0" y="320.0" width="97.4" height="35.2" rx="17.6" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+<text x="432.7" y="343.7" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle" >observe</text>
+<path d="M489.4,337.6 H502.4 M497.4,332.6 L503.4,337.6 L497.4,342.6" fill="none" stroke="#A3A3A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="511.4" y="320.0" width="67.7" height="35.2" rx="17.6" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+<text x="545.3" y="343.7" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle" >vary</text>
+<path d="M587.1,337.6 H600.1 M595.1,332.6 L601.1,337.6 L595.1,342.6" fill="none" stroke="#A3A3A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="609.1" y="320.0" width="97.4" height="35.2" rx="17.6" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+<text x="657.8" y="343.7" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle" >measure</text>
+<path d="M714.6,337.6 H727.6 M722.6,332.6 L728.6,337.6 L722.6,342.6" fill="none" stroke="#A3A3A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="736.6" y="320.0" width="87.5" height="35.2" rx="17.6" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+<text x="780.3" y="343.7" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle" >select</text>
+<path d="M832.1,337.6 H845.1 M840.1,332.6 L846.1,337.6 L840.1,342.6" fill="none" stroke="#A3A3A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="854.1" y="320.0" width="107.4" height="35.2" rx="17.6" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+<text x="907.8" y="343.7" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="16" font-weight="600" fill="#FFFFFF" text-anchor="middle" >remember</text>
+</svg>

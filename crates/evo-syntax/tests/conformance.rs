@@ -6,7 +6,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use peace_syntax::{SyntaxKind, parse};
+use evo_syntax::{SyntaxKind, parse};
 
 fn repo_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -15,20 +15,20 @@ fn repo_root() -> PathBuf {
         .expect("repo root")
 }
 
-fn peace_files(dir: &Path) -> Vec<PathBuf> {
+fn evo_files(dir: &Path) -> Vec<PathBuf> {
     let mut files: Vec<_> = fs::read_dir(dir)
         .unwrap_or_else(|e| panic!("{}: {e}", dir.display()))
         .map(|e| e.unwrap().path())
-        .filter(|p| p.extension().is_some_and(|x| x == "peace"))
+        .filter(|p| p.extension().is_some_and(|x| x == "evo"))
         .collect();
     files.sort();
-    assert!(!files.is_empty(), "no .peace files in {}", dir.display());
+    assert!(!files.is_empty(), "no .evo files in {}", dir.display());
     files
 }
 
 #[test]
 fn ok_corpus_parses_cleanly_and_round_trips() {
-    for path in peace_files(&repo_root().join("tests/syntax/ok")) {
+    for path in evo_files(&repo_root().join("tests/syntax/ok")) {
         let src = fs::read_to_string(&path).unwrap();
         let parse = parse(&src);
         assert!(
@@ -52,7 +52,7 @@ fn ok_corpus_parses_cleanly_and_round_trips() {
 #[test]
 fn err_corpus_reports_expected_diagnostics_and_still_round_trips() {
     let mut problems = Vec::new();
-    for path in peace_files(&repo_root().join("tests/syntax/err")) {
+    for path in evo_files(&repo_root().join("tests/syntax/err")) {
         let src = fs::read_to_string(&path).unwrap();
         let parse = parse(&src);
         let name = path.file_name().unwrap().to_string_lossy();
@@ -83,8 +83,8 @@ fn err_corpus_reports_expected_diagnostics_and_still_round_trips() {
 
 #[test]
 fn recovery_keeps_parsing_after_an_unspecified_construct() {
-    let src = fs::read_to_string(repo_root().join("tests/syntax/err/unspecified_construct.peace"))
-        .unwrap();
+    let src =
+        fs::read_to_string(repo_root().join("tests/syntax/err/unspecified_construct.evo")).unwrap();
     let parse = parse(&src);
     let stmts: Vec<_> = parse.syntax().children().map(|n| n.kind()).collect();
     assert_eq!(
@@ -95,7 +95,7 @@ fn recovery_keeps_parsing_after_an_unspecified_construct() {
     );
 }
 
-/// Every ```peace block in README.md, docs/ and rfcs/. Blocks listed in
+/// Every ```evo block in README.md, docs/ and rfcs/. Blocks listed in
 /// tests/syntax/docs-allowlist.txt use constructs no RFC specifies yet: they must
 /// still round-trip, and must still fail (so the allowlist never goes stale).
 #[test]
@@ -120,7 +120,7 @@ fn doc_samples_parse() {
             .unwrap()
             .to_string_lossy()
             .replace('\\', "/");
-        for (n, block) in peace_blocks(&fs::read_to_string(md).unwrap())
+        for (n, block) in evo_blocks(&fs::read_to_string(md).unwrap())
             .into_iter()
             .enumerate()
         {
@@ -171,15 +171,15 @@ fn load_allowlist(path: &Path) -> BTreeMap<String, String> {
         .collect()
 }
 
-/// Extracts ```peace fenced blocks, removing the fence's own indentation.
-fn peace_blocks(md: &str) -> Vec<String> {
+/// Extracts ```evo fenced blocks, removing the fence's own indentation.
+fn evo_blocks(md: &str) -> Vec<String> {
     let mut blocks = Vec::new();
     let mut current: Option<(usize, String)> = None;
     for line in md.lines() {
         let trimmed = line.trim_start();
         let indent = line.len() - trimmed.len();
         match &mut current {
-            None if trimmed == "```peace" => current = Some((indent, String::new())),
+            None if trimmed == "```evo" => current = Some((indent, String::new())),
             Some(_) if trimmed == "```" => blocks.push(current.take().unwrap().1),
             Some((fence_indent, text)) => {
                 text.push_str(
@@ -202,7 +202,7 @@ fn every_prefix_parses_and_round_trips() {
     let root = repo_root();
     let mut checked = 0;
     for dir in ["tests/syntax/ok", "tests/syntax/err"] {
-        for path in peace_files(&root.join(dir)) {
+        for path in evo_files(&root.join(dir)) {
             let src = fs::read_to_string(&path).unwrap();
             for (cut, _) in src.char_indices() {
                 let prefix = &src[..cut];

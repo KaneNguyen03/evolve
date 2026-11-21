@@ -1,0 +1,11 @@
+for x in xs:
+    pass
+else:
+    pass
+while busy():
+    pass
+else:
+    pass
+
+# expect: 3:1: loops have no `else` clause in Evolve; use a flag or `any(...)`
+# expect: 7:1: loops have no `else` clause in Evolve; use a flag or `any(...)`

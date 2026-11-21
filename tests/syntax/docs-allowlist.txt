@@ -1,6 +1,6 @@
 # Doc code samples that use syntax no RFC specifies yet.
 #
-# Format: <file>#<n-th peace block>  <reason>
+# Format: <file>#<n-th evo block>  <reason>
 # The conformance test requires these blocks to still FAIL, so this list shrinks as
 # RFCs land. Each reason is a to-do for a future RFC. Remove an entry when its
 # construct is specified and the sample parses.

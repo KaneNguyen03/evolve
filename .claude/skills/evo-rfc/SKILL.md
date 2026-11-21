@@ -1,9 +1,9 @@
 ---
-name: peace-rfc
-description: Draft, revise, or review a Peace RFC in rfcs/ and the spec files it owns (spec/grammar.ebnf, spec/lesson.schema.json). Use for "write an RFC", "spec this Peace feature", "review RFC 0003", "update the Peace grammar", or graduating a brainstorm idea.
+name: evo-rfc
+description: Draft, revise, or review an Evolve RFC in rfcs/ and the spec files it owns (spec/grammar.ebnf, spec/lesson.schema.json). Use for "write an RFC", "spec this Evolve feature", "review RFC 0003", "update the Evolve grammar", or graduating a brainstorm idea.
 ---
 
-# Peace RFC
+# Evolve RFC
 
 RFCs decide anything that changes the language, its file formats, or its safety model. Process and statuses: `rfcs/README.md`.
 

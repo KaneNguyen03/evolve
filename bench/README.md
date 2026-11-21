@@ -1,6 +1,6 @@
-# 🧪 PeaceBench
+# 🧪 EvoBench
 
-A public benchmark of **real software failures caused by a changing environment**, and how well a system heals them. See the [roadmap](../docs/roadmap.md#4-peacebench) for goals and targets.
+A public benchmark of **real software failures caused by a changing environment**, and how well a system heals them. See the [roadmap](../docs/roadmap.md#4-evobench) for goals and targets.
 
 ## Case format v0
 
@@ -9,7 +9,7 @@ Each case is a folder in `cases/` named `NNNN-short-name`:
 | File | Purpose |
 |---|---|
 | `case.toml` | Metadata: id, category, the gene a healer may change, environment change, fitness files, invariants |
-| `program.py` | The program **as it was before** the environment changed. Phase 1 cases are Python; Peace cases come later |
+| `program.py` | The program **as it was before** the environment changed. Phase 1 cases are Python; Evolve cases come later |
 | `examples.jsonl` | **Visible** examples, one per line: `{"input": …, "expected": …}` or `{"input": …, "raises": "ErrorType"}` |
 | `holdout.jsonl` | **Hidden** examples in the same format. Healers must never read this file |
 

@@ -13,15 +13,15 @@ spec: []
 
 ## Summary
 
-Defines Peace's core data types: **scalars**, **N-dimensional arrays** with broadcasting, **DataFrames** on Apache Arrow, **units of measure**, **uncertain values**, and **missing data**. These types live in the core language, not in libraries, so they compose: an array of uncertain lengths in meters inside a DataFrame column just works.
+Defines Evolve's core data types: **scalars**, **N-dimensional arrays** with broadcasting, **DataFrames** on Apache Arrow, **units of measure**, **uncertain values**, and **missing data**. These types live in the core language, not in libraries, so they compose: an array of uncertain lengths in meters inside a DataFrame column just works.
 
 ## Motivation
 
-Today a scientist combines NumPy, pandas, pint, and uncertainties, and the four don't know about each other. Peace's data missions (scientific computing, ML, AI models) need one coherent model with Julia-level speed.
+Today a scientist combines NumPy, pandas, pint, and uncertainties, and the four don't know about each other. Evolve's data missions (scientific computing, ML, AI models) need one coherent model with Julia-level speed.
 
 ## Guide-level explanation
 
-```peace
+```evo
 g  = 9.81 ± 0.02 m/s²                 # uncertain scalar with a unit
 L  = [0.50, 0.75, 1.00] m             # array with a unit
 T  = 2 * π .* sqrt.(L ./ g)           # units and uncertainty propagate: T is in s

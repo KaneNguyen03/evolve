@@ -13,30 +13,30 @@ spec: [spec/lesson.schema.json]
 
 ## Summary
 
-A **Lesson** is the structured record of one failure. The **fossil record** is the append-only store of all Lessons and lineage events for a project. This RFC defines the Lesson fields, the storage layout, privacy rules, and the query surface. It's the first thing the Phase 1 engine (`peace-fossil`) builds, and it's shared by the Peace language and the Python engine.
+A **Lesson** is the structured record of one failure. The **fossil record** is the append-only store of all Lessons and lineage events for a project. This RFC defines the Lesson fields, the storage layout, privacy rules, and the query surface. It's the first thing the Phase 1 engine (`evo-fossil`) builds, and it's shared by the Evolve language and the Python engine.
 
 ## Motivation
 
-Every promise Peace makes (agents that learn, self-healing pipelines, regression evals from production) depends on failures being **data with a stable shape**. If Lessons are just log lines, none of it works. This schema is frozen at v0 at the end of Phase 0 so that both tracks build on it.
+Every promise Evolve makes (agents that learn, self-healing pipelines, regression evals from production) depends on failures being **data with a stable shape**. If Lessons are just log lines, none of it works. This schema is frozen at v0 at the end of Phase 0 so that both tracks build on it.
 
 ## Guide-level explanation
 
-```peace
+```evo
 attempt:
     order = parse_order(row)
 learn ParseError as err:
     remember err                           # writes one Lesson
     quarantine(row)
 
-peace.fossils()
+evo.fossils()
   |> filter(_.gene == "parse_order" and _.origin == :prod)
   |> groupby(:kind)
   |> count()
 ```
 
 ```bash
-peace lessons --gene parse_order --since 7d
-peace lessons show 01JD3Q8K6Z9X2V4M7N5B1C0A8E
+evo lessons --gene parse_order --since 7d
+evo lessons show 01JD3Q8K6Z9X2V4M7N5B1C0A8E
 ```
 
 ## Reference-level explanation
@@ -47,17 +47,17 @@ The normative definition is [`spec/lesson.schema.json`](../spec/lesson.schema.js
 
 | Field | Type | Required | Meaning |
 |---|---|:---:|---|
-| `schema` | `"peace.lesson/v0"` | ✅ | Format version |
+| `schema` | `"evo.lesson/v0"` | ✅ | Format version |
 | `id` | ULID string | ✅ | Unique, time-sortable id |
 | `time` | RFC 3339 timestamp (UTC) | ✅ | When the failure happened |
-| `project` | string | ✅ | Project name from `peace.toml` (or Python package) |
+| `project` | string | ✅ | Project name from `evo.toml` (or Python package) |
 | `origin` | `dev` \| `test` \| `ci` \| `staging` \| `prod` \| `sandbox` | ✅ | Where it happened |
 | `kind` | string | ✅ | Error type path, e.g. `std.parse.ParseError` |
 | `message` | string | ✅ | Human-readable message, **after redaction** |
 | `site` | object | ✅ | `module`, `function`, `gene` (if any), `variant` (if any), `file`, `line`, `col` |
 | `stack` | array of frames | | Frames as `{module, function, file, line}`; no local variable values |
 | `inputs` | array of input records | | Each argument as `{name, type, fingerprint, sample?}`, see Privacy |
-| `env` | object | | `peace_version`, `os`, `arch`, dependency versions, capabilities granted |
+| `env` | object | | `evo_version`, `os`, `arch`, dependency versions, capabilities granted |
 | `recorded` | bool | ✅ | `true` if `remember` was called; `false` for implicit debug Lessons |
 | `severity` | `info` \| `warn` \| `error` \| `fatal` | ✅ | |
 | `tags` | array of strings | | Free-form labels |
@@ -72,7 +72,7 @@ The same store holds **lineage events**, one per state change of a variant (RFC 
 ### Storage layout
 
 ```
-.peace/
+.evo/
 ├── fossils/
 │   ├── lessons/date=2026-11-21/part-0000.parquet   # append-only, partitioned by day
 │   └── lineage/date=2026-11-21/part-0000.parquet
@@ -82,7 +82,7 @@ The same store holds **lineage events**, one per state change of a variant (RFC 
 
 - **Append-only.** Records are never edited. A `resolution` update is a new lineage event that the query layer joins in.
 - **Write path:** buffered in memory, flushed on size (1 MiB), time (5 s), or process exit. A crash may lose the last buffer, never corrupt earlier files.
-- **Export:** `peace lessons export --format jsonl|parquet`.
+- **Export:** `evo lessons export --format jsonl|parquet`.
 
 ### Privacy and redaction (on by default)
 
@@ -101,7 +101,7 @@ The same store holds **lineage events**, one per state change of a variant (RFC 
 ## Drawbacks
 
 - Fingerprints without values limit what an agent can learn from a single Lesson. Mitigation: opt-in samples for genes where data is not sensitive.
-- Parquet plus SQLite is two formats. It keeps queries fast and files portable, at the cost of an index that can drift. `peace fossils reindex` rebuilds it.
+- Parquet plus SQLite is two formats. It keeps queries fast and files portable, at the cost of an index that can drift. `evo fossils reindex` rebuilds it.
 
 ## Alternatives
 
@@ -124,4 +124,4 @@ Sentry and similar error trackers (grouping by fingerprint), OpenTelemetry (stru
 - JSON Schema validation for every Lesson written in tests.
 - Property tests: write N Lessons, crash at a random point, reopen; every flushed Lesson is readable and the index matches.
 - Redaction tests with a corpus of synthetic PII in messages and samples.
-- Python engine and Peace runtime write Lessons that the other can read (cross-track conformance).
+- Python engine and Evolve runtime write Lessons that the other can read (cross-track conformance).

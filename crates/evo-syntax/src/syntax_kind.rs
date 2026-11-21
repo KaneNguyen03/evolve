@@ -1,4 +1,4 @@
-//! Token and node kinds for the Peace concrete syntax tree.
+//! Token and node kinds for the Evolve concrete syntax tree.
 
 macro_rules! syntax_kinds {
     ($($name:ident),* $(,)?) => {
@@ -32,7 +32,7 @@ syntax_kinds! {
     PLUS, MINUS, STAR, STAR2, SLASH, SLASH2, BACKSLASH, PERCENT, CARET, PIPE, PIPE_GT, PLUS_MINUS,
     DOT_PLUS, DOT_MINUS, DOT_STAR, DOT_SLASH, DOT_BACKSLASH, DOT_CARET,
     PLUS_EQ, MINUS_EQ, STAR_EQ, SLASH_EQ, SLASH2_EQ, PERCENT_EQ, CARET_EQ,
-    // not Peace operators: lexed only so the parser can give a hint (`&&`, `||`, `!`)
+    // not Evolve operators: lexed only so the parser can give a hint (`&&`, `||`, `!`)
     AMP2, PIPE2, BANG,
     // ---- hard keywords (RFC 0001): never names ----
     AND_KW, AS_KW, ASSERT_KW, ATTEMPT_KW, ALWAYS_KW, BREAK_KW, CONTINUE_KW, DEF_KW, ELIF_KW,
@@ -119,11 +119,11 @@ impl From<SyntaxKind> for rowan::SyntaxKind {
     }
 }
 
-/// The rowan language tag for Peace trees.
+/// The rowan language tag for Evolve trees.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum PeaceLanguage {}
+pub enum EvoLanguage {}
 
-impl rowan::Language for PeaceLanguage {
+impl rowan::Language for EvoLanguage {
     type Kind = SyntaxKind;
 
     fn kind_from_raw(raw: rowan::SyntaxKind) -> SyntaxKind {

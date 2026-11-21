@@ -1,6 +1,6 @@
 [package]
-name = "peace-syntax"
-description = "Lexer and lossless, error-tolerant parser for the Peace language (RFC 0001)"
+name = "evo-syntax"
+description = "Lexer and lossless, error-tolerant parser for the Evolve language (RFC 0001)"
 version.workspace = true
 edition.workspace = true
 license.workspace = true

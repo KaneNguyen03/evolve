@@ -13,21 +13,21 @@ spec: [spec/grammar.ebnf]
 
 ## Summary
 
-Peace's syntax looks like Python: indentation, `def`, f-strings, comprehensions, and readable keywords. It adds a small set of Julia-style features for data work: broadcasting, `^`, symbols, string macros, and `|>`. It also adds Peace's own constructs for evolution: `gene`, `fitness`, `attempt / learn`, and `remember`.
+Evolve's syntax looks like Python: indentation, `def`, f-strings, comprehensions, and readable keywords. It adds a small set of Julia-style features for data work: broadcasting, `^`, symbols, string macros, and `|>`. It also adds Evolve's own constructs for evolution: `gene`, `fitness`, `attempt / learn`, and `remember`.
 
 This RFC fixes the lexical rules, keywords, statements, expressions, operator precedence, and diagnostics for the Phase 1 interpreter. The grammar lives in [`spec/grammar.ebnf`](../spec/grammar.ebnf). It is written in the same PEG-style notation as the [Python 3.16 grammar](https://docs.python.org/3.16/reference/grammar.html).
 
-Revision 2 went through the [Python 3.16 language reference](https://docs.python.org/3.16/reference/index.html) section by section. For each Python rule it records whether Peace adopts it, adapts it, declines it, or defers it, and why ([Lessons from Python](#lessons-from-python-316)).
+Revision 2 went through the [Python 3.16 language reference](https://docs.python.org/3.16/reference/index.html) section by section. For each Python rule it records whether Evolve adopts it, adapts it, declines it, or defers it, and why ([Lessons from Python](#lessons-from-python-316)).
 
 ## Motivation
 
-The Phase 1 parser (`peace-syntax`) needs a frozen target. Every code sample in the docs should parse under this RFC. Where the docs disagree with each other, this RFC decides.
+The Phase 1 parser (`evo-syntax`) needs a frozen target. Every code sample in the docs should parse under this RFC. Where the docs disagree with each other, this RFC decides.
 
-Design rule: **if a Python programmer can guess what a line does, keep it. If a Julia user would miss a data feature, add it with the smallest syntax possible.** Thirty years of Python also show which rules cost the most to fix later, such as hard keywords, silent escapes, and implicit concatenation. Peace has no users to break yet, so this RFC fixes those now.
+Design rule: **if a Python programmer can guess what a line does, keep it. If a Julia user would miss a data feature, add it with the smallest syntax possible.** Thirty years of Python also show which rules cost the most to fix later, such as hard keywords, silent escapes, and implicit concatenation. Evolve has no users to break yet, so this RFC fixes those now.
 
 ## Guide-level explanation
 
-```peace
+```evo
 from std.data import read
 
 def mean(xs: list[float]) -> float:
@@ -51,7 +51,7 @@ by_month = sales |> groupby(:month) |> sum(:revenue)
 
 Revision 2 adds the Python constructs a Python programmer reaches for first:
 
-```peace
+```evo
 from std.io import (open, write)
 
 model = load("pendulum.onnx")                 # `model` is a soft keyword: still a normal name here
@@ -73,7 +73,7 @@ ok = 0 <= p <= 1
 
 What a Python user needs to unlearn:
 
-| Python | Peace | Why |
+| Python | Evolve | Why |
 |---|---|---|
 | `True`, `False`, `None` | `true`, `false`, `none` | Consistent lowercase keywords |
 | `x ** 2` | `x ^ 2` | Julia and math convention. `**` is an error with a hint, except as `**kwargs` |
@@ -90,7 +90,7 @@ What a Python user needs to unlearn:
 ### Lexical structure
 
 **Source text.**
-- Source files are UTF-8 with the extension `.peace`. There is no encoding declaration.
+- Source files are UTF-8 with the extension `.evo`. There is no encoding declaration.
 - A byte-order mark is allowed only at offset 0, where it is kept as trivia.
 - Lines end in LF or CRLF. A lone CR is an error.
 - The NUL character is an error anywhere.
@@ -118,7 +118,7 @@ There is **no backslash continuation**. `\` is left division (RFC 0005). Blank a
 - Superscript digits and `⁻` never belong to an identifier. They are unit powers, so `s²` is `s` followed by `²`.
 - Identifiers are compared after **NFC** normalization, not Python's NFKC: NFKC would fold `ℝ`, `𝐱`, and `x²` into `R`, `x`, and `x2`, which matter in math-heavy code. The CST keeps the original spelling.
 - A leading `_` makes a name private to its module.
-- Peace reserves no `__dunder__` names: operators are methods of generic functions (see [Multiple dispatch](#multiple-dispatch)).
+- Evolve reserves no `__dunder__` names: operators are methods of generic functions (see [Multiple dispatch](#multiple-dispatch)).
 
 **`_` has exactly three roles**:
 1. in a target (`for _ in 0..3`, `a, _ = pair`) it discards the value;
@@ -130,7 +130,7 @@ There is **no backslash continuation**. `\` is left division (RFC 0005). Blank a
 | Kind | Examples | Rules |
 |---|---|---|
 | Integer | `42`, `1_000_000`, `0xFF`, `0o17`, `0b1010` | `_` only between digits, or once right after `0x`, `0o`, `0b` (`1__0`, `_1`, `1_` are errors). No leading zeros: `0123` is an error with the hint `0o123`. Arbitrary-precision `int`; sized types come from annotations |
-| Float | `3.14`, `1e-5`, `2.5e3` | Digits on **both** sides of `.`: `.5` and `5.` are errors with the hints `0.5` and `5.0`, because `.` and `..` are operators in Peace. 64-bit by default |
+| Float | `3.14`, `1e-5`, `2.5e3` | Digits on **both** sides of `.`: `.5` and `5.` are errors with the hints `0.5` and `5.0`, because `.` and `..` are operators in Evolve. 64-bit by default |
 
 - A number directly followed by a letter or `_` is an error, so `5kg` gives the hint "write `5 kg`" and `2π` gives "write `2 * π`". Python 3.16 is moving the same way for `1or x`.
 - Units are written after a space (`9.81 m/s²`) and resolved by RFC 0005.
@@ -171,7 +171,7 @@ A user macro such as `sql"…"`, `read"…"`, or `prompt"…"` that interpolates
 
 ### Keywords
 
-Peace follows Python's lesson from `match` (3.10), `type` (3.12), and `lazy` (3.15): **new keywords are soft**. A soft keyword acts as a keyword only where the grammar expects it and is an ordinary name everywhere else, so adding one never breaks code. Python had to break code to make `async` hard in 3.7. Soft keywords spare Peace that.
+Evolve follows Python's lesson from `match` (3.10), `type` (3.12), and `lazy` (3.15): **new keywords are soft**. A soft keyword acts as a keyword only where the grammar expects it and is an ordinary name everywhere else, so adding one never breaks code. Python had to break code to make `async` hard in 3.7. Soft keywords spare Evolve that.
 
 **Hard keywords** (27). These start control flow or literals and are never names:
 
@@ -296,15 +296,15 @@ From lowest to highest:
 All `def`s with the same name visible in a module are **methods of one generic function**.
 - A call dispatches on the runtime types of **all** positional arguments and chooses the most specific method.
 - Ambiguity is a compile-time error when it can be detected, and otherwise a runtime `AmbiguityError` that is recorded as a Lesson.
-- Operators are generic functions too (`+` is `add`), so Peace needs no `__add__`.
+- Operators are generic functions too (`+` is `add`), so Evolve needs no `__add__`.
 
 ### Start rules
 
 | Rule | Input | Used by |
 |---|---|---|
-| `file` | statements to end of file | `.peace` files |
+| `file` | statements to end of file | `.evo` files |
 | `repl` | one statement; a compound statement ends at a blank line | the REPL |
-| `eval` | one expression | notebooks, `peace eval`, fitness `score =` expressions |
+| `eval` | one expression | notebooks, `evo eval`, fitness `score =` expressions |
 
 ### Diagnostics
 
@@ -314,7 +314,7 @@ Python 3.10 and later show that **hints for likely mistakes** are the cheapest w
 
 | Input | Message |
 |---|---|
-| `x ** 2` | `**` is not Peace syntax; use `^` for powers |
+| `x ** 2` | `**` is not Evolve syntax; use `^` for powers |
 | `True`, `False`, `None` | Python spelling: use `true`, `false`, `none` |
 | `lambda x: …` | Python spelling: use `x -> …` |
 | `try:`, `except`, `finally:` | use `attempt:`, `learn`, `always:` |
@@ -337,10 +337,10 @@ Python 3.10 and later show that **hints for likely mistakes** are the cheapest w
 
 Source: the [Python 3.16 language reference](https://docs.python.org/3.16/reference/index.html) (3.16.0a2 docs), including the 3.14 and 3.15 changes it describes.
 
-| Python rule | Peace | Why |
+| Python rule | Evolve | Why |
 |---|---|---|
 | PEG grammar with ordered choice, lookahead, and `s.e+` (PEP 617) | **Adopt** the notation in `spec/grammar.ebnf` | The rules read the same as Python's reference. The parser stays hand-written for lossless trees and error recovery |
-| Grammar page generated from the parser's own grammar | **Adapt**: conformance and doc-sample tests | Peace's parser is hand-written, so tests keep the spec and parser from drifting |
+| Grammar page generated from the parser's own grammar | **Adapt**: conformance and doc-sample tests | Evolve's parser is hand-written, so tests keep the spec and parser from drifting |
 | `invalid_*` rules that produce targeted messages | **Adopt** as `# error:` lines plus the Diagnostics table | Good errors are part of the grammar, not an afterthought |
 | Soft keywords (`match`, `case`, `type`, `_`, `lazy`) | **Adopt** for all declaration keywords and `with` | `model`, `agent`, `schema`, and `population` are common names in AI code |
 | Indentation stack, INDENT/DEDENT | **Adopt** | |
@@ -355,7 +355,7 @@ Source: the [Python 3.16 language reference](https://docs.python.org/3.16/refere
 | f-strings per PEP 701 (nesting, quote reuse, `=`) | **Adopt** | |
 | t-strings (PEP 750) | **Adopt** as `t"…"`, and as the input every interpolating string macro receives | Safe prompts and SQL by construction |
 | `0123` is an error; `_` between digits | **Adopt** | |
-| `.5` and `5.` floats | **Decline** | `.` and `..` are operators in Peace |
+| `.5` and `5.` floats | **Decline** | `.` and `..` are operators in Evolve |
 | Number followed by a keyword (`1or x`), warning in 3.16 and later an error | **Adopt as an error** for any letter | Units need a space anyway |
 | Imaginary literals `1j` | **Defer** to RFC 0005 | |
 | Comparison chaining | **Adapt**: one direction only; `in`, `is`, `!=` do not chain | `x < y > z` and `x == y in z` are documented Python traps |
@@ -366,7 +366,7 @@ Source: the [Python 3.16 language reference](https://docs.python.org/3.16/refere
 | `-x ** 2 == -(x ** 2)` | **Adopt** for `^` | Same as math |
 | `//` floor division | **Adopt** | Python users type it |
 | `@` matrix multiply | **Decline** | `*` and `.*` (RFC 0005) |
-| Bitwise operators | **Decline** in Phase 1 | Rare in data and AI code; their tokens have Peace meanings |
+| Bitwise operators | **Decline** in Phase 1 | Rare in data and AI code; their tokens have Evolve meanings |
 | Comprehensions and generator expressions; `*` in comprehensions (PEP 798) | **Adopt** | The most guessable Python construct |
 | `*args`, `**kwargs`, keyword-only `*` | **Adopt** | |
 | Positional-only `/` | **Defer** | Interacts with dispatch; see unresolved questions |
@@ -397,13 +397,13 @@ Source: the [Python 3.16 language reference](https://docs.python.org/3.16/refere
 | Injection through interpolated strings in prompts, SQL, and shell | String macros receive templates, never joined strings (RFC 0004 capabilities limit the damage) |
 | A check removed by an optimization flag | `assert` is never compiled out; safety code fails closed (RFC 0004) |
 | A failure silently swallowed by `return` in `always` | Parse error |
-| Parse errors | Error-tolerant parser; each error has a fix hint; the REPL records it as a Lesson (`peace lessons --mine`) |
+| Parse errors | Error-tolerant parser; each error has a fix hint; the REPL records it as a Lesson (`evo lessons --mine`) |
 | Mutations producing unreadable or invalid code | Mutations operate on the CST, never on text, so a variant always round-trips to valid, formatted source |
 
 ## Drawbacks
 
 - `true/false/none`, `^`, and the comparison-chain limits break Python muscle memory. The parser recognizes the Python spellings and gives a one-line hint for each.
-- Soft keywords make tools such as syntax highlighters and simple tokenizers context-sensitive, as Python found with `match`. Peace limits this to one rule: a statement-start keyword followed by a NAME.
+- Soft keywords make tools such as syntax highlighters and simple tokenizers context-sensitive, as Python found with `match`. Evolve limits this to one rule: a statement-start keyword followed by a NAME.
 - `_` placeholder scoping is a classic source of confusion (Scala). The "smallest enclosing call argument" rule is simple but must be taught early.
 - Evaluating defaults per call costs time when a default is expensive. Hoist the value to a module-level constant.
 
@@ -425,12 +425,12 @@ Python (indentation, f-strings and t-strings, comprehensions, soft keywords, PEG
 3. Is the symbol-wins rule for `xs[:n]` acceptable to Python users, or should symbols in index position need a different spelling?
 4. `class` vs. `struct` vs. `schema`: which record types exist in Phase 1? Leaning: `schema` for validated data records, `struct` for plain records, no inheritance. The types RFC also owns `def f[T]` and `type X = …`.
 5. Positional-only parameters (`/`): needed for dispatch-only methods, or do keyword-only parameters suffice?
-6. Confusables: lint on mixed-script identifiers only (as Rust does), or on any identifier that is confusable with another name in scope? Owner: the `peace-syntax` maintainers.
+6. Confusables: lint on mixed-script identifiers only (as Rust does), or on any identifier that is confusable with another name in scope? Owner: the `evo-syntax` maintainers.
 7. Should leaving a `with` block because of a failure record a Lesson on its own, or only through `learn`/`remember`? Owner: RFC 0002.
 
 ## Test plan
 
-- **Conformance corpus** in `tests/syntax/ok/`, one `.peace` file per construct, plus every `peace` block from `README.md`, `docs/`, and `rfcs/`, parsed in CI. Blocks that use syntax not yet specified or implemented are listed in `tests/syntax/docs-allowlist.txt` with a reason, and must keep failing until they parse.
+- **Conformance corpus** in `tests/syntax/ok/`, one `.evo` file per construct, plus every `evo` block from `README.md`, `docs/`, and `rfcs/`, parsed in CI. Blocks that use syntax not yet specified or implemented are listed in `tests/syntax/docs-allowlist.txt` with a reason, and must keep failing until they parse.
 - **Round-trip:** `parse → CST → print` reproduces the input byte for byte, for every file and every prefix of every corpus file.
 - **Diagnostics:** one file in `tests/syntax/err/` per row of the Diagnostics table, asserting the message and its position.
 - **Lexical edge cases:** BOM at offset 0 and elsewhere, lone CR, bidi controls in code, strings, and comments, NFC-equal identifiers resolving to one name, `x²` lexing as two tokens, and number-then-letter errors.

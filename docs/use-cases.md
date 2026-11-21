@@ -1,19 +1,19 @@
-<img src="../assets/logo/peace-mark.svg" width="72" align="right" alt="Peace logo"/>
+<img src="../assets/logo/evolve-mark.svg" width="72" align="right" alt="Evolve logo"/>
 
-# 🧪 Peace: Use Cases
+# 🧪 Evolve: Use Cases
 
-> A thinking document. Each scenario covers **the pain today**, **how Peace changes it**, a **code sketch**, and the **open questions** it raises. Syntax is illustrative and will change.
+> A thinking document. Each scenario covers **the pain today**, **how Evolve changes it**, a **code sketch**, and the **open questions** it raises. Syntax is illustrative and will change.
 
 ---
 
-## Prioritization: where Peace wins first
+## Prioritization: where Evolve wins first
 
 Not every use case is equally ready. Each one is scored on **pain** (how much it hurts today), **measurability** (can we write a clear `fitness`?), and **safety** (how bad a wrong promotion would be), then mapped to the [roadmap](roadmap.md) phase that unlocks it.
 
 | # | Use case | Pain | Measurable | Safe to evolve | Unlocked in | Priority |
 |---|---|---|---|---|---|---|
 | 1 | Self-healing data pipelines | 🔴 High | 🟢 Clear (historical rows) | 🟢 Quarantine limits damage | Phase 1 (Python), Phase 3 (native) | ⭐ **Beachhead** |
-| 2 | AI coding agents that learn | 🔴 High | 🟢 PeaceBench | 🟢 Sandboxed | Phase 1 → Phase 5 | ⭐ **Beachhead** |
+| 2 | AI coding agents that learn | 🔴 High | 🟢 EvoBench | 🟢 Sandboxed | Phase 1 → Phase 5 | ⭐ **Beachhead** |
 | 3 | Resilient API integrations | 🟠 Med–High | 🟢 Recorded contracts | 🟡 Needs capabilities | Phase 4 | High |
 | 10 | Evolving prompts and agent tools | 🟠 Med–High | 🟡 Eval sets | 🟢 Sandboxed | Phase 5 | High |
 | 13 | AI-native applications | 🔴 High | 🟡 Eval sets + Lessons | 🟢 Escalation to humans | Phase 5 | 🎯 **Mission** |
@@ -29,12 +29,12 @@ Not every use case is equally ready. Each one is scored on **pain** (how much it
 
 **Why these two beachheads:**
 
-- **Self-healing data pipelines** have frequent, expensive, *repetitive* failures (schema and format drift) with an obvious fitness signal (do historical rows still parse the same way?). Quarantine and partial results make a wrong guess cheap. This is the demo that sells Peace to teams.
-- **AI agents that learn** is the reason Peace exists now rather than ten years ago. Agents are the most frequent "programmers" that will ever use the evolution loop, and PeaceBench gives an objective way to prove the uplift.
+- **Self-healing data pipelines** have frequent, expensive, *repetitive* failures (schema and format drift) with an obvious fitness signal (do historical rows still parse the same way?). Quarantine and partial results make a wrong guess cheap. This is the demo that sells Evolve to teams.
+- **AI agents that learn** is the reason Evolve exists now rather than ten years ago. Agents are the most frequent "programmers" that will ever use the evolution loop, and EvoBench gives an objective way to prove the uplift.
 
-Both can start delivering value in **Phase 1 through the Python engine**, before the Peace language is finished.
+Both can start delivering value in **Phase 1 through the Python engine**, before the Evolve language is finished.
 
-**Beachheads vs. mission:** the beachheads prove the loop on problems that are cheap to get wrong. The 🎯 **mission** use cases (AI models, AI-native apps, and agent-to-agent systems) are *why* Peace exists. Each beachhead builds a piece the mission needs: Lessons and fitness (1, 2), typed prompts and tools (10), sandboxed capabilities (3), and safety invariants (7, 11).
+**Beachheads vs. mission:** the beachheads prove the loop on problems that are cheap to get wrong. The 🎯 **mission** use cases (AI models, AI-native apps, and agent-to-agent systems) are *why* Evolve exists. Each beachhead builds a piece the mission needs: Lessons and fitness (1, 2), typed prompts and tools (10), sandboxed capabilities (3), and safety invariants (7, 11).
 
 ### Applications by industry
 
@@ -58,10 +58,10 @@ Both can start delivering value in **Phase 1 through the Python engine**, before
 ### The pain today
 A vendor renames `customer_id` to `customerId`, or starts sending dates as `21/11/2026` instead of `2026-11-21`. The nightly ETL crashes, someone gets paged, writes a one-line fix, and redeploys. Next month it happens again with a different column.
 
-### With Peace
+### With Evolve
 The parsing and mapping steps are `gene`s. When they fail, the runtime records a Lesson with the offending rows, generates variants (for example, "accept a camelCase alias" or "try an alternate date format"), validates them against historical data plus the new rows, and queues the fittest one for approval. Meanwhile the failing rows go to quarantine, so the rest of the batch still lands.
 
-```peace
+```evo
 schema Order:
     customer_id: str
     ordered_at:  Date
@@ -100,15 +100,15 @@ pipeline nightly:
 ### The pain today
 An agent writes code, runs it, sees a stack trace, edits, and runs again. Across sessions it forgets everything. The same mistakes (wrong API version, off-by-one, missing null check) come back in every new task. Success is judged by "tests pass?", a single bit.
 
-### With Peace
+### With Evolve
 - Every failure is a typed **Lesson** the agent can query, not just read.
 - **Fitness** is a continuous reward signal (accuracy, latency, memory, cost), so the agent can tell "better" from "merely passing".
 - The **fossil record** is long-term memory that persists across sessions and agents.
-- `peace serve --mcp` gives the agent tools such as `lessons.query`, `gene.mutate`, `fitness.run`, and `lineage.show`.
+- `evo serve --mcp` gives the agent tools such as `lessons.query`, `gene.mutate`, `fitness.run`, and `lineage.show`.
 
-```peace
+```evo
 # What an agent can ask before writing new code:
-past = peace.fossils()
+past = evo.fossils()
   |> filter(_.module == "billing" and _.kind == "TypeError")
   |> select(:message, :fix_diff, :fitness_delta)
   |> sort(:fitness_delta, rev=true)
@@ -128,10 +128,10 @@ The agent sees which fixes worked before and by how much, then proposes a mutati
 ### The pain today
 Integrations break silently when a partner adds a field, changes an enum, or paginates differently. Fixes are reactive and manual.
 
-### With Peace
+### With Evolve
 Adapters are genes whose fitness comes from **contract examples** (recorded real responses) plus invariants about the domain model. A failure triggers a heal cycle against freshly recorded responses. Because the `http` capability is granted only to the fetch step, a mutation in the parser can never start calling the network.
 
-```peace
+```evo
 @conserved                               # auth logic never mutates
 def sign(req: Request) -> Request: ...
 
@@ -154,10 +154,10 @@ fitness parse_shipment:
 ### The pain today
 Scientists juggle NumPy, pandas, a units library, an uncertainty library, and a separate optimization framework. Units and error bars get lost between libraries. Exploring model variants means copy-pasted notebooks.
 
-### With Peace
+### With Evolve
 Units and uncertainty are part of the type system. Arrays and DataFrames are native. Model exploration is a `population`.
 
-```peace
+```evo
 data = read"lab/pendulum.csv"            # columns carry units from the header
 
 gene def pendulum(L: m, θ0: rad) -> s:
@@ -184,10 +184,10 @@ Evolution here is *symbolic regression*: the result is a readable formula you ca
 ### The pain today
 Cache eviction, job scheduling, query planning, and compression levels are tuned by hand once and then left alone, even though workloads keep drifting.
 
-### With Peace
+### With Evolve
 Heuristics are genes with benchmark-driven fitness, evolved offline against recorded workloads and promoted with a human gate.
 
-```peace
+```evo
 gene def evict_score(entry: CacheEntry, now: Time) -> f64:
     return entry.hits / (now - entry.last_access).seconds
 
@@ -207,10 +207,10 @@ fitness evict_score:
 ### The pain today
 You need Optuna, Ray Tune, W&B, and glue code. Search spaces live in YAML, separate from the model code.
 
-### With Peace
+### With Evolve
 The search space lives next to the code as mutable parameters (`~` marks an evolvable constant with a range).
 
-```peace
+```evo
 gene def train(data: Dataset) -> Model:
     lr     = ~0.001  in 1e-5..1e-1 log
     layers = ~4      in 2..12
@@ -222,7 +222,7 @@ fitness train:
 ```
 
 ### Open questions
-- Should Peace integrate with existing trackers (MLflow, W&B) or treat the fossil record as the tracker?
+- Should Evolve integrate with existing trackers (MLflow, W&B) or treat the fossil record as the tracker?
 
 ---
 
@@ -231,10 +231,10 @@ fitness train:
 ### The pain today
 Controller gains are tuned in the lab, then the robot meets a new floor surface, payload, or temperature. Retuning means a technician visit.
 
-### With Peace
+### With Evolve
 Only *parametric* mutation is allowed in the field, inside a `@conserved` safety envelope enforced by invariants. New gains are evaluated in simulation or shadow mode before they control the actuator.
 
-```peace
+```evo
 @conserved
 def safety_envelope(cmd: Torque) -> Torque:
     return clamp(cmd, -5 N*m, 5 N*m)
@@ -259,10 +259,10 @@ fitness pid:
 ### The pain today
 Evolutionary simulations (ecology, economics, game AI) reimplement genomes, mutation, and selection from scratch every time.
 
-### With Peace
-The simulation agents *are* Peace genes. The language's evolution engine is the simulation's evolution engine.
+### With Evolve
+The simulation agents *are* Evolve genes. The language's evolution engine is the simulation's evolution engine.
 
-```peace
+```evo
 species Forager:
     gene def decide(self, view: Grid) -> Action: ...
 
@@ -283,9 +283,9 @@ pop.lineage().plot()                     # phylogenetic tree of strategies
 ### The pain today
 Beginners experience errors as personal failure. Red text means "you're bad at this".
 
-### With Peace
+### With Evolve
 The language's culture says failure is data. Students:
-- see their Lessons as a personal learning log (`peace lessons --mine`),
+- see their Lessons as a personal learning log (`evo lessons --mine`),
 - watch a function improve generation by generation,
 - learn testing naturally, because fitness *is* testing,
 - learn about evolution, statistics, and uncertainty along the way.
@@ -297,10 +297,10 @@ The language's culture says failure is data. Students:
 ### The pain today
 LLM applications are tuned by trial and error: someone edits a prompt, eyeballs a few outputs, and ships. Tool descriptions and agent routing rules drift out of date as models change. Each model upgrade restarts the guesswork.
 
-### With Peace
+### With Evolve
 Prompts, tool schemas, and routing policies are genes. Eval sets are fitness. Every model upgrade becomes a new *environment* that triggers re-selection, with lineage showing exactly which prompt version shipped with which model.
 
-```peace
+```evo
 gene prompt summarize_ticket:
     """
     Summarize the support ticket in 3 bullet points.
@@ -317,7 +317,7 @@ evolve(summarize_ticket, size=8, generations=5, strategy=ask_agent, budget=$5)
 ```
 
 ### Open questions
-- LLM-as-judge fitness can itself be gamed. Should Peace require a human-labeled holdout for every prompt gene?
+- LLM-as-judge fitness can itself be gamed. Should Evolve require a human-labeled holdout for every prompt gene?
 - How do cost budgets (`budget=$5`) interact with the provider's own rate limits?
 
 ---
@@ -327,10 +327,10 @@ evolve(summarize_ticket, size=8, generations=5, strategy=ask_agent, budget=$5)
 ### The pain today
 Runbooks are written after incidents and then rot. On-call engineers repeat the same diagnostic steps at 3 a.m.
 
-### With Peace
-Runbook steps are genes. Fitness comes from replaying past incidents in a staging environment, and invariants encode what must never happen (for example, "never scale below 2 replicas" or "never delete data"). Peace *proposes* remediations with evidence. A human executes or approves.
+### With Evolve
+Runbook steps are genes. Fitness comes from replaying past incidents in a staging environment, and invariants encode what must never happen (for example, "never scale below 2 replicas" or "never delete data"). Evolve *proposes* remediations with evidence. A human executes or approves.
 
-```peace
+```evo
 @conserved
 def forbidden(action: Action) -> bool:
     return action.kind in {DeleteVolume, DropTable} or action.replicas < 2
@@ -353,10 +353,10 @@ fitness remediate:
 ### The pain today
 Models are trained once, evaluated once, and frozen. Architecture search, safety evaluation, and context adaptation each live in a different tool. Safety is often a separate filter bolted on after training, and nothing stops a "better" checkpoint from quietly regressing on it.
 
-### With Peace
+### With Evolve
 Gradient descent trains the weights; **evolution shapes everything around them**: architecture, modules, hyperparameters, and context-specific variants (an idea related to population-based training). Safety and robustness are not afterthoughts but **hard invariants of fitness**.
 
-```peace
+```evo
 module Encoder(dim: int):
     layers = [Attention(dim, heads=~8 in 4..16), MLP(dim, ratio=~4 in 2..8)]
 
@@ -365,7 +365,7 @@ gene model Assistant:
     memory   = Retrieval(index="kb/")
     tools    = [search, calculator]                 # world interaction via capabilities
     adapters = species(by=context)                  # one adapter line per context
-    @conserved safety = SafetyFilter(policy="policies/v3.peace")
+    @conserved safety = SafetyFilter(policy="policies/v3.evo")
 
 fitness Assistant:
     evals     "evals/quality/*.jsonl", "evals/robustness/*.jsonl"
@@ -381,7 +381,7 @@ def respond(m: Assistant, ctx: Code,    q: Query): return m.adapters[Code].answe
 ```
 
 ### Open questions
-- Which tensor and autodiff backend should Peace build on? Rust crates such as Burn or Candle, or bindings to an existing runtime?
+- Which tensor and autodiff backend should Evolve build on? Rust crates such as Burn or Candle, or bindings to an existing runtime?
 - How do we make evolution affordable at model scale? Evolve small proxies, then transfer? Evolve adapters only?
 - Can safety invariants on models ever be *proven*, or only tested? What's the minimum eval coverage before a promotion?
 
@@ -392,15 +392,15 @@ def respond(m: Assistant, ctx: Code,    q: Query): return m.adapters[Code].answe
 ### The pain today
 Prompts are string constants, tools are loosely typed JSON, evals live in a separate notebook, and production failures disappear into logs. Every model upgrade means re-checking everything by hand.
 
-### With Peace
+### With Evolve
 Prompts, tools, memory, and evals are language features. Every failure in production becomes a Lesson, then a regression eval, then input to the next evolution cycle.
 
-```peace
+```evo
 app SupportDesk:
     gene prompt classify:
         """Classify the ticket as billing, bug, or how-to. Reply with one word."""
     agent resolver = Agent(model=any, tools=[crm.lookup, kb.search])
-    memory = peace.fossils(scope="app")
+    memory = evo.fossils(scope="app")
 
     on ticket:
         attempt:
@@ -426,10 +426,10 @@ fitness SupportDesk:
 ### The pain today
 Multi-agent systems are wired together with untyped messages and prompt conventions. When one agent changes, others break silently. Nobody can say which agent caused a bad outcome, and improving one agent can make the team worse.
 
-### With Peace
+### With Evolve
 Agents are first-class. **Protocols** between them are typed, versioned, and `@conserved`. A **society** has a system-level fitness, so evolution optimizes the team, not individuals. Every message and decision is part of one lineage, so failures can be traced to the agent and generation that caused them.
 
-```peace
+```evo
 agent Researcher:
     capabilities web.read
     gene def plan(goal: Goal) -> list[Task]: ...
@@ -452,13 +452,13 @@ fitness lab:
     invariant no agent exceeds its capabilities
 
 lab.evolve(roles=true, generations=20)          # agents evolve; the protocol stays conserved
-lab.expose(a2a=true, mcp=true)                  # interoperate with agents outside Peace
+lab.expose(a2a=true, mcp=true)                  # interoperate with agents outside Evolve
 ```
 
 ### Open questions
 - How is credit assigned when the society's fitness improves: to which agent, and which generation?
 - How do we prevent collusion, where agents jointly game the system-level fitness?
-- How much of an open protocol (such as A2A) should be modeled as Peace types vs. handled by a library?
+- How much of an open protocol (such as A2A) should be modeled as Evolve types vs. handled by a library?
 
 ---
 
@@ -466,7 +466,7 @@ lab.expose(a2a=true, mcp=true)                  # interoperate with agents outsi
 
 | Scenario | Why caution | Recommendation |
 |---|---|---|
-| Certified safety software (avionics, medical) | Runtime change can void certification | Plain Peace only; no `gene` in shipped code |
+| Certified safety software (avionics, medical) | Runtime change can void certification | Plain Evolve only; no `gene` in shipped code |
 | Hard real-time loops | Dispatch and sandbox overhead | Evolve offline, compile AOT, freeze |
 | Security & cryptography | Mutation could weaken guarantees | Always `@conserved` |
 | Legal or financial calculations | Auditability and explainability | `approve="human"` and mandatory lineage review |
@@ -480,7 +480,7 @@ Copy this template into a new section or an issue:
 ```markdown
 ## N. <Title>
 ### The pain today
-### With Peace
+### With Evolve
 <code sketch>
 ### Open questions
 ```

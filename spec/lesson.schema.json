@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/peace-program-project/peace/spec/lesson.schema.json",
-  "title": "Peace Lesson v0",
-  "description": "Structured record of one failure in the Peace fossil record. Defined by RFC 0002.",
+  "title": "Evolve Lesson v0",
+  "description": "Structured record of one failure in the Evolve fossil record. Defined by RFC 0002.",
   "type": "object",
   "required": ["schema", "id", "time", "project", "origin", "kind", "message", "site", "recorded", "severity", "redaction"],
   "additionalProperties": false,
   "properties": {
-    "schema": { "const": "peace.lesson/v0" },
+    "schema": { "const": "evo.lesson/v0" },
     "id": { "type": "string", "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$", "description": "ULID" },
     "time": { "type": "string", "format": "date-time" },
     "project": { "type": "string", "minLength": 1 },
@@ -61,7 +61,7 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "peace_version": { "type": "string" },
+        "evo_version": { "type": "string" },
         "os": { "type": "string" },
         "arch": { "type": "string" },
         "dependencies": { "type": "object", "additionalProperties": { "type": "string" } },

@@ -348,7 +348,7 @@ impl<'a> Parser<'a> {
                     && self.nth(2) == L_PAREN =>
             {
                 self.error(format!(
-                    "`{word}` is not Peace: define functions with `def`"
+                    "`{word}` is not Evolve: define functions with `def`"
                 ));
                 self.fn_def(cp, FN_DEF);
             }
@@ -653,7 +653,7 @@ impl<'a> Parser<'a> {
         self.block();
         self.loop_in_always = saved;
         if self.at(ELSE_KW) && self.nth(1) == COLON {
-            self.error_line("loops have no `else` clause in Peace; use a flag or `any(...)`");
+            self.error_line("loops have no `else` clause in Evolve; use a flag or `any(...)`");
         }
     }
 
@@ -1002,9 +1002,9 @@ impl<'a> Parser<'a> {
             AMP2 => "use `and`, not `&&`",
             PIPE2 => "use `or`, not `||`",
             AT => {
-                "`@` is not an operator in Peace: `*` is matrix multiply for 2-d arrays, `.*` is element-wise"
+                "`@` is not an operator in Evolve: `*` is matrix multiply for 2-d arrays, `.*` is element-wise"
             }
-            STAR2 => "`**` is not Peace syntax; use `^` for powers",
+            STAR2 => "`**` is not Evolve syntax; use `^` for powers",
             _ => return,
         };
         self.error(message);

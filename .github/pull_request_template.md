@@ -1,4 +1,4 @@
-## ☮ What does this change?
+## 🧬 What does this change?
 
 <!-- A short description. Link the related issue or RFC: "Closes #123" -->
 
@@ -6,7 +6,7 @@
 
 - [ ] 📝 Docs
 - [ ] 💡 RFC
-- [ ] 🧪 PeaceBench case
+- [ ] 🧪 EvoBench case
 - [ ] 🛠️ Code
 
 ## ✅ Checklist

@@ -1,9 +1,9 @@
 ---
-name: peace-brainstorm
-description: Brainstorm Peace language ideas (features, syntax, use cases, AI missions) and record them in brainstorm/. Use for "brainstorm Peace", "what if Peace had X", "explore an idea for Peace", or deciding an open question before writing an RFC.
+name: evo-brainstorm
+description: Brainstorm Evolve language ideas (features, syntax, use cases, AI missions) and record them in brainstorm/. Use for "brainstorm Evolve", "what if Evolve had X", "explore an idea for Evolve", or deciding an open question before writing an RFC.
 ---
 
-# Peace brainstorm
+# Evolve brainstorm
 
 Turn a topic into options, a recommendation, and a written record. This skill writes only to `brainstorm/`. It never edits RFCs or docs.
 
@@ -14,14 +14,14 @@ Read `rfcs/README.md` (index), the newest files in `brainstorm/`, and the "Open 
 ## 2. Diverge
 
 Generate 5 to 8 options, from conservative to radical. For each:
-- a one-line `peace` code sketch,
+- a one-line `evo` code sketch,
 - who benefits (persona, or use case number from `docs/use-cases.md`),
 - how fitness or success would be measured,
 - what fails or gets abused, and which guardrail from RFC 0004 catches it.
 
 ## 3. Converge
 
-Score each option on value, feasibility (the roadmap phase that could ship it), and safety risk. Recommend one or two, with the reason in one sentence each. Ideas that conflict with the Zen of Peace (README) are dropped, with the conflict named.
+Score each option on value, feasibility (the roadmap phase that could ship it), and safety risk. Recommend one or two, with the reason in one sentence each. Ideas that conflict with the Zen of Evolve (README) are dropped, with the conflict named.
 
 ## 4. Record
 
@@ -29,4 +29,4 @@ Write `brainstorm/YYYY-MM-DD-<topic>.md` with a table of ideas and statuses (ðŸŒ
 
 ## 5. Hand off
 
-Offer to turn the top idea into an RFC with the `peace-rfc` skill. Don't start the RFC without a yes.
+Offer to turn the top idea into an RFC with the `evo-rfc` skill. Don't start the RFC without a yes.

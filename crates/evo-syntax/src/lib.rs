@@ -1,4 +1,4 @@
-//! Lexer and lossless, error-tolerant parser for the Peace language.
+//! Lexer and lossless, error-tolerant parser for the Evolve language.
 //!
 //! Implements the draft of [RFC 0001](../../../rfcs/0001-syntax-core.md) and
 //! `spec/grammar.ebnf`. The tree is a rowan CST: `parse(src).syntax().to_string()`
@@ -6,7 +6,7 @@
 //! variants can be edited on the tree and printed back as readable code.
 //!
 //! ```
-//! let parse = peace_syntax::parse("ys = sin.(xs) .+ 1\n");
+//! let parse = evo_syntax::parse("ys = sin.(xs) .+ 1\n");
 //! assert!(parse.errors().is_empty());
 //! assert_eq!(parse.syntax().to_string(), "ys = sin.(xs) .+ 1\n");
 //! ```
@@ -17,10 +17,10 @@ mod syntax_kind;
 
 use rowan::{GreenNode, TextRange};
 
-pub use syntax_kind::{PeaceLanguage, SyntaxKind};
+pub use syntax_kind::{EvoLanguage, SyntaxKind};
 
-pub type SyntaxNode = rowan::SyntaxNode<PeaceLanguage>;
-pub type SyntaxToken = rowan::SyntaxToken<PeaceLanguage>;
+pub type SyntaxNode = rowan::SyntaxNode<EvoLanguage>;
+pub type SyntaxToken = rowan::SyntaxToken<EvoLanguage>;
 
 /// A syntax error with the source range it applies to.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -75,7 +75,7 @@ impl Parse {
     }
 }
 
-/// Parses a Peace source file. Never fails: errors are reported in [`Parse::errors`].
+/// Parses an Evolve source file. Never fails: errors are reported in [`Parse::errors`].
 pub fn parse(src: &str) -> Parse {
     let mut errors = Vec::new();
     let tokens = lexer::lex(src, &mut errors);

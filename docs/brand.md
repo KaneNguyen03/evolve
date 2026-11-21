@@ -1,50 +1,60 @@
 <div align="center">
-<img src="../assets/logo/peace-mark.svg" width="120" alt="Peace logo mark"/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="../assets/logo/evolve-mark-white.svg">
+  <img src="../assets/logo/evolve-mark.svg" width="120" alt="Evolve logo mark"/>
+</picture>
 
-# 🎨 Peace Brand Guide
+# 🎨 Evolve Brand Guide
 
-*How Peace looks, sounds, and feels.*
+*How Evolve looks, sounds, and feels.*
 </div>
 
 ---
 
-## ☮ The mark
+## 🧬 The mark
 
-The Peace logo is a **peace symbol drawn as a lineage tree**:
+The Evolve logo is a **geometric lowercase e whose tail is a separate dot**:
 
-- ⭕ **The ring** is the environment: the world a program lives in and is measured against.
-- 🌳 **The trunk and branches** are a family tree. A common ancestor (the center node) gives rise to descendants (the three end nodes).
-- 🟠 **The ember twig** is a *mutation*: an experiment branching off a successful line. It may fail, and that's the point.
+- **The ring and crossbar** are the program as it runs today: whole, readable, and working.
+- **The dot** sits in the e's opening, not yet joined. It is the next variant: an experiment that may fail, and that's the point. Most dots never join. The ones that pass their fitness checks become part of the line.
+
+The mark is drawn on a 256-unit grid with one stroke weight (30 units), so it stays legible down to a 16-pixel favicon.
 
 | Asset | File | Use |
 |---|---|---|
-| Logo mark (transparent) | [`assets/logo/peace-mark.svg`](../assets/logo/peace-mark.svg) · [PNG](../assets/logo/peace-mark.png) | Docs, slides, favicons |
-| Avatar (dark tile) | [`assets/logo/peace-avatar.svg`](../assets/logo/peace-avatar.svg) · [PNG 512²](../assets/logo/peace-avatar.png) | GitHub org avatar, social profiles |
+| Logo mark, black (transparent) | [`assets/logo/evolve-mark.svg`](../assets/logo/evolve-mark.svg) · [PNG](../assets/logo/evolve-mark.png) | Docs, slides, favicons on light backgrounds |
+| Logo mark, white (transparent) | [`assets/logo/evolve-mark-white.svg`](../assets/logo/evolve-mark-white.svg) | Dark backgrounds |
+| Avatar (white on black) | [`assets/logo/evolve-avatar.svg`](../assets/logo/evolve-avatar.svg) · [PNG 512²](../assets/logo/evolve-avatar.png) | GitHub org avatar, social profiles |
 | Banner (light / dark) | [`assets/banner/`](../assets/banner/) | README headers |
-| Social preview | [`assets/social/peace-social-preview.png`](../assets/social/peace-social-preview.png) (1280×640) | GitHub social card, link previews |
+| Social preview | [`assets/social/evolve-social-preview.png`](../assets/social/evolve-social-preview.png) (1280×640) | GitHub social card, link previews |
 | Diagrams (light / dark) | [`assets/diagrams/`](../assets/diagrams/) | Evolution loop, architecture, roadmap |
 
-**Do** ✅ keep clear space around the mark of at least ¼ of its width. Use it on the brand's dark or light backgrounds.
-**Don't** ❌ recolor the nodes, remove the ember twig, rotate the mark, or add effects such as shadows or outlines.
+**Do** ✅
+- Use the mark in pure black on white, or pure white on black.
+- Keep clear space around it of at least ¼ of its width.
+
+**Don't** ❌
+- Color the mark, add gradients, shadows, or outlines.
+- Join the dot to the ring, or move it.
+- Rotate or stretch the mark.
 
 ---
 
-## 🎨 Color palette
+## ⚫⚪ Color
 
-Each color has a meaning in the evolution story, and it's used the same way in every diagram.
+Evolve is **monochrome**. Structure, weight, and line style carry meaning, never hue, so every asset prints, photocopies, and reads the same for color-blind viewers.
 
-| Swatch | Name | Hex | Meaning |
+| Swatch | Name | Hex | Use |
 |:---:|---|---|---|
-| ![](https://img.shields.io/badge/-%20%20%20%20-22C55E?style=flat-square) | **Leaf** | `#22C55E` | Growth, variation, new life |
-| ![](https://img.shields.io/badge/-%20%20%20%20-14B8A6?style=flat-square) | **Teal** | `#14B8A6` | The core brand color: balance, measurement |
-| ![](https://img.shields.io/badge/-%20%20%20%20-0F766E?style=flat-square) | **Evergreen** | `#0F766E` | Text accents on light backgrounds |
-| ![](https://img.shields.io/badge/-%20%20%20%20-38BDF8?style=flat-square) | **Sky** | `#38BDF8` | Selection, clarity, the open world |
-| ![](https://img.shields.io/badge/-%20%20%20%20-8B5CF6?style=flat-square) | **Violet** | `#8B5CF6` | Memory: fossils, lineage, history |
-| ![](https://img.shields.io/badge/-%20%20%20%20-F97316?style=flat-square) | **Ember** | `#F97316` | Failure, mutation, Lessons: the spark of learning |
+| ![](https://img.shields.io/badge/-%20%20%20%20-000000?style=flat-square) | **Black** | `#000000` | Ink on light; background on dark |
+| ![](https://img.shields.io/badge/-%20%20%20%20-FFFFFF?style=flat-square) | **White** | `#FFFFFF` | Background on light; ink on dark |
+| ![](https://img.shields.io/badge/-%20%20%20%20-525252?style=flat-square) | **Graphite** | `#525252` | Muted text on light |
+| ![](https://img.shields.io/badge/-%20%20%20%20-A3A3A3?style=flat-square) | **Silver** | `#A3A3A3` | Muted text on dark |
 
-**Neutrals:** Ink `#0B1220` (dark background) · Paper `#F8FAF7` (light background) · Slate `#475569` / `#94A3B8` (muted text).
-
-**Signature gradient:** Leaf → Teal → Sky (`#22C55E → #14B8A6 → #38BDF8`), used for the ring and the tagline.
+In diagrams, emphasis comes from line style:
+- **Solid filled circles:** steps of the evolution loop.
+- **Heavy outlines:** where evolution happens (`evo-search`, the WASM sandbox).
+- **Dashed lines:** feedback, such as fitness results and edits to the CST.
 
 ---
 
@@ -56,11 +66,13 @@ Each color has a meaning in the evolution story, and it's used the same way in e
 | Body | **Inter** (400–500) | same |
 | Code | **JetBrains Mono** | SF Mono, Menlo, Consolas, monospace |
 
+The wordmark is "Evolve" set in Inter ExtraBold (800) with tight tracking.
+
 ---
 
 ## 🗣️ Voice and tone
 
-Peace speaks the way a good mentor reacts to a mistake: **calm, curious, and constructive**.
+Evolve speaks the way a good mentor reacts to a mistake: **calm, curious, and constructive**.
 
 | We are… | We are not… |
 |---|---|
@@ -69,8 +81,9 @@ Peace speaks the way a good mentor reacts to a mistake: **calm, curious, and con
 | 🤝 Humble: humans hold the final say | 🤖 Grandiose: "No developers needed" |
 | 🧬 Playful with biology metaphors, when they clarify | 🎭 Metaphor-first at the expense of meaning |
 
+**Name:** *Evolve* in prose. Source files are `.evo`, the command is `evo`, code fences are `evo`, and crates are `evo-*`.
 **Tagline:** *Programs that learn from failure.*
-**One-liner:** *Peace is a programming language in which a program's failures make it better instead of only breaking it.*
+**One-liner:** *Evolve is a programming language in which a program's failures make it better instead of only breaking it.*
 **Short pitch:** *Python-readable · Julia data-native · Rust-built · AI-agent ready.*
 
 ### Emoji vocabulary
@@ -79,26 +92,26 @@ Use emojis as consistent signposts, not decoration:
 
 | Emoji | Means | Emoji | Means |
 |:---:|---|:---:|---|
-| ☮ | Peace (the project) | 🧬 | `gene`, evolution |
-| 🍂 | Failure, `attempt / learn` | 🩹 | `@heal` |
-| 🎯 | `fitness` | 🏆 | Selection, promotion |
-| 🦴 | Fossil record, Lessons | 🌳 | Lineage |
-| 🔒 | `@conserved` | 📦 | Sandbox |
-| 🌱🌿🌳🌲🌸🐝🌍 | Roadmap phases, Seed → Forest | 🦀🐍🔬 | Rust, Python, Julia heritage |
+| 🧬 | Evolve (the project), `gene`, evolution | 🩹 | `@heal` |
+| 🍂 | Failure, `attempt / learn` | 🏆 | Selection, promotion |
+| 🎯 | `fitness` | 🌳 | Lineage |
+| 🦴 | Fossil record, Lessons | 📦 | Sandbox |
+| 🔒 | `@conserved` | 🦀🐍🔬 | Rust, Python, Julia heritage |
+| 🌱🌿🌳🌲🌸🐝🌍 | Roadmap phases, Seed → Forest | | |
 
 ---
 
 ## 🛠️ Regenerating assets
 
-All SVGs come from one script, so colors and geometry stay consistent:
+All SVGs come from one script, so geometry stays consistent. Never edit the SVGs by hand.
 
 ```bash
 python3 tools/brand/generate.py assets
-# PNG exports (avatar, social preview) need cairosvg:
+# PNG exports (mark, avatar, social preview) need cairosvg:
 uv run --with cairosvg python - <<'EOF'
 import cairosvg
-cairosvg.svg2png(url="assets/logo/peace-avatar.svg", write_to="assets/logo/peace-avatar.png", output_width=512, output_height=512)
-cairosvg.svg2png(url="assets/logo/peace-mark.svg", write_to="assets/logo/peace-mark.png", output_width=512, output_height=512)
-cairosvg.svg2png(url="assets/social/peace-social-preview.svg", write_to="assets/social/peace-social-preview.png", output_width=1280, output_height=640)
+cairosvg.svg2png(url="assets/logo/evolve-avatar.svg", write_to="assets/logo/evolve-avatar.png", output_width=512, output_height=512)
+cairosvg.svg2png(url="assets/logo/evolve-mark.svg", write_to="assets/logo/evolve-mark.png", output_width=512, output_height=512)
+cairosvg.svg2png(url="assets/social/evolve-social-preview.svg", write_to="assets/social/evolve-social-preview.png", output_width=1280, output_height=640)
 EOF
 ```

@@ -1,4 +1,4 @@
-"""PeaceBench reference scorer (format v0).
+"""EvoBench reference scorer (format v0).
 
 Usage:
     python3 bench/run.py bench/cases/0001-date-format-drift
@@ -17,7 +17,7 @@ import tomllib
 
 
 def load_program(path, gene):
-    spec = importlib.util.spec_from_file_location("peacebench_candidate", path)
+    spec = importlib.util.spec_from_file_location("evobench_candidate", path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return getattr(module, gene)

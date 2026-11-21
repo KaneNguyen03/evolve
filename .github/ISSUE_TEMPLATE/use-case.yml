@@ -1,5 +1,5 @@
 name: "🌍 Use case"
-description: Describe where Peace could help in your domain.
+description: Describe where Evolve could help in your domain.
 title: "Use case: "
 labels: ["use-case"]
 body:
@@ -10,9 +10,9 @@ body:
     validations:
       required: true
   - type: textarea
-    id: peace
+    id: evo
     attributes:
-      label: ☮ With Peace
+      label: 🧬 With Evolve
       description: How would genes, fitness, Lessons, or populations help? A code sketch is welcome.
     validations:
       required: true

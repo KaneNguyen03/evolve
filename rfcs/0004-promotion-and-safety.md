@@ -13,7 +13,7 @@ spec: []
 
 ## Summary
 
-Defines the **variant lifecycle**, **promotion gates**, **capabilities**, **`@conserved` code**, **budgets**, the **audit trail**, and the **threat model** for self-modifying Peace programs. The core rule: **variants may be created freely in a sandbox; nothing reaches production without passing a gate.**
+Defines the **variant lifecycle**, **promotion gates**, **capabilities**, **`@conserved` code**, **budgets**, the **audit trail**, and the **threat model** for self-modifying Evolve programs. The core rule: **variants may be created freely in a sandbox; nothing reaches production without passing a gate.**
 
 ## Motivation
 
@@ -21,7 +21,7 @@ Self-modifying code is only acceptable if it's safer than a human editing code b
 
 ## Guide-level explanation
 
-```peace
+```evo
 @conserved                                   # never mutated by any operator
 def charge(card: Card, amount: Money) -> Receipt: ...
 
@@ -31,9 +31,9 @@ gene def parse_amount(raw: str) -> Money: ...
 ```
 
 ```bash
-peace promote --list                         # candidates waiting for approval
-peace promote billing.parse_amount@gen-8     # shows diff, fitness report, Lessons fixed, then asks
-peace revert  billing.parse_amount@gen-7     # instant rollback, recorded as a lineage event
+evo promote --list                         # candidates waiting for approval
+evo promote billing.parse_amount@gen-8     # shows diff, fitness report, Lessons fixed, then asks
+evo revert  billing.parse_amount@gen-7     # instant rollback, recorded as a lineage event
 ```
 
 ## Reference-level explanation
@@ -54,9 +54,9 @@ Every transition is a lineage event (RFC 0002) with an `actor`.
 |---|---|---|
 | `human` (**default**) | A person with `promote` permission on the project | Always available |
 | `tests` | The runner, automatically | Gene is `@capabilities(none)` (pure) **and** has at least one invariant **and** holdout size ≥ 50 |
-| `auto` | The runner, automatically | Explicit opt-in per gene in `peace.toml` **and** `origin != prod`, or a `population` in shadow mode only |
+| `auto` | The runner, automatically | Explicit opt-in per gene in `evo.toml` **and** `origin != prod`, or a `population` in shadow mode only |
 
-A gate can only be relaxed in `peace.toml`, never in code that a mutation can touch. The `approve=` argument in source is a request that must match the config, or the runner refuses.
+A gate can only be relaxed in `evo.toml`, never in code that a mutation can touch. The `approve=` argument in source is a request that must match the config, or the runner refuses.
 
 ### Capabilities
 
@@ -77,14 +77,14 @@ Per heal or evolve run: generations, wall time, CPU time, memory, GPU hours, age
 
 ### Audit trail
 
-For every promotion, the record includes: diff against the incumbent, fitness report (visible and holdout, with CIs), invariants checked, Lessons resolved, operator and seed, for agentic operators the **full prompt and response**, and the approver. `peace audit <gene>` prints it.
+For every promotion, the record includes: diff against the incumbent, fitness report (visible and holdout, with CIs), invariants checked, Lessons resolved, operator and seed, for agentic operators the **full prompt and response**, and the approver. `evo audit <gene>` prints it.
 
 ### Threat model
 
 | Threat | Example | Mitigation |
 |---|---|---|
 | Sandbox escape | A variant reads secrets from disk | WASM isolation, no ambient authority, capability checks |
-| Gate bypass | A variant edits `approve="auto"` in its own source | Gates come from `peace.toml`; source `approve=` must match |
+| Gate bypass | A variant edits `approve="auto"` in its own source | Gates come from `evo.toml`; source `approve=` must match |
 | Conserved tampering | A mutation changes `charge()` through inlining | Conserved hashes checked before promotion |
 | Fitness gaming | A variant special-cases visible examples | Holdout, regression Lessons, size limits (RFC 0003) |
 | Prompt injection via Lessons | A malicious input in a Lesson steers the agent operator | Redacted Lessons only, inputs as fingerprints by default, agent output treated as an untrusted proposal |
@@ -118,5 +118,5 @@ Capability-based security (WASI, Fuchsia, E language), deployment canaries and f
 ## Test plan
 
 - Red-team test suite: one test per row of the threat model, each must fail closed.
-- Gate tests: every combination of source `approve=` and `peace.toml` setting.
+- Gate tests: every combination of source `approve=` and `evo.toml` setting.
 - Conserved-hash tests including inlined and transitively called code.

@@ -1,4 +1,4 @@
-# Peace tracks the Rust beta channel to adopt upcoming features one cycle early.
+# Evolve tracks the Rust beta channel to adopt upcoming features one cycle early.
 # CI should also build on stable so we never depend on a feature pulled from beta.
 [toolchain]
 channel = "beta"

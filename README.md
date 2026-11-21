@@ -1,28 +1,28 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/banner/peace-banner-dark.svg">
-  <img alt="Peace: programs that learn from failure. Python-readable, Julia data-native, Rust-built." src="assets/banner/peace-banner-light.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner/evolve-banner-dark.svg">
+  <img alt="Evolve: programs that learn from failure. Python-readable, Julia data-native, Rust-built." src="assets/banner/evolve-banner-light.svg" width="100%">
 </picture>
 
 <br/>
 
-[![Status: Seed](https://img.shields.io/badge/status-seed%20·%20design%20stage-22C55E?style=flat-square)](docs/roadmap.md)
-[![Built with Rust beta](https://img.shields.io/badge/built%20with-Rust%20beta-F97316?style=flat-square&logo=rust&logoColor=white)](rust-toolchain.toml)
-[![Python-readable](https://img.shields.io/badge/syntax-Python--readable-38BDF8?style=flat-square&logo=python&logoColor=white)](#-three-heritages)
-[![Julia data-native](https://img.shields.io/badge/data-Julia--native-8B5CF6?style=flat-square&logo=julia&logoColor=white)](#-three-heritages)
-[![PRs welcome](https://img.shields.io/badge/PRs%20%26%20RFCs-welcome-14B8A6?style=flat-square)](CONTRIBUTING.md)
-[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-0F766E?style=flat-square)](LICENSE)
+[![Status: Seed](https://img.shields.io/badge/status-seed%20·%20design%20stage-000000?style=flat-square)](docs/roadmap.md)
+[![Built with Rust beta](https://img.shields.io/badge/built%20with-Rust%20beta-000000?style=flat-square&logo=rust&logoColor=white)](rust-toolchain.toml)
+[![Python-readable](https://img.shields.io/badge/syntax-Python--readable-000000?style=flat-square&logo=python&logoColor=white)](#-three-heritages)
+[![Julia data-native](https://img.shields.io/badge/data-Julia--native-000000?style=flat-square&logo=julia&logoColor=white)](#-three-heritages)
+[![PRs welcome](https://img.shields.io/badge/PRs%20%26%20RFCs-welcome-000000?style=flat-square)](CONTRIBUTING.md)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-000000?style=flat-square)](LICENSE)
 
-**☮ A programming language that makes peace with failure.**<br/>
+**🧬 A programming language that evolves through failure.**<br/>
 Programs that mutate, experiment, learn from their mistakes, and heal themselves.
 
-[🌿 Vision](docs/vision.md) · [🧪 Use cases](docs/use-cases.md) · [🗺️ Roadmap](docs/roadmap.md) · [📜 RFCs](rfcs/README.md) · [🧪 PeaceBench](bench/README.md) · [🎨 Brand](docs/brand.md) · [🤝 Contribute](CONTRIBUTING.md)
+[🌿 Vision](docs/vision.md) · [🧪 Use cases](docs/use-cases.md) · [🗺️ Roadmap](docs/roadmap.md) · [📜 RFCs](rfcs/README.md) · [🧪 EvoBench](bench/README.md) · [🎨 Brand](docs/brand.md) · [🤝 Contribute](CONTRIBUTING.md)
 
 </div>
 
 > [!NOTE]
-> 🌱 **Peace is in the Seed stage.** Nothing is implemented yet. This repository is where we work out *why* Peace should exist and *what* people (and AI agents) will build with it. Ideas, critiques, and real-world failure stories are the most valuable contributions right now.
+> 🌱 **Evolve is in the Seed stage.** Nothing is implemented yet. This repository is where we work out *why* Evolve should exist and *what* people (and AI agents) will build with it. Ideas, critiques, and real-world failure stories are the most valuable contributions right now.
 
 ---
 
@@ -30,9 +30,9 @@ Programs that mutate, experiment, learn from their mistakes, and heal themselves
 
 | | | |
 |---|---|---|
-| 🎯 [Mission](#-mission) | 🌿 [Why Peace?](#-why-peace) | 🧘 [The Zen of Peace](#-the-zen-of-peace) |
+| 🎯 [Mission](#-mission) | 🌿 [Why Evolve?](#-why-evolve) | 🧘 [The Zen of Evolve](#-the-zen-of-evolve) |
 | ✨ [A first taste](#-a-first-taste) | 🧬 [Three heritages](#-three-heritages) | 🦠 [The evolutionary model](#-the-evolutionary-model) |
-| 🧠 [Peace for AI](#-peace-for-ai-models-apps-and-agent-systems) | 🛡️ [Safety guardrails](#️-safety-evolution-with-guardrails) | 🧪 [Use cases](#-use-cases) |
+| 🧠 [Evolve for AI](#-evolve-for-ai-models-apps-and-agent-systems) | 🛡️ [Safety guardrails](#️-safety-evolution-with-guardrails) | 🧪 [Use cases](#-use-cases) |
 | 🦀 [Architecture](#-architecture-built-on-rust-beta) | 🧰 [Toolchain](#-toolchain-sketch) | 🗺️ [Roadmap](#️-roadmap) |
 | ❓ [Open questions](#-open-questions) | 🤝 [Contributing](#-contributing) | 📄 [License](#-license) |
 
@@ -40,7 +40,7 @@ Programs that mutate, experiment, learn from their mistakes, and heal themselves
 
 ## 🎯 Mission
 
-**Peace exists to build the next generation of AI systems: systems that evolve, adapt, and stay safe while doing it.**
+**Evolve exists to build the next generation of AI systems: systems that evolve, adapt, and stay safe while doing it.**
 
 <table>
 <tr>
@@ -69,9 +69,9 @@ Underneath all three is the same foundation: 🍂 **failure as data**, 🧬 **ev
 
 ---
 
-## 🌿 Why Peace?
+## 🌿 Why Evolve?
 
-> **Peace is a programming language in which a program's failures make it better instead of only breaking it.**
+> **Evolve is a programming language in which a program's failures make it better instead of only breaking it.**
 
 Most programming languages treat failure as an enemy. An exception is something to be caught, silenced, or allowed to crash the program. Then a human reads a stack trace, guesses a fix, and redeploys. The program itself learns nothing.
 
@@ -85,16 +85,16 @@ Nature works differently. For about four billion years, life has improved throug
 
 ### 💡 The thesis
 
-Rust made *ownership* a primitive. Julia made *dispatch and arrays* primitives. **Peace makes the improvement loop a primitive.**
+Rust made *ownership* a primitive. Julia made *dispatch and arrays* primitives. **Evolve makes the improvement loop a primitive.**
 
 <div align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/diagrams/evolution-loop-dark.svg">
-  <img alt="The Peace improvement loop: 1 Observe (attempt/learn), 2 Vary (gene, mutate), 3 Measure (fitness, invariant), 4 Select (population, promote), 5 Remember (fossil record, lineage), around a sandboxed, budgeted, human-gated runtime." src="assets/diagrams/evolution-loop-light.svg" width="760">
+  <img alt="The Evolve improvement loop: 1 Observe (attempt/learn), 2 Vary (gene, mutate), 3 Measure (fitness, invariant), 4 Select (population, promote), 5 Remember (fossil record, lineage), around a sandboxed, budgeted, human-gated runtime." src="assets/diagrams/evolution-loop-light.svg" width="760">
 </picture>
 </div>
 
-Because the loop lives in the language, Peace can make it **🛡️ safe** (sandbox, capabilities, conserved code), **⚡ cheap** (JIT, parallel populations), and **🔍 auditable** (lineage for every change).
+Because the loop lives in the language, Evolve can make it **🛡️ safe** (sandbox, capabilities, conserved code), **⚡ cheap** (JIT, parallel populations), and **🔍 auditable** (lineage for every change).
 
 ### 👥 Who it's for
 
@@ -102,7 +102,7 @@ Because the loop lives in the language, Peace can make it **🛡️ safe** (sand
 |:---:|:---:|:---:|:---:|:---:|
 | Modular models, typed agent protocols, safety invariants, and machine-readable feedback | Pipelines that survive drift | Speed, units, and uncertainty | Integrations that adapt | Failure as the first step of learning |
 
-### 🚫 What Peace is not
+### 🚫 What Evolve is not
 
 - ❌ **Not "no humans needed".** Production changes are human-gated by default.
 - ❌ **Not magic.** No measurable fitness means no evolution.
@@ -113,7 +113,7 @@ Because the loop lives in the language, Peace can make it **🛡️ safe** (sand
 
 ---
 
-## 🧘 The Zen of Peace
+## 🧘 The Zen of Evolve
 
 *In the spirit of `import this`:*
 
@@ -137,17 +137,17 @@ Humans hold the final say over what survives.
 
 ### 🐍 Looks like Python, on purpose
 
-```peace
-# hello.peace
+```evo
+# hello.evo
 def greet(name: str) -> str:
-    return f"Peace be with you, {name}"
+    return f"Hello, {name}. Welcome to Evolve."
 
 print(greet("world"))
 ```
 
 ### 📊 Data is native (Julia heritage)
 
-```peace
+```evo
 xs = [1.0, 2.0, 3.0, 4.0]
 ys = sin.(xs) .+ 1                 # broadcast any function with `.`
 
@@ -163,7 +163,7 @@ sales
 
 ### 📏 Imperfection is native
 
-```peace
+```evo
 g     = 9.81 ± 0.02 m/s²           # values carry uncertainty and units
 t     = 1.30 ± 0.05 s
 drop  = 0.5 * g * t^2              # uncertainty propagates automatically
@@ -172,7 +172,7 @@ print(drop)                        # 8.29 ± 0.64 m
 
 ### 🍂 Failure is a teacher
 
-```peace
+```evo
 attempt:
     config = load_toml("app.toml")
 learn err:
@@ -184,7 +184,7 @@ learn err:
 
 ### 🩹 Code that evolves and heals
 
-```peace
+```evo
 @heal(strategies=[retry, mutate, ask_agent], budget=20, approve="human")
 gene def parse_price(raw: str) -> Money:
     return Money.parse(raw.strip(), currency="USD")
@@ -199,7 +199,7 @@ fitness parse_price:
 - 🎯 `fitness` defines what "better" means for it.
 - 🩹 `@heal` says what to do when it fails in production: retry, generate mutated variants, test them in a sandbox, and propose the fittest one for promotion.
 
-When `parse_price("€12,50")` fails, Peace doesn't just crash. It records a Lesson, spawns variants, keeps the one that passes all examples, the new case, and every invariant, and opens a promotion request with the full diff and lineage. ✅
+When `parse_price("€12,50")` fails, Evolve doesn't just crash. It records a Lesson, spawns variants, keeps the one that passes all examples, the new case, and every invariant, and opens a promotion request with the full diff and lineage. ✅
 
 ---
 
@@ -216,7 +216,7 @@ When `parse_price("€12,50")` fails, Peace doesn't just crash. It records a Les
 
 ### 🔀 Multiple dispatch
 
-```peace
+```evo
 def collide(a: Asteroid, b: Ship):   return damage(b, a.mass)
 def collide(a: Ship, b: Asteroid):   return collide(b, a)
 def collide(a: Ship, b: Ship):       return bounce(a, b)
@@ -228,9 +228,9 @@ Dispatch is also how evolution plugs in: a mutated variant is just another **met
 
 ## 🦠 The evolutionary model
 
-Peace borrows its vocabulary from biology on purpose. The metaphor *is* the mental model.
+Evolve borrows its vocabulary from biology on purpose. The metaphor *is* the mental model.
 
-| | Biology | Peace concept | What it is |
+| | Biology | Evolve concept | What it is |
 |:---:|---|---|---|
 | 🧬 | Gene | `gene def` | A function that may evolve |
 | 🔒 | Conserved gene | `@conserved` | Code that must never mutate (security, money, safety) |
@@ -239,8 +239,8 @@ Peace borrows its vocabulary from biology on purpose. The metaphor *is* the ment
 | 🏆 | Natural selection | `select` | Keep the fittest variant(s) that satisfy all invariants |
 | 👥 | Population | `population` | Several variants running side by side (A/B, shadow, canary) |
 | 🩹 | Scar / immune memory | `Lesson` | A structured record of a failure |
-| 🦴 | Fossil record | `.peace/fossils/` | Queryable history of every lesson and mutation |
-| 🌳 | Genome / lineage | `.peace/lineage/` | Parent → child ancestry of every promoted variant |
+| 🦴 | Fossil record | `.evo/fossils/` | Queryable history of every lesson and mutation |
+| 🌳 | Genome / lineage | `.evo/lineage/` | Parent → child ancestry of every promoted variant |
 | 🪦 | Extinction | `extinct` | A retired variant, kept for history, never run |
 | 🐦 | Speciation | `fork species` | A variant line that diverges for a different environment |
 
@@ -254,7 +254,7 @@ Peace borrows its vocabulary from biology on purpose. The metaphor *is* the ment
 
 ### 👥 Explicit populations
 
-```peace
+```evo
 population ranker = evolve(rank_results, size=16, generations=30, seed=42):
     strategy  mutate.parametric | mutate.structural
     fitness   ndcg@10(on="data/queries.parquet") - 0.01 * p99_ms
@@ -266,13 +266,13 @@ best.promote(approve="human")
 
 ---
 
-## 🧠 Peace for AI: models, apps, and agent systems
+## 🧠 Evolve for AI: models, apps, and agent systems
 
 ### 🧠 Building next-generation AI models
 
-Gradient descent trains the weights *inside* a model. Peace adds evolution *outside* it: architectures, modules, hyperparameters, and context-specific variants evolve against fitness that includes **quality, cost, robustness, and safety**. This is the idea behind population-based training, made into language syntax.
+Gradient descent trains the weights *inside* a model. Evolve adds evolution *outside* it: architectures, modules, hyperparameters, and context-specific variants evolve against fitness that includes **quality, cost, robustness, and safety**. This is the idea behind population-based training, made into language syntax.
 
-```peace
+```evo
 module Encoder(dim: int):                          # 🧩 modular, typed, swappable building block
     layers = [Attention(dim, heads=~8 in 4..16), MLP(dim, ratio=~4 in 2..8)]
 
@@ -281,7 +281,7 @@ gene model Assistant:
     memory   = Retrieval(index="kb/")              # 🔌 plug-in modules
     tools    = [search, calculator, robot_arm]     # 🌍 interacts with the world through capabilities
     adapters = species(by=context)                 # 🐦 one specialized line per context: legal, medical, code…
-    @conserved safety = SafetyFilter(policy="policies/v3.peace")   # 🔒 never mutated
+    @conserved safety = SafetyFilter(policy="policies/v3.evo")   # 🔒 never mutated
 
 fitness Assistant:
     evals     "evals/quality/*.jsonl", "evals/robustness/*.jsonl"
@@ -292,7 +292,7 @@ fitness Assistant:
 train Assistant on data"corpus/" with optimizer=AdamW, evolve=architecture, budget=gpu_hours(500)
 ```
 
-| Goal | How Peace supports it |
+| Goal | How Evolve supports it |
 |---|---|
 | ⚡ **Optimized** | Evolution over architectures and hyperparameters; tensor kernels in Rust, with backends such as Burn or Candle |
 | 🛡️ **Safe** | `@conserved` safety modules, safety evals as hard `invariant`s, human promotion gates |
@@ -303,12 +303,12 @@ train Assistant on data"corpus/" with optimizer=AdamW, evolve=architecture, budg
 
 ### 📱 Building AI-native applications
 
-```peace
+```evo
 app SupportDesk:
     gene prompt classify:                          # 💬 prompts are genes, versioned with lineage
         """Classify the ticket as billing, bug, or how-to. Reply with one word."""
     agent resolver = Agent(model=any, tools=[crm.lookup, kb.search])
-    memory = peace.fossils(scope="app")            # 🦴 Lessons become long-term memory
+    memory = evo.fossils(scope="app")            # 🦴 Lessons become long-term memory
 
     on ticket:
         attempt:
@@ -320,7 +320,7 @@ app SupportDesk:
 
 ### 🕸️ Building agent-to-agent systems
 
-```peace
+```evo
 agent Researcher:
     capabilities web.read
     gene def plan(goal: Goal) -> list[Task]: ...
@@ -341,20 +341,20 @@ fitness lab:
 lab.evolve(roles=true)                             # 🧬 agents evolve; the protocol stays conserved
 ```
 
-Peace agents speak **open protocols**: MCP for tools and context, and agent-to-agent protocols such as A2A for cross-system messaging. Protocol messages are typed, Lessons can be shared between agents (with redaction), and the whole society has one lineage.
+Evolve agents speak **open protocols**: MCP for tools and context, and agent-to-agent protocols such as A2A for cross-system messaging. Protocol messages are typed, Lessons can be shared between agents (with redaction), and the whole society has one lineage.
 
 ### 🤖 The language agents learn best in
 
-When agents *write code*, Peace gives them a real feedback loop:
+When agents *write code*, Evolve gives them a real feedback loop:
 
 - 🧾 **Lessons are machine-readable.** Every failure is a typed record that can be exported as JSON or Arrow, not free-form stderr text.
 - 📊 **The fossil record is a DataFrame.** Agents (and humans) query their own history:
-  ```peace
-  fossils = peace.fossils()
+  ```evo
+  fossils = evo.fossils()
   fossils |> filter(_.gene == "parse_price") |> groupby(:error_kind) |> count()
   ```
 - 🎯 **Fitness is the reward signal.** Agents don't guess whether a change is better; the language measures it.
-- 🔌 **Built-in MCP server.** `peace serve --mcp` exposes lessons, lineage, fitness runs, and mutation proposals as tools, so any agent can join the evolutionary loop.
+- 🔌 **Built-in MCP server.** `evo serve --mcp` exposes lessons, lineage, fitness runs, and mutation proposals as tools, so any agent can join the evolutionary loop.
 - 🧪 **Cheap, safe experiments.** Every attempt runs in a sandbox with a budget, so agents can explore freely without breaking anything.
 - 🧠 **Memory across sessions.** Lessons persist, so a mistake an agent made last week becomes an immune response today.
 
@@ -362,7 +362,7 @@ When agents *write code*, Peace gives them a real feedback loop:
 
 ## 🛡️ Safety: evolution with guardrails
 
-Self-modifying code is powerful and dangerous. Peace treats safety as part of the language, not an afterthought.
+Self-modifying code is powerful and dangerous. Evolve treats safety as part of the language, not an afterthought.
 
 | | Guardrail | Mechanism |
 |:---:|---|---|
@@ -373,7 +373,7 @@ Self-modifying code is powerful and dangerous. Peace treats safety as part of th
 | ⏱️ | **Budgets** | Limits on generations, CPU time, memory, tokens, and money per heal cycle |
 | 🚦 | **Promotion gates** | `approve="human"` (default), `"tests"`, or `"auto"` (opt-in, per gene) |
 | 🌳 | **Full lineage** | Every promoted variant has a diff, parent, fitness report, and author (human or agent) |
-| ⏪ | **Instant rollback** | `peace revert parse_price@gen-7` restores any ancestor |
+| ⏪ | **Instant rollback** | `evo revert parse_price@gen-7` restores any ancestor |
 | 🎰 | **Reproducibility** | Seeded randomness, so evolution runs can be replayed exactly |
 
 > [!IMPORTANT]
@@ -385,7 +385,7 @@ Self-modifying code is powerful and dangerous. Peace treats safety as part of th
 
 See **[docs/use-cases.md](docs/use-cases.md)** for detailed scenarios with code sketches, a prioritization matrix, and applications by industry.
 
-| # | Use case | Why Peace fits | Priority |
+| # | Use case | Why Evolve fits | Priority |
 |:---:|---|---|---|
 | 1 | 🛠️ **Self-healing data pipelines** | Schema drift and messy input trigger heal cycles instead of 3 a.m. pages | ⭐ Beachhead |
 | 2 | 🤖 **AI coding agents that learn** | Lessons + fitness give agents a real feedback loop and long-term memory | ⭐ Beachhead |
@@ -397,24 +397,24 @@ See **[docs/use-cases.md](docs/use-cases.md)** for detailed scenarios with code 
 | 4 | 🔬 **Scientific computing & experiments** | Uncertainty, units, arrays, and evolutionary search in one language | 🟡 Medium |
 | 5 | 🧮 **Algorithm & heuristic discovery** | Evolve ranking, scheduling, caching, or compression heuristics against benchmarks | 🟡 Medium |
 | 6 | 🧠 **ML hyperparameter & architecture search** | Populations + fitness as a native construct, not a framework | 🟡 Medium |
-| 11 | 🚨 **Incident auto-remediation** | Runbooks evolve against replayed incidents; Peace proposes, humans execute | ⏳ Later |
+| 11 | 🚨 **Incident auto-remediation** | Runbooks evolve against replayed incidents; Evolve proposes, humans execute | ⏳ Later |
 | 7 | 🦾 **Edge, robotics & control tuning** | Parametric evolution of controllers with `@conserved` safety envelopes | ⏳ Later |
 | 8 | 🐜 **Simulation & agent-based modeling** | Populations of evolving agents are literally the language model | 🌍 Community |
 | 9 | 🎓 **Teaching programming** | Students see failure as data and watch code improve generation by generation | 🌍 Community |
 
 > [!CAUTION]
-> **Where Peace is *not* a good fit (yet):** hard real-time systems, safety-certified software (avionics, medical devices) where any runtime change is forbidden, and tiny scripts where evolution adds nothing. You can still write plain Peace there; just don't use `gene`.
+> **Where Evolve is *not* a good fit (yet):** hard real-time systems, safety-certified software (avionics, medical devices) where any runtime change is forbidden, and tiny scripts where evolution adds nothing. You can still write plain Evolve there; just don't use `gene`.
 
 ---
 
 ## 🦀 Architecture (built on Rust beta)
 
-Peace is implemented in **Rust**, tracking the **beta channel** so the compiler can adopt upcoming Rust features (language, `std`, and codegen improvements) one release cycle before stable. CI also builds on stable, so the project never depends on a feature that gets pulled from beta.
+Evolve is implemented in **Rust**, tracking the **beta channel** so the compiler can adopt upcoming Rust features (language, `std`, and codegen improvements) one release cycle before stable. CI also builds on stable, so the project never depends on a feature that gets pulled from beta.
 
 <div align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/diagrams/architecture-dark.svg">
-  <img alt="Peace architecture: .peace source goes through a lossless CST, HIR and typed IR, then to a Cranelift JIT, LLVM AOT, or a WASM sandbox. peace-evolve edits the CST/IR, receives fitness results from the sandbox, and stores lessons and lineage in the fossil record." src="assets/diagrams/architecture-light.svg" width="100%">
+  <img alt="Evolve architecture: .evo source goes through a lossless CST, HIR and typed IR, then to a Cranelift JIT, LLVM AOT, or a WASM sandbox. evo-search edits the CST/IR, receives fitness results from the sandbox, and stores lessons and lineage in the fossil record." src="assets/diagrams/architecture-light.svg" width="100%">
 </picture>
 </div>
 
@@ -429,21 +429,21 @@ components = ["rustfmt", "clippy", "rust-src"]
 <summary>📦 <b>Planned crate layout</b></summary>
 
 ```
-peacelang/
+evolve/
 ├── crates/
-│   ├── peace-syntax      # lexer + lossless CST (rowan); round-trips source exactly so mutations stay readable
-│   ├── peace-hir         # name resolution, desugaring, gene/fitness lowering
-│   ├── peace-types       # gradual typing, multiple-dispatch resolution, units & uncertainty types
-│   ├── peace-codegen     # Cranelift JIT (dev/REPL) + LLVM AOT (release) + WASM (sandbox)
-│   ├── peace-runtime     # memory management, arrays, dispatch tables, attempt/learn
-│   ├── peace-data        # Arrow-backed arrays & DataFrames (Polars / arrow-rs)
-│   ├── peace-evolve      # mutation operators, populations, selection, fitness runner
-│   ├── peace-sandbox     # wasmtime isolation, capabilities, budgets
-│   ├── peace-fossil      # lessons + lineage store (append-only, Arrow/Parquet + SQLite index)
-│   ├── peace-agent       # MCP server, LLM mutation providers
-│   ├── peace-interop     # Rust FFI, Python (PyO3), C ABI
-│   └── peace-cli         # the `peace` command
-├── std/                  # standard library, written in Peace
+│   ├── evo-syntax      # lexer + lossless CST (rowan); round-trips source exactly so mutations stay readable
+│   ├── evo-hir         # name resolution, desugaring, gene/fitness lowering
+│   ├── evo-types       # gradual typing, multiple-dispatch resolution, units & uncertainty types
+│   ├── evo-codegen     # Cranelift JIT (dev/REPL) + LLVM AOT (release) + WASM (sandbox)
+│   ├── evo-runtime     # memory management, arrays, dispatch tables, attempt/learn
+│   ├── evo-data        # Arrow-backed arrays & DataFrames (Polars / arrow-rs)
+│   ├── evo-search      # mutation operators, populations, selection, fitness runner
+│   ├── evo-sandbox     # wasmtime isolation, capabilities, budgets
+│   ├── evo-fossil      # lessons + lineage store (append-only, Arrow/Parquet + SQLite index)
+│   ├── evo-agent       # MCP server, LLM mutation providers
+│   ├── evo-interop     # Rust FFI, Python (PyO3), C ABI
+│   └── evo-cli         # the `evo` command
+├── std/                  # standard library, written in Evolve
 ├── docs/
 └── examples/
 ```
@@ -455,19 +455,19 @@ peacelang/
 ## 🧰 Toolchain sketch
 
 ```bash
-peace run app.peace                 # ▶️  run (JIT)
-peace build --release               # 📦 native binary (AOT)
-peace repl                          # 💬 interactive, notebook-friendly
-peace test                          # ✅ tests + fitness checks + invariants
+evo run app.evo                 # ▶️  run (JIT)
+evo build --release               # 📦 native binary (AOT)
+evo repl                          # 💬 interactive, notebook-friendly
+evo test                          # ✅ tests + fitness checks + invariants
 
-peace evolve parse_price            # 🧬 run an evolution cycle for one gene
-peace heal --watch                  # 🩹 watch production lessons and propose fixes
-peace lessons --gene parse_price    # 🦴 browse the fossil record
-peace lineage parse_price           # 🌳 show the family tree of a gene
-peace diff parse_price@gen-3 @gen-7 # 🔍 compare two generations
-peace promote parse_price@gen-7     # 🚦 human-approved promotion
-peace revert parse_price@gen-3      # ⏪ rollback to an ancestor
-peace serve --mcp                   # 🔌 expose Peace to AI agents
+evo evolve parse_price            # 🧬 run an evolution cycle for one gene
+evo heal --watch                  # 🩹 watch production lessons and propose fixes
+evo lessons --gene parse_price    # 🦴 browse the fossil record
+evo lineage parse_price           # 🌳 show the family tree of a gene
+evo diff parse_price@gen-3 @gen-7 # 🔍 compare two generations
+evo promote parse_price@gen-7     # 🚦 human-approved promotion
+evo revert parse_price@gen-3      # ⏪ rollback to an ancestor
+evo serve --mcp                   # 🔌 expose Evolve to AI agents
 ```
 
 ---
@@ -485,15 +485,15 @@ peace serve --mcp                   # 🔌 expose Peace to AI agents
 
 | Phase | Version | Target | Headline |
 |---|---|---|---|
-| 🌱 0 **Seed** | `v0.0` | Feb 2027 | Vision, core RFCs, grammar, PeaceBench spec |
-| 🌿 1 **Sprout** | `v0.1` | Jun 2027 | Evolution engine for Python + Peace interpreter with `attempt/learn` |
+| 🌱 0 **Seed** | `v0.0` | Feb 2027 | Vision, core RFCs, grammar, EvoBench spec |
+| 🌿 1 **Sprout** | `v0.1` | Jun 2027 | Evolution engine for Python + Evolve interpreter with `attempt/learn` |
 | 🌳 2 **Root** | `v0.2` | Oct 2027 | Arrays, broadcasting, multiple dispatch, DataFrames, units, uncertainty |
-| 🌲 3 **Branch** | `v0.3` | Jan 2028 | Native `gene` / `fitness` / `population`, lineage, PeaceBench v1 |
+| 🌲 3 **Branch** | `v0.3` | Jan 2028 | Native `gene` / `fitness` / `population`, lineage, EvoBench v1 |
 | 🌸 4 **Bloom** | `v0.4` | Apr 2028 | Cranelift JIT, WASM sandbox, capabilities, `@heal` in services |
 | 🐝 5 **Pollinate** | `v0.5` | Aug 2028 | MCP + A2A, `agent` / `protocol` / `society`, AI-native `app`s, Python interop, LSP |
 | 🌍 6 **Forest** | `v1.0` | H2 2028 | LLVM AOT, package manager, stdlib, stability guarantees |
 
-📍 Full plan with deliverables, exit demos, the **PeaceBench** benchmark, success metrics, risks, Rust beta policy, and future possibilities (a collective immune system, verified invariants, self-evolving compiler, and more): **[docs/roadmap.md](docs/roadmap.md)**
+📍 Full plan with deliverables, exit demos, the **EvoBench** benchmark, success metrics, risks, Rust beta policy, and future possibilities (a collective immune system, verified invariants, self-evolving compiler, and more): **[docs/roadmap.md](docs/roadmap.md)**
 
 ---
 
@@ -518,12 +518,12 @@ These are deliberately unresolved. They're the most interesting part. 🤔
 
 ## 🤝 Contributing
 
-Peace is at the idea stage, so the best contributions now are **use cases, syntax ideas, real-world failure cases for PeaceBench, and hard questions**.
+Evolve is at the idea stage, so the best contributions now are **use cases, syntax ideas, real-world failure cases for EvoBench, and hard questions**.
 
 | If you want to… | Do this |
 |---|---|
 | 💡 Propose a language idea | Read the [draft RFCs](rfcs/README.md), then open an **RFC** issue |
-| 🧪 Share a real-world failure | Open a **PeaceBench case** issue (format: [bench/README.md](bench/README.md)) |
+| 🧪 Share a real-world failure | Open a **EvoBench case** issue (format: [bench/README.md](bench/README.md)) |
 | 🌍 Describe a use case | Open a **Use case** issue |
 | ❓ Ask anything | Start a [Discussion](https://github.com/peace-program-project/peace/discussions) |
 
@@ -533,19 +533,19 @@ Read **[CONTRIBUTING.md](CONTRIBUTING.md)** and [how to help right now](docs/roa
 
 ## 📄 License
 
-Peace is licensed under the **[Apache License, Version 2.0](LICENSE)**. See [NOTICE](NOTICE).
+Evolve is licensed under the **[Apache License, Version 2.0](LICENSE)**. See [NOTICE](NOTICE).
 
-Unless you explicitly state otherwise, any contribution you intentionally submit for inclusion in Peace is licensed under Apache-2.0, as defined in the license, without any additional terms or conditions.
+Unless you explicitly state otherwise, any contribution you intentionally submit for inclusion in Evolve is licensed under Apache-2.0, as defined in the license, without any additional terms or conditions.
 
 ---
 
 <div align="center">
 
-<img src="assets/logo/peace-mark.svg" width="72" alt="Peace logo"/>
+<img src="assets/logo/evolve-mark.svg" width="72" alt="Evolve logo"/>
 
 <i>"Nothing in biology makes sense except in the light of evolution."</i> (Theodosius Dobzhansky)<br/>
-<b><i>Nothing in Peace makes sense except in the light of failure.</i></b> ☮
+<b><i>Nothing in Evolve makes sense except in the light of failure.</i></b> 🧬
 
-<sub>Made with 🕊️ by the <a href="https://github.com/peace-program-project">Peace Program Project</a></sub>
+<sub>Made with 🕊️ by the <a href="https://github.com/peace-program-project">Evolve Program Project</a></sub>
 
 </div>

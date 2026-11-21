@@ -21,7 +21,7 @@ The problem today, with a concrete example. Which [use case](../docs/use-cases.m
 
 ## Guide-level explanation
 
-Explain it the way the Peace Book would teach it. Use `peace` code blocks.
+Explain it the way the Evolve Book would teach it. Use `evo` code blocks.
 
 ## Reference-level explanation
 
@@ -49,4 +49,4 @@ What must be settled before `accepted`? What can wait until implementation?
 
 ## Test plan
 
-How we'll know the implementation is right: conformance tests, fitness tests, PeaceBench cases.
+How we'll know the implementation is right: conformance tests, fitness tests, EvoBench cases.

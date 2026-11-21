@@ -1,6 +1,6 @@
-<img src="../assets/logo/peace-mark.svg" width="72" align="right" alt="Peace logo"/>
+<img src="../assets/logo/evolve-mark.svg" width="72" align="right" alt="Evolve logo"/>
 
-# 🗺️ Peace: Development Roadmap and Possibilities
+# 🗺️ Evolve: Development Roadmap and Possibilities
 
 > **Status:** planning draft (November 2026). Dates are targets for a small core team (3–5 people) and will move as we learn. Each phase ships something people can use and ends with a demo that proves a hypothesis.
 
@@ -11,12 +11,12 @@
 1. [Strategy: engine first, language second](#1-strategy-engine-first-language-second)
 2. [Phase plan](#2-phase-plan) · [Mission track](#-mission-track-ai-models-ai-native-apps-and-agent-systems)
 3. [Release milestones](#3-release-milestones)
-4. [PeaceBench](#4-peacebench)
+4. [EvoBench](#4-evobench)
 5. [Success metrics](#5-success-metrics)
 6. [Risks and mitigations](#6-risks-and-mitigations)
 7. [Rust beta policy](#7-rust-beta-policy)
 8. [Team and governance](#8-team-and-governance)
-9. [Possibilities: where Peace could go](#9-possibilities-where-peace-could-go)
+9. [Possibilities: where Evolve could go](#9-possibilities-where-evolve-could-go)
 10. [How to help right now](#10-how-to-help-right-now)
 
 ---
@@ -34,9 +34,9 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
  Language
 ```
 
-- **Track A, the Evolution Engine**, is a set of Rust crates (`peace-fossil`, `peace-evolve`, `peace-sandbox`) with **Python bindings**. Python developers can use `@gene`, `fitness`, and Lessons *before the Peace language exists*. This tests the core hypothesis with real users and real failures early.
+- **Track A, the Evolution Engine**, is a set of Rust crates (`evo-fossil`, `evo-search`, `evo-sandbox`) with **Python bindings**. Python developers can use `@gene`, `fitness`, and Lessons *before the Evolve language exists*. This tests the core hypothesis with real users and real failures early.
 - **Track B, the Language**, covers the parser, interpreter, type system, and data-native core. It's slower and more ambitious.
-- **Convergence (Phase 3):** the language uses the same engine natively, so `gene def` in Peace and `@gene` in Python share one fossil record and one lineage format.
+- **Convergence (Phase 3):** the language uses the same engine natively, so `gene def` in Evolve and `@gene` in Python share one fossil record and one lineage format.
 
 **Why this order:** if the evolution loop doesn't help real users in Python, a new syntax won't save it. If it does help, we'll have users, data, and a benchmark before the compiler is finished.
 
@@ -58,7 +58,7 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 | RFC process | ✅ [`rfcs/`](../rfcs/) folder, template, statuses, review rules |
 | Core RFCs | 🌱 drafted: [0001](../rfcs/0001-syntax-core.md) Syntax core · [0002](../rfcs/0002-lesson-schema.md) Lesson schema · [0003](../rfcs/0003-gene-fitness-semantics.md) `gene`/`fitness` semantics · [0004](../rfcs/0004-promotion-and-safety.md) Promotion & safety model · [0005](../rfcs/0005-data-model.md) Data model. Next: comment period |
 | Grammar draft | 🌱 [Grammar revision 2](../spec/grammar.ebnf) (PEG notation, reviewed against the Python 3.16 reference) done; tree-sitter grammar for syntax highlighting still to do |
-| PeaceBench v0 spec | 🌱 [Case format v0 and scorer](../bench/README.md) done; 1 of 50 cases (see [PeaceBench](#4-peacebench)) |
+| EvoBench v0 spec | 🌱 [Case format v0 and scorer](../bench/README.md) done; 1 of 50 cases (see [EvoBench](#4-evobench)) |
 | Project hygiene | ✅ Apache-2.0 license, ✅ Code of Conduct, ✅ CONTRIBUTING, CI skeleton |
 
 **Exit criteria:** the five core RFCs are accepted, and Lesson schema v0 is frozen for the engine to build on.
@@ -70,27 +70,27 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 
 | Track A: Engine | Track B: Language |
 |---|---|
-| `peace-fossil`: append-only Lesson + lineage store (Parquet + SQLite index) | 🌱 `peace-syntax`: lexer + lossless CST (rowan), error-tolerant parser: **prototype done** against draft RFC 0001 revision 2 ([crate](../crates/peace-syntax/)) |
-| `peace-evolve`: fitness runner, **parametric** mutation, selection, seeds | Tree-walking interpreter: Python-like core (functions, classes, control flow, f-strings) |
-| `peace-engine` Python package (PyO3): `@gene`, `fitness`, `attempt/learn` context manager | `attempt / learn` with Lessons written to the same fossil store |
-| CLI: `peace lessons`, `peace lineage`, `peace evolve`, `peace revert` | `peace run`, `peace repl` |
+| `evo-fossil`: append-only Lesson + lineage store (Parquet + SQLite index) | 🌱 `evo-syntax`: lexer + lossless CST (rowan), error-tolerant parser: **prototype done** against draft RFC 0001 revision 2 ([crate](../crates/evo-syntax/)) |
+| `evo-search`: fitness runner, **parametric** mutation, selection, seeds | Tree-walking interpreter: Python-like core (functions, classes, control flow, f-strings) |
+| `evo-engine` Python package (PyO3): `@gene`, `fitness`, `attempt/learn` context manager | `attempt / learn` with Lessons written to the same fossil store |
+| CLI: `evo lessons`, `evo lineage`, `evo evolve`, `evo revert` | `evo run`, `evo repl` |
 
-**Exit demo:** a **Python** pipeline using `peace-engine` hits a date-format drift, records a Lesson, evolves a parser parameter, and proposes a fix that a human approves. Separately, `.peace` scripts run with `attempt/learn`.
+**Exit demo:** a **Python** pipeline using `evo-engine` hits a date-format drift, records a Lesson, evolves a parser parameter, and proposes a fix that a human approves. Separately, `.evo` scripts run with `attempt/learn`.
 
 ---
 
 ### Phase 2: Root 🌳 (May – Oct 2027) → `v0.2`
-**Goal:** Peace becomes data-native.
+**Goal:** Evolve becomes data-native.
 
 - N-dimensional arrays with broadcasting (`f.(xs)`, `.+`), slicing, and linear algebra (`A \ b`)
 - **Multiple dispatch** with method tables (also the hook for evolved variants)
 - Arrow-backed **DataFrames** and the pipe operator (`|>`), with `read"..."` / `write"..."` loaders for CSV, Parquet, and JSON
 - **Units of measure** and **uncertainty** (`±`) as types, with propagation
-- Gradual type checker (`peace-types`): optional hints, inference, dispatch resolution
+- Gradual type checker (`evo-types`): optional hints, inference, dispatch resolution
 - 🧠 **Tensors and automatic differentiation** on a Rust backend (candidates: Burn, Candle), the foundation for the AI-model mission
 - Track A: **structural** mutation operators for Python ASTs (guards, alternate parses, type widening)
 
-**Exit demo:** the [scientific computing use case](use-cases.md#4-scientific-computing-with-honest-uncertainty) runs in Peace, with units and uncertainty flowing through correctly.
+**Exit demo:** the [scientific computing use case](use-cases.md#4-scientific-computing-with-honest-uncertainty) runs in Evolve, with units and uncertainty flowing through correctly.
 
 ---
 
@@ -98,13 +98,13 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 **Goal:** the tracks converge, and evolution becomes native syntax.
 
 - `gene def`, `fitness`, `invariant`, `population`, `@conserved`, `@heal` in the language
-- Structural mutation directly on the Peace CST, rendering back to idiomatic source
-- Promotion workflow: `peace promote`, `peace diff`, and approval gates (`human` / `tests` / `auto`)
+- Structural mutation directly on the Evolve CST, rendering back to idiomatic source
+- Promotion workflow: `evo promote`, `evo diff`, and approval gates (`human` / `tests` / `auto`)
 - Holdout sets and **adversarial examples generated from Lessons** to resist fitness gaming
-- **PeaceBench v1** published with baseline heal rates
+- **EvoBench v1** published with baseline heal rates
 - 🧩 `module` construct with typed interfaces, and `gene model` to evolve architectures on **small proxy models** first
 
-**Exit demo:** the [self-healing data pipeline](use-cases.md#1-self-healing-data-pipelines) runs end to end in pure Peace, with lineage, quarantine, and human promotion.
+**Exit demo:** the [self-healing data pipeline](use-cases.md#1-self-healing-data-pipelines) runs end to end in pure Evolve, with lineage, quarantine, and human promotion.
 
 ---
 
@@ -125,19 +125,19 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 ---
 
 ### Phase 5: Pollinate 🐝 (Mar – Aug 2028) → `v0.5`
-**Goal:** Peace becomes the best language for AI agents.
+**Goal:** Evolve becomes the best language for AI agents.
 
-- `peace serve --mcp`: tools for `lessons.query`, `gene.mutate`, `fitness.run`, `lineage.show`, `promote.request`
+- `evo serve --mcp`: tools for `lessons.query`, `gene.mutate`, `fitness.run`, `lineage.show`, `promote.request`
 - **Agentic mutation providers**: plug in hosted or local LLMs. Every prompt and response is recorded in the lineage for reproducibility.
 - Recombination (crossover) between successful variants
 - 🕸️ **`agent`, `protocol`, and `society`** constructs: typed, versioned, conserved contracts between agents; system-level fitness
 - 🌐 **Open agent interoperability**: A2A-style agent-to-agent messaging alongside MCP
 - 📱 **`app` and `gene prompt`** constructs for AI-native applications, with Lessons flowing into regression evals
-- **Python interop** both ways (call Python libraries from Peace, embed Peace in Python)
+- **Python interop** both ways (call Python libraries from Evolve, embed Evolve in Python)
 - **LSP + VS Code extension** with a lineage tree view, Lesson explorer, and fitness diff
-- Agent uplift study on PeaceBench (see [metrics](#5-success-metrics))
+- Agent uplift study on EvoBench (see [metrics](#5-success-metrics))
 
-**Exit demo:** an off-the-shelf coding agent connected over MCP fixes measurably more PeaceBench cases, and repeats fewer mistakes, than the same agent working in plain Python.
+**Exit demo:** an off-the-shelf coding agent connected over MCP fixes measurably more EvoBench cases, and repeats fewer mistakes, than the same agent working in plain Python.
 
 ---
 
@@ -145,12 +145,12 @@ Track B  ───[ Parser + interpreter ]──[ Data-native core ]─┘
 **Goal:** a stable, documented, production-ready language.
 
 - **LLVM AOT** backend for release binaries
-- Package manager and registry (`peace add`, `peace publish`) with Rust crate interop
-- Standard library written in Peace (`std.data`, `std.units`, `std.http`, `std.test`, `std.evolve`)
-- *The Peace Book*, a language reference, and a cookbook
+- Package manager and registry (`evo add`, `evo publish`) with Rust crate interop
+- Standard library written in Evolve (`std.data`, `std.units`, `std.http`, `std.test`, `std.evolve`)
+- *The Evolve Book*, a language reference, and a cookbook
 - Stability guarantees: language spec 1.0, Lesson and lineage formats versioned with migrations
 - External security audit of the sandbox and promotion pipeline
-- 🎯 Flagship examples: an AI-native app and a multi-agent society, both built entirely in Peace
+- 🎯 Flagship examples: an AI-native app and a multi-agent society, both built entirely in Evolve
 
 **Exit:** 1.0 released, with a public commitment to backward compatibility.
 
@@ -173,18 +173,18 @@ The phases above build the foundation. This track shows how each [mission](visio
 | Version | Phase | Headline |
 |---|---|---|
 | `v0.0` | Seed | Docs, RFCs, grammar |
-| `v0.1` | Sprout | Evolution engine for Python + Peace interpreter |
+| `v0.1` | Sprout | Evolution engine for Python + Evolve interpreter |
 | `v0.2` | Root | Arrays, dispatch, DataFrames, units, uncertainty |
-| `v0.3` | Branch | Native `gene` / `fitness` / `population`, PeaceBench v1 |
+| `v0.3` | Branch | Native `gene` / `fitness` / `population`, EvoBench v1 |
 | `v0.4` | Bloom | JIT, WASM sandbox, capabilities, `@heal` in services |
 | `v0.5` | Pollinate | MCP, agentic mutation, agents/protocols/societies, AI-native apps, Python interop, LSP |
 | `v1.0` | Forest | AOT, package manager, stdlib, stability |
 
 ---
 
-## 4. PeaceBench
+## 4. EvoBench
 
-**A public benchmark of real-world software failures and how well a system heals them.** It's useful beyond Peace: any agent or repair tool can be scored on it.
+**A public benchmark of real-world software failures and how well a system heals them.** It's useful beyond Evolve: any agent or repair tool can be scored on it.
 
 Each case contains:
 - a small program that used to work,
@@ -209,12 +209,12 @@ Targets: 50 cases (Phase 0), 300 (Phase 3), 1,000 (Phase 5), with community cont
 
 | Metric | Definition | Target by 1.0 |
 |---|---|---|
-| **Heal rate** | % of PeaceBench cases where a promoted variant passes the hidden holdout | > 60% |
+| **Heal rate** | % of EvoBench cases where a promoted variant passes the hidden holdout | > 60% |
 | **False promotion rate** | % of promoted variants that later regress or violate an invariant | < 1% |
 | **Mean time to heal** | From first Lesson to an approval-ready variant | < 10 min for parametric, < 1 h for structural |
-| **Agent uplift** | Same agent's heal rate in Peace vs. plain Python | Statistically significant improvement |
+| **Agent uplift** | Same agent's heal rate in Evolve vs. plain Python | Statistically significant improvement |
 | **Repeat-mistake rate** | How often an agent re-introduces a failure kind already in its Lessons | Falls over time within a project |
-| **Numeric performance** | Peace vs. Julia on a standard numeric benchmark suite | Within 2× |
+| **Numeric performance** | Evolve vs. Julia on a standard numeric benchmark suite | Within 2× |
 | **Unapproved prod changes** | With default settings | Exactly 0 |
 
 ---
@@ -238,10 +238,10 @@ Targets: 50 cases (Phase 0), 300 (Phase 3), 1,000 (Phase 5), with community cont
 
 ## 7. Rust beta policy
 
-Peace tracks Rust's **beta channel** to adopt upcoming language, `std`, and codegen improvements one release cycle early.
+Evolve tracks Rust's **beta channel** to adopt upcoming language, `std`, and codegen improvements one release cycle early.
 
 - **Development:** `rust-toolchain.toml` uses `channel = "beta"`.
-- **Releases:** each Peace release pins a dated beta toolchain (for example `beta-2027-06-01`) so builds are reproducible.
+- **Releases:** each Evolve release pins a dated beta toolchain (for example `beta-2027-06-01`) so builds are reproducible.
 - **CI matrix:** beta (required), stable (required: the code must also compile on stable, so we never depend on a feature that gets pulled), nightly (informational).
 - **Rule:** if a feature exists only on nightly, we don't use it.
 
@@ -255,7 +255,7 @@ Peace tracks Rust's **beta channel** to adopt upcoming language, `std`, and code
 |---|---|
 | Compiler engineer | Parser, HIR, type system, Cranelift and LLVM backends |
 | Runtime and data engineer | Memory model, arrays, Arrow DataFrames, units and uncertainty |
-| Evolution and ML engineer | Mutation operators, fitness, selection, PeaceBench |
+| Evolution and ML engineer | Mutation operators, fitness, selection, EvoBench |
 | AI/ML research engineer | Tensors and autodiff, `module`/`model`, safety eval suites, agent societies |
 | Security engineer (part-time) | Sandbox, capabilities, promotion pipeline, audits |
 | Developer relations and docs | The Book, examples, community, Python-engine adoption |
@@ -264,7 +264,7 @@ Peace tracks Rust's **beta channel** to adopt upcoming language, `std`, and code
 
 ---
 
-## 9. Possibilities: where Peace could go
+## 9. Possibilities: where Evolve could go
 
 Beyond 1.0, these are directions worth exploring. They're ideas, not commitments.
 
@@ -276,14 +276,14 @@ Beyond 1.0, these are directions worth exploring. They're ideas, not commitments
 
 ### Mid horizon (2029–2031)
 - **Verified invariants:** discharge `invariant` clauses with an SMT solver (such as Z3), so some mutations are *proven* safe and don't just pass tests.
-- **Evolving the compiler itself:** inlining, specialization, and scheduling heuristics in the Peace compiler as genes, tuned on real workloads.
+- **Evolving the compiler itself:** inlining, specialization, and scheduling heuristics in the Evolve compiler as genes, tuned on real workloads.
 - **GPU kernel evolution:** evolve tiling and fusion strategies for array code on specific hardware.
 - **Federated evolution at the edge:** fleets of devices evolve controllers locally (parametric only, inside `@conserved` envelopes) and share winning variants centrally.
-- **Peace Garden (hosted service):** managed fossil storage, sandboxed evolution runners, a team approval UI, and a dashboard for lineage. This could also make the project sustainable.
+- **Evolve Garden (hosted service):** managed fossil storage, sandboxed evolution runners, a team approval UI, and a dashboard for lineage. This could also make the project sustainable.
 
 ### Far horizon (research)
 - **Open-ended evolution:** populations that keep generating novel, useful behavior rather than converging, inspired by artificial-life research.
-- **Self-hosting:** Peace written in Peace, with its own core evolving under strict gates.
+- **Self-hosting:** Evolve written in Evolve, with its own core evolving under strict gates.
 - **A science of software evolution:** the public fossil record as a dataset for studying how real software fails and adapts over time.
 
 ---
@@ -293,9 +293,9 @@ Beyond 1.0, these are directions worth exploring. They're ideas, not commitments
 | If you are… | You can… |
 |---|---|
 | A language designer | Comment on or draft the core RFCs (syntax, gene semantics) |
-| A data or platform engineer | Contribute **PeaceBench cases** from real failures you've fixed (anonymized) |
+| A data or platform engineer | Contribute **EvoBench cases** from real failures you've fixed (anonymized) |
 | An ML or agents person | Propose mutation operators and fitness designs; critique the anti-gaming plan |
-| A Rust developer | Prototype `peace-fossil`, or help specify the constructs in [`tests/syntax/docs-allowlist.txt`](../tests/syntax/docs-allowlist.txt) so `peace-syntax` can parse them |
+| A Rust developer | Prototype `evo-fossil`, or help specify the constructs in [`tests/syntax/docs-allowlist.txt`](../tests/syntax/docs-allowlist.txt) so `evo-syntax` can parse them |
 | A teacher | Tell us what a "failure-friendly" first programming course would need |
 
 Open an issue titled `RFC: <idea>`, `Bench: <failure case>`, or `Question: <topic>`.

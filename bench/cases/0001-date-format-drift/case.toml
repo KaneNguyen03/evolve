@@ -1,4 +1,4 @@
-# PeaceBench case format v0 (see bench/README.md)
+# EvoBench case format v0 (see bench/README.md)
 id          = "0001-date-format-drift"
 title       = "Vendor switches order dates from ISO to day-first"
 category    = "format-drift"        # schema-drift | format-drift | api-contract | edge-case | dependency-upgrade | performance-drift

@@ -1,12 +1,12 @@
 name: "💡 RFC: language idea"
-description: Propose a change to the Peace language, its formats, or its safety model.
+description: Propose a change to the Evolve language, its formats, or its safety model.
 title: "RFC: "
 labels: ["rfc"]
 body:
   - type: markdown
     attributes:
       value: |
-        ☮ Thanks for helping Peace evolve! Rough ideas are welcome. We refine them together.
+        🧬 Thanks for helping Evolve grow! Rough ideas are welcome. We refine them together.
   - type: textarea
     id: problem
     attributes:
@@ -18,7 +18,7 @@ body:
     id: proposal
     attributes:
       label: 🧬 The proposal
-      description: How would you solve it in Peace? Code sketches in a ```peace block are great.
+      description: How would you solve it in Evolve? Code sketches in a ```evo block are great.
     validations:
       required: true
   - type: textarea

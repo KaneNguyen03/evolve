@@ -4,7 +4,7 @@ no = False
 nothing = None
 f = lambda
 
-# expect: 1:7: `**` is not Peace syntax; use `^` for powers
+# expect: 1:7: `**` is not Evolve syntax; use `^` for powers
 # expect: 2:6: `True` is Python spelling: use `true`
 # expect: 3:6: `False` is Python spelling: use `false`
 # expect: 4:11: `None` is Python spelling: use `none`

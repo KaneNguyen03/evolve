@@ -1,20 +1,20 @@
-<img src="../assets/logo/peace-mark.svg" width="72" align="right" alt="Peace logo"/>
+<img src="../assets/logo/evolve-mark.svg" width="72" align="right" alt="Evolve logo"/>
 
-# 🌿 Peace: Vision and Purpose
+# 🌿 Evolve: Vision and Purpose
 
-> **Peace is a programming language in which a program's failures make it better instead of only breaking it.**
+> **Evolve is a programming language in which a program's failures make it better instead of only breaking it.**
 
 ---
 
 ## 🎯 Mission
 
-**Peace exists to build the next generation of AI systems: systems that evolve, adapt, and stay safe while doing it.** It has three missions, built on one foundation.
+**Evolve exists to build the next generation of AI systems: systems that evolve, adapt, and stay safe while doing it.** It has three missions, built on one foundation.
 
 ### 🧠 Mission 1: Next-generation AI models
 
-Today's models are trained once, evaluated once, and frozen. When the world changes, they're retrained from scratch. Peace aims for models that are:
+Today's models are trained once, evaluated once, and frozen. When the world changes, they're retrained from scratch. Evolve aims for models that are:
 
-| Property | What it means | Peace primitive |
+| Property | What it means | Evolve primitive |
 |---|---|---|
 | ⚡ **Optimized** | Best quality for the compute, latency, and cost budget | `fitness` with multi-objective scores; evolution over architectures and hyperparameters (gradient descent inside, evolution outside) |
 | 🛡️ **Safe** | Safety can't be traded away for a better score | `@conserved` safety modules; safety evals as hard `invariant`s; human promotion gates |
@@ -25,7 +25,7 @@ Today's models are trained once, evaluated once, and frozen. When the world chan
 
 ### 📱 Mission 2: AI-native applications
 
-In most AI applications, prompts are string constants, tools are loosely typed JSON, evals live in a separate notebook, and failures disappear into logs. In Peace:
+In most AI applications, prompts are string constants, tools are loosely typed JSON, evals live in a separate notebook, and failures disappear into logs. In Evolve:
 
 - 💬 **Prompts are genes**, versioned with lineage and evolved against eval sets.
 - 🔧 **Tools are typed functions** with declared capabilities.
@@ -35,7 +35,7 @@ In most AI applications, prompts are string constants, tools are loosely typed J
 
 ### 🕸️ Mission 3: Agent-to-agent systems
 
-As agents start to work with other agents, the hard problems move to the **interfaces**: who may say what to whom, in what format, under which guarantees. Peace provides:
+As agents start to work with other agents, the hard problems move to the **interfaces**: who may say what to whom, in what format, under which guarantees. Evolve provides:
 
 - 🤖 **`agent`** as a first-class construct, with its own capabilities, genes, and Lessons.
 - 📜 **`protocol`**: typed, versioned contracts between agents, with invariants checked on every message.
@@ -45,7 +45,7 @@ As agents start to work with other agents, the hard problems move to the **inter
 
 ### 🌱 The shared foundation
 
-All three missions rest on the same three ideas: 🍂 **failure as data**, 🧬 **evolution as a language feature**, and 🛡️ **safety by construction**. Self-healing pipelines and learning coding agents are where Peace proves these ideas first. AI models, AI-native apps, and agent societies are where they matter most.
+All three missions rest on the same three ideas: 🍂 **failure as data**, 🧬 **evolution as a language feature**, and 🛡️ **safety by construction**. Self-healing pipelines and learning coding agents are where Evolve proves these ideas first. AI models, AI-native apps, and agent societies are where they matter most.
 
 ---
 
@@ -63,7 +63,7 @@ Each trend has partial answers: agent frameworks, AutoML, genetic-programming li
 
 > Great languages turn a hard discipline into a primitive.
 > Rust made *ownership* a primitive. Julia made *multiple dispatch and arrays* primitives.
-> **Peace makes the improvement loop a primitive.**
+> **Evolve makes the improvement loop a primitive.**
 
 The improvement loop is the oldest algorithm in nature:
 
@@ -73,12 +73,12 @@ observe failure → vary → measure → select → remember
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="../assets/diagrams/evolution-loop-dark.svg">
-  <img alt="The Peace improvement loop: observe, vary, measure, select, remember" src="../assets/diagrams/evolution-loop-light.svg" width="720">
+  <img alt="The Evolve improvement loop: observe, vary, measure, select, remember" src="../assets/diagrams/evolution-loop-light.svg" width="720">
 </picture>
 
-In Peace, each step is a language construct:
+In Evolve, each step is a language construct:
 
-| Step | Construct | Today, without Peace |
+| Step | Construct | Today, without Evolve |
 |---|---|---|
 | Observe failure | `attempt / learn` → structured **Lesson** | Free-text stack traces in logs |
 | Vary | `gene`, `mutate` | Hand edits or ad-hoc scripts |
@@ -88,7 +88,7 @@ In Peace, each step is a language construct:
 
 Because the loop is part of the language, the compiler and runtime can make it **safe** (sandboxing, capabilities, conserved code), **cheap** (JIT, parallel populations), and **auditable** (lineage for every change).
 
-## 3. Who Peace is for
+## 3. Who Evolve is for
 
 | Persona | What they get |
 |---|---|
@@ -98,29 +98,29 @@ Because the loop is part of the language, the compiler and runtime can make it *
 | **Platform engineers and SREs** | Integrations and heuristics that adapt to changing environments, behind explicit promotion gates |
 | **Educators and learners** | A culture and toolchain where failure is visibly the first step of learning |
 
-## 4. What makes Peace different
+## 4. What makes Evolve different
 
-| Approach | Example | What it lacks that Peace adds |
+| Approach | Example | What it lacks that Evolve adds |
 |---|---|---|
 | Evolutionary computation libraries | DEAP (Python) | Evolution lives *outside* the program; no sandbox, lineage, or production integration |
 | Automated program repair research | GenProg | Research prototypes; repairs are one-off patches with no ongoing population or memory |
-| LLM-driven algorithm discovery | FunSearch, AlphaEvolve (DeepMind) | Powerful but bespoke research systems; Peace aims to make this loop available to every developer |
-| LM program optimizers | DSPy | Optimizes prompts and LM pipelines; Peace generalizes to any code, with typed invariants |
+| LLM-driven algorithm discovery | FunSearch, AlphaEvolve (DeepMind) | Powerful but bespoke research systems; Evolve aims to make this loop available to every developer |
+| LM program optimizers | DSPy | Optimizes prompts and LM pipelines; Evolve generalizes to any code, with typed invariants |
 | Self-healing infrastructure | Kubernetes restarts, retries | Heals *processes*, not *logic*; a restart doesn't fix a wrong date parser |
 | AI coding agents | Many | Strong at proposing edits, weak at measuring, remembering, and safely deploying them |
 | Data-native languages | Julia | Excellent arrays and dispatch, but no failure-learning model and no Python-style syntax |
 
-Peace isn't trying to beat any of these at its own game. Its bet is that **putting the loop, the data model, and the safety model in one language** unlocks things that gluing tools together can't.
+Evolve isn't trying to beat any of these at its own game. Its bet is that **putting the loop, the data model, and the safety model in one language** unlocks things that gluing tools together can't.
 
 ## 5. Non-goals
 
 To keep the project honest:
 
-- **Peace is not "no humans needed".** Promotion to production is human-gated by default. Peace makes humans *faster* reviewers, not absent ones.
-- **Peace is not AGI or magic.** Evolution only works where fitness can be measured. If you can't write a `fitness` block, Peace can't improve the code.
-- **Peace does not replace Rust** for systems programming. It's built *on* Rust and calls into Rust crates freely.
-- **Peace is not a genetic-programming toy.** Mutations must produce readable, reviewable source code, never opaque blobs.
-- **Peace does not mutate everything.** Plain functions are plain. Evolution is opt-in per `gene`.
+- **Evolve is not "no humans needed".** Promotion to production is human-gated by default. Evolve makes humans *faster* reviewers, not absent ones.
+- **Evolve is not AGI or magic.** Evolution only works where fitness can be measured. If you can't write a `fitness` block, Evolve can't improve the code.
+- **Evolve does not replace Rust** for systems programming. It's built *on* Rust and calls into Rust crates freely.
+- **Evolve is not a genetic-programming toy.** Mutations must produce readable, reviewable source code, never opaque blobs.
+- **Evolve does not mutate everything.** Plain functions are plain. Evolution is opt-in per `gene`.
 
 ## 6. Design principles, in depth
 
@@ -137,11 +137,11 @@ To keep the project honest:
 
 By 1.0, we want to be able to say:
 
-- A data pipeline written in Peace **heals most common real-world drift failures** without a code change from a human, beyond an approval click.
-- An AI agent working in Peace **fixes more bugs, and repeats fewer mistakes**, than the same agent working in plain Python. We'll measure this on a public benchmark (see [PeaceBench](roadmap.md#4-peacebench)).
-- Numeric Peace code runs **within a small constant factor of Julia**.
-- A team can build a **modular model or agent society** in Peace whose variants improve on quality and cost **without ever regressing on safety invariants**.
-- Agents written in Peace **interoperate over open protocols** (MCP, A2A) with agents written in other languages.
+- A data pipeline written in Evolve **heals most common real-world drift failures** without a code change from a human, beyond an approval click.
+- An AI agent working in Evolve **fixes more bugs, and repeats fewer mistakes**, than the same agent working in plain Python. We'll measure this on a public benchmark (see [EvoBench](roadmap.md#4-evobench)).
+- Numeric Evolve code runs **within a small constant factor of Julia**.
+- A team can build a **modular model or agent society** in Evolve whose variants improve on quality and cost **without ever regressing on safety invariants**.
+- Agents written in Evolve **interoperate over open protocols** (MCP, A2A) with agents written in other languages.
 - **Zero** unapproved changes ever reach production by default.
 
 See **[roadmap.md](roadmap.md)** for how we get there.

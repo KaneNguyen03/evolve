@@ -13,7 +13,7 @@ spec: []
 
 ## Summary
 
-Defines what a **gene** is, how **variants** are identified, how **fitness** is evaluated, and how the runtime **selects** a winner. Phase 1 implements this for parametric mutation in the Python engine. Phase 3 implements it natively in Peace with structural mutation.
+Defines what a **gene** is, how **variants** are identified, how **fitness** is evaluated, and how the runtime **selects** a winner. Phase 1 implements this for parametric mutation in the Python engine. Phase 3 implements it natively in Evolve with structural mutation.
 
 ## Motivation
 
@@ -21,7 +21,7 @@ Defines what a **gene** is, how **variants** are identified, how **fitness** is 
 
 ## Guide-level explanation
 
-```peace
+```evo
 gene def evict_score(entry: CacheEntry, now: Time) -> float:
     alpha = ~1.0 in 0.5..=2.0                 # evolvable constant
     return entry.hits ^ alpha / (now - entry.last_access).seconds
@@ -34,7 +34,7 @@ fitness evict_score:
 ```
 
 ```bash
-peace evolve evict_score --generations 20 --seed 42
+evo evolve evict_score --generations 20 --seed 42
 # gen  best   Δ vs incumbent  holdout  invariants  status
 #   0  0.812  —               0.809    ✅          incumbent
 #  14  0.851  +0.039 ± 0.006  0.846    ✅          candidate → awaiting approval
@@ -44,7 +44,7 @@ peace evolve evict_score --generations 20 --seed 42
 
 ### Genes and variants
 
-- A **gene** is a function declared with `gene def` (Peace) or `@gene` (Python engine). Its identity is its **fully qualified name** (`billing.parse_price`). The signature is the gene's **contract**: every variant must keep the same parameter names, types, and return type. Changing the contract is a new gene, not a variant.
+- A **gene** is a function declared with `gene def` (Evolve) or `@gene` (Python engine). Its identity is its **fully qualified name** (`billing.parse_price`). The signature is the gene's **contract**: every variant must keep the same parameter names, types, and return type. Changing the contract is a new gene, not a variant.
 - A **variant** is one implementation of a gene. Its id is `<gene>@gen-<n>` for promoted lines, plus a content hash: `billing.parse_price@gen-7#3f9a1c`.
 - A variant record holds: `gene`, `generation`, `parents` (1 for mutation, 2 for recombination, 0 for the original), `source` (canonical CST text), `source_hash`, `params` (values of `~` constants), `operator` (which mutation produced it), `author` (`human:`, `agent:`, `operator:`), `created_at`.
 - The **incumbent** is the currently promoted variant. Calls to a gene always dispatch to the incumbent unless a `population` routes some traffic elsewhere (shadow or canary).

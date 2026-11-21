@@ -1,6 +1,6 @@
-# 📜 Peace RFCs
+# 📜 Evolve RFCs
 
-RFCs ("requests for comments") are how Peace decides anything that changes the **language, its file formats, or its safety model**. Code follows RFCs, not the other way around.
+RFCs ("requests for comments") are how Evolve decides anything that changes the **language, its file formats, or its safety model**. Code follows RFCs, not the other way around.
 
 ## Status values
 

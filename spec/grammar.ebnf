@@ -1,4 +1,4 @@
-# Peace core grammar: RFC 0001 (core syntax), revision 2.
+# Evolve core grammar: RFC 0001 (core syntax), revision 2.
 #
 # Notation follows the Python 3.16 reference ("Notation" and "Full Grammar specification"):
 #
@@ -12,7 +12,7 @@
 #   NAME, NUMBER …   tokens from the lexer (see "Lexical" at the end)
 #   # error: …       a mistake the parser must diagnose with this hint (RFC 0001 "Diagnostics")
 #
-# The parser (crates/peace-syntax) is hand-written recursive descent that builds a lossless
+# The parser (crates/evo-syntax) is hand-written recursive descent that builds a lossless
 # CST and recovers from errors; this file is its contract, checked by tests/syntax/.
 # Declaration blocks from later RFCs (population, agent, protocol, society, app, model,
 # pipeline) are not here yet; their keywords are soft, so the names stay usable meanwhile.

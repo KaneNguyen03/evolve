@@ -1,3 +1,0 @@
-c = a @ b
-
-# expect: 1:7: `@` is not an operator in Peace: `*` is matrix multiply for 2-d arrays, `.*` is element-wise

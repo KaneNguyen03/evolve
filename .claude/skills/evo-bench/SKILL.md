@@ -1,9 +1,9 @@
 ---
-name: peace-bench
-description: Author a PeaceBench case from a real-world failure, or heal and score a candidate fix against an existing case. Use for "add a PeaceBench case", "turn this bug into a bench case", "heal case 0001", or "score this fix on PeaceBench".
+name: evo-bench
+description: Author an EvoBench case from a real-world failure, or heal and score a candidate fix against an existing case. Use for "add an EvoBench case", "turn this bug into a bench case", "heal case 0001", or "score this fix on EvoBench".
 ---
 
-# PeaceBench
+# EvoBench
 
 Format and rules: `bench/README.md`. Scorer: `python3 bench/run.py <case> [--program candidate.py]`.
 

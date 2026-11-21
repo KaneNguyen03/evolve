@@ -1,6 +1,6 @@
 # 🕊️ Code of Conduct
 
-Peace is a language about learning from failure. Our community should be the same: **a safe place to be wrong, ask, and grow.**
+Evolve is a language about learning from failure. Our community should be the same: **a safe place to be wrong, ask, and grow.**
 
 This Code of Conduct is adapted from the [Contributor Covenant, version 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
 
@@ -28,7 +28,7 @@ We pledge to make participation in our community a harassment-free experience fo
 
 Community maintainers will remove, edit, or reject contributions that violate this Code of Conduct, and may temporarily or permanently ban contributors for behavior they consider harmful.
 
-**Reporting:** contact the maintainers privately through the [Peace Program Project organization](https://github.com/peace-program-project) or a private GitHub security advisory on the repository. All reports are reviewed promptly and kept confidential.
+**Reporting:** contact the maintainers privately through the [Evolve Program Project organization](https://github.com/peace-program-project) or a private GitHub security advisory on the repository. All reports are reviewed promptly and kept confidential.
 
 Consequences follow the Contributor Covenant's [enforcement guidelines](https://www.contributor-covenant.org/version/2/1/code_of_conduct/#enforcement-guidelines): correction, warning, temporary ban, and permanent ban.
 
